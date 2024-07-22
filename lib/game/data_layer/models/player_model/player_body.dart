@@ -5,6 +5,7 @@ class PlayerBody{
     ['assets/images/spider.png','assets/images/spider.png'],
     ['assets/images/skeleton_passive.png','assets/images/skeleton_agressive.png','assets/images/arrow.png'],
     ['assets/images/creeper.png','assets/images/creeper.png'],
+    ['assets/images/Enderman.png','assets/images/enderman_attack.png'],
     ['assets/images/pigman.png','assets/images/pigman.png'],
     ['assets/images/diamondZombie.png','assets/images/diamondZombie.png']
   ];

@@ -34,12 +34,12 @@ void main(){
         home: Scaffold(
           body: ButtonWidget(
             fontSize: 20.0,
-            ignore: false,
+            buttonIgnore: false,
             battle: () {},
             textButton: 'Test Button',
             color: Colors.blue,
             width: 100.0,
-            height: 50.0,
+            height: 50.0, manaCost: '',
           ),
         ),
       ),

@@ -19,17 +19,20 @@ class SaveAdapter extends TypeAdapter<Save> {
     return Save(
       list: (fields[0] as List).cast<Player>(),
       name: fields[1] as String,
+      itemPlace: (fields[2] as List).cast<ItemPlace>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Save obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.list)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.itemPlace);
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'package:brave_steve/game/presentation/screens/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data_layer/models/player_model/steve.dart';
 import '../../data_layer/models/save_model/save_model.dart';
-import '../../state_menegment/riverpod/game_state.dart';
+import '../../state_menegment/eq_state.dart';
+import '../../state_menegment/game_state.dart';
 
 import 'game_view.dart';
 
@@ -43,12 +45,11 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,
       ),
-      body: ListView.builder(
+      body: listSaves.isEmpty?
+            const Center(child: Text('Brak zapisów',style: TextStyle(fontSize:20),))
+          :ListView.builder(
         itemCount: listSaves.length,
         itemBuilder: (context, index) {
-          if(listSaves.isEmpty){
-            return const Center(child: Text('Brak zapisów',style: TextStyle(fontSize:20),));
-          }else{
             return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
@@ -69,7 +70,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                       child: Column(
                         children: [
                           Text(
-                            listSaves[index].list[0].name,
+                            listSaves[index].list[0].getName(),
                             style: const TextStyle(fontSize: 16),
                           ),
                           Table(columnWidths: const {
@@ -118,8 +119,8 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                         children: [
                           Text(
                             listSaves[index]
-                                .list[listSaves[index].list[0].getEnemyIndex()]
-                                .name,
+                                .list[(listSaves[index].list[0] as Steve).getEnemyIndex()]
+                                .getName(),
                             style: const TextStyle(fontSize: 16),
                           ),
                           Table(columnWidths: const {
@@ -130,32 +131,32 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                               const TableCell(child: Text('Życie:')),
                               TableCell(
                                   child: Text(
-                                      '${listSaves[index].list[listSaves[index].list[0].getEnemyIndex()].showHp()}'))
+                                      '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showHp()}'))
                             ]),
                             TableRow(children: [
                               const TableCell(child: Text('Mana:')),
                               TableCell(
                                   child: Text(
-                                      '${listSaves[index].list[listSaves[index].list[0].getEnemyIndex()].showMana()}'))
+                                      '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showMana()}'))
                             ]),
                             TableRow(children: [
                               const TableCell(child: Text('Atak:')),
                               TableCell(
                                   child: Text(
-                                      '${listSaves[index].list[listSaves[index].list[0].getEnemyIndex()].showAttack()}'))
+                                      '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showAttack()}'))
                             ]),
                             TableRow(children: [
                               const TableCell(child: Text('Poziom:')),
                               TableCell(
                                   child: Text(
-                                      '${listSaves[index].list[listSaves[index].list[0].getEnemyIndex()].getlvl()}'))
+                                      '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].getlvl()}'))
                             ]),
                             TableRow(
                               children: [
                                 const TableCell(child: Text('Doświadczenie:')),
                                 TableCell(
                                     child: Text(
-                                        '${listSaves[index].list[listSaves[index].list[0].getEnemyIndex()].showExp()}'))
+                                        '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showExp()}'))
                               ],
                             ),
                           ]),
@@ -176,6 +177,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
               ),
               onTap: () {
                 ref.read(myStateProvider.notifier).loadGame(index);
+                ref.read(providerEQ.notifier).loadItemPlaceModels(index);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) {
@@ -185,8 +187,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                 );
               },
             ),
-          );
-          }  
+          ); 
         },
       ),
     );

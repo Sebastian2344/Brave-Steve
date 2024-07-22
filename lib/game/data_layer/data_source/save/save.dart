@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive_flutter/hive_flutter.dart';
-
+import '../eq/eq.dart';
+import '../../models/save_model/save_model.dart';
 import '../player/player.dart';
-import '../save_model/save_model.dart';
 
 part 'save.g.dart';
 
@@ -13,8 +12,12 @@ class Save extends HiveObject {
   List<Player> list;
   @HiveField(1)
   String name;
+  @HiveField(2)
+  List<ItemPlace> itemPlace;
   Save({
-    required this.list,required this.name
+    required this.list,
+    required this.name,
+    required this.itemPlace,
   });
   
   SaveModel toSaveModel(){

@@ -17,43 +17,49 @@ class PlayerAdapter extends TypeAdapter<Player> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Player(
-      name: fields[0] as String,
-      hp: fields[1] as double,
-      maxHp: fields[2] as double,
-      attack: fields[3] as double,
-      mana: fields[4] as double,
-      exp: fields[5] as double,
-      lvl: fields[6] as int,
-      weak: fields[7] as bool,
-      enemyIndex: fields[8] as int?,
-      damageReduction: fields[9] as int,
+      fields[0] as String,
+      fields[1] as double,
+      fields[2] as double,
+      fields[3] as double,
+      fields[11] as double,
+      fields[4] as double,
+      fields[5] as double,
+      fields[6] as double,
+      fields[7] as double,
+      fields[8] as int,
+      fields[9] as bool,
+      fields[10] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(12)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
       ..writeByte(1)
-      ..write(obj.hp)
+      ..write(obj._hp)
       ..writeByte(2)
-      ..write(obj.maxHp)
+      ..write(obj._maxHp)
       ..writeByte(3)
-      ..write(obj.attack)
+      ..write(obj._attack)
       ..writeByte(4)
-      ..write(obj.mana)
+      ..write(obj._mana)
       ..writeByte(5)
-      ..write(obj.exp)
+      ..write(obj._exp)
       ..writeByte(6)
-      ..write(obj.lvl)
+      ..write(obj._armour)
       ..writeByte(7)
-      ..write(obj.weak)
+      ..write(obj._maxArmour)
       ..writeByte(8)
-      ..write(obj.enemyIndex)
+      ..write(obj._lvl)
       ..writeByte(9)
-      ..write(obj.damageReduction);
+      ..write(obj._weak)
+      ..writeByte(10)
+      ..write(obj._enemyIndex)
+      ..writeByte(11)
+      ..write(obj._maxAttack);
   }
 
   @override

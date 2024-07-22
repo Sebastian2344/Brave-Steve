@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/presentation/screens/game_view.dart';
+import 'package:brave_steve/game/presentation/screens/introduction.dart';
 import 'package:brave_steve/game/presentation/screens/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,11 +30,11 @@ void main() {
       await tester.pumpWidget(const ProviderScope(child:MaterialApp(home: MainMenu())));
 
       // Wywołaj kliknięcie na przycisk "Start New Game"
-      await tester.tap(find.text('Start New Game'));
+      await tester.tap(find.text('Rozpocznij Nową Grę'));
       await tester.pumpAndSettle();
       // Sprawdź, czy nowa strona gry została wyrenderowana po naciśnięciu przycisku
       
-      expect(find.byType(GameView), findsOneWidget);
+      expect(find.byType(IntroductionScreen), findsOneWidget);
     });
 
     testWidgets('Navigate to next page when you press continue game', (WidgetTester tester) async {

@@ -1,7 +1,8 @@
+import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data_layer/models/player_model/player_model.dart';
-import '../../state_menegment/riverpod/game_state.dart';
+import '../../state_menegment/game_state.dart';
 
 class PlayerView extends ConsumerWidget {
   const PlayerView(
@@ -18,6 +19,7 @@ class PlayerView extends ConsumerWidget {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double fontSize = mediaQueryData.textScaler.scale(14.0);
     final game = ref.watch(myStateProvider);
+    ref.watch(providerEQ);
 
     return Column(
       children: [
@@ -73,10 +75,10 @@ class BattleView extends StatelessWidget {
                 ? game.move1
                     ? mediaQuerySize.width / 2 / 4
                     : 0
-                : game.move2 && player.name != 'Skeleton'
+                : game.move2 && player.getName() != 'Skeleton'
                     ? 0
                     : mediaQuerySize.width / 2 / 4,
-            top: player.name == 'Spider'
+            top: player.getName() == 'Spider'
                 ? mediaQuerySize.height / 3 / 4
                 : mediaQuerySize.height / 3 / 7,
             child: side =='left' && game.effect[0] || side =='right' && game.effect[1] || side =='left' && game.effect[2] || side =='right' && game.effect[3]?ColorFiltered(
@@ -94,7 +96,7 @@ class BattleView extends StatelessWidget {
                 width: mediaQuerySize.width * 0.35,
                 height: mediaQuerySize.height * 0.3,
               )),
-             player.name == 'Skeleton' && side == 'right'?
+             player.getName() == 'Skeleton' && side == 'right'?
                  AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
                     left: game.arrowGo? 0 : mediaQuerySize.width / 2 / 4,
@@ -143,11 +145,11 @@ class StatsView extends StatelessWidget {
                 width: 4, style: BorderStyle.solid, color: Color(0xFFC0C0C0)),
           )),
       width: MediaQuery.of(context).size.width / 2,
-      height: MediaQuery.of(context).size.height / 3,
+      height: MediaQuery.of(context).size.height / 2.5,
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Text(
-          player.name,
+          player.getName(),
           style: TextStyle(color: Colors.amber, fontSize: fontSize + 2),
         ),
         Text(
@@ -156,8 +158,6 @@ class StatsView extends StatelessWidget {
         ),
         Text("Atak  ${player.showAttack()}",
             style: TextStyle(color: Colors.blueGrey, fontSize: fontSize)),
-        Text("Redukcja obrażeń  ${player.damageReduction()}",
-            style: TextStyle(color: Colors.grey, fontSize: fontSize)),
         Text(
           "Mana",
           style: TextStyle(
@@ -231,6 +231,46 @@ class StatsView extends StatelessWidget {
               child: Center(
                 child: Text(
                   '${player.showHp()} / ${player.maxHpInfo()}',
+                  style: TextStyle(fontSize: fontSize, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Text(
+          "Armour",
+          style: TextStyle(
+              color:const Color.fromARGB(255, 136, 137, 136), fontSize: fontSize),
+        ),
+        Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              width: mediaQuerySize.width / 2 * 0.9,
+              height: mediaQuerySize.height / 3 / 10,
+              color: const Color.fromARGB(34, 170, 173, 170),
+            ),
+            Container(
+              width: mediaQuerySize.width /
+                  2 *
+                  0.9 *
+                  (player.getArmour() / 40),
+              height: mediaQuerySize.height / 3 / 10,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 99, 101, 99),
+                    Color.fromARGB(255, 128, 130, 128)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: mediaQuerySize.width / 2 * 0.9,
+              height: mediaQuerySize.height / 3 / 10,
+              child: Center(
+                child: Text(
+                  '${player.getArmour()} / 40.0',
                   style: TextStyle(fontSize: fontSize, color: Colors.white),
                 ),
               ),

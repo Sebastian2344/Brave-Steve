@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:brave_steve/game/presentation/screens/introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../state_menegment/riverpod/game_state.dart';
+import '../../state_menegment/game_state.dart';
 import '../widgets/main_menu_buttons.dart';
 import 'show_saves.dart';
 
@@ -46,7 +46,7 @@ class MainMenu extends ConsumerWidget {
                       if (context.mounted) {
                         Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) {
-                          return const IntroductionScreen(
+                          return IntroductionScreen(
                             isNewGame: true,
                           );
                         }));
