@@ -63,7 +63,7 @@ class LvlupStats extends StatelessWidget {
                         gameMetods.chooseStats(0, 10);
                       },
                       icon: Icon(
-                        Icons.favorite,
+                        Icons.add_circle,
                         color: numberSkillPoints > 0 ? Colors.red : Colors.grey,
                         size: 24,
                       ))),

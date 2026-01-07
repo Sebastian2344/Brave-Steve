@@ -39,6 +39,7 @@ dependencies:
   flutter_riverpod: ^2.4.9
   build_runner: ^2.4.7
   feature_discovery: ^0.14.1
+  showcaseview: ^5.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
