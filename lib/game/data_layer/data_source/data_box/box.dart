@@ -24,7 +24,7 @@ class DataBox {
   List<Player> get playersStartStats{
     return[
       Player('Steve', 200, 200, 14, 14, 10, 0, 0,0, 1, false,1), // My hero has got enemyIndex
-      Player('Zombie', 150, 150, 17, 17, 10, 0, 0,0, 1, false,), //enemy hasnot enemy index
+      Player('Kostucha', 150, 150, 17, 17, 10, 0, 0,0, 1, false,), //enemy hasnot enemy index
       Player('Spider', 160, 160, 16, 16, 10, 0, 0,0, 1, false,), //enemy
       Player('Skeleton', 170, 170, 15, 15, 10, 0, 0,0, 1, false,), //enemy
       Player('Creeper', 180, 180, 14, 14, 10, 0, 0,0, 1, false,), //enemy
@@ -143,7 +143,7 @@ class DataBox {
       ItemModel(
           'Skórzane Buty',
           'Dodają 1 pancerza',
-          'assets/images/brown_boots.png',
+          'assets/images/1024px_items/buty_3_na_3/Nowy_folder/b1.jpg',
           1,
           ItemTypeModel.boots),
       ItemModel(

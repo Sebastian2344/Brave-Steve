@@ -9,24 +9,24 @@ final providerEQ =
       return EqStateMenagment(myRepo);});
 
 class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
-  EqStateMenagment(this.repositoryGame) : super([
-    ItemPlaceModel(0, true, FieldTypeModel.helmet, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(1, true, FieldTypeModel.sword, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(2, true, FieldTypeModel.chestplate, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(3, true, FieldTypeModel.pants, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(4, true, FieldTypeModel.boots, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(5, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(6, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(7, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(8, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(9, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(10, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(11, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(12, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(13, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(14, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(15, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(16, true, FieldTypeModel.backpack, const ItemModel('','','',0,ItemTypeModel.none)),
+  EqStateMenagment(this.repositoryGame) : super(const [
+    ItemPlaceModel(0, true, FieldTypeModel.helmet, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(1, true, FieldTypeModel.sword, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(2, true, FieldTypeModel.chestplate, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(3, true, FieldTypeModel.pants, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(4, true, FieldTypeModel.boots, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(5, true, FieldTypeModel.backpack,ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(6, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(7, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(8, true, FieldTypeModel.backpack,  ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(9, true, FieldTypeModel.backpack,  ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(10, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(11, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(12, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(13, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(14, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(15, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+    ItemPlaceModel(16, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
   ]);
   final RepositoryGame repositoryGame;
 
@@ -229,7 +229,7 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(itemName),
-          Image.asset(image),
+          Image.asset(image, cacheWidth: 256, cacheHeight: 256),
           Text(description),
         ],
       ),

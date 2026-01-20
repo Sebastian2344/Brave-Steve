@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:brave_steve/game/data_layer/models/save_model/save_model.dart';
 import 'package:brave_steve/game/data_layer/repo/repository.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
 import '../data_layer/models/player_model/player_model.dart';
@@ -9,17 +10,17 @@ import '../data_layer/models/player_model/steve.dart';
 enum Stan{
   koniecGry,wygrana,przegrana,graTrwa
 }
-class MyVars {
-  late final bool _move1; //left side move
-  late final bool _move2; //right side move
-  late final List<bool>_buttonIgnore; //can press button or not - [atack, superatack,  weakness, clear]
-  late final List<PlayerModel> _list; // player (index 0)and enemies(indexes 1 to 5) and bosses (index 6 and 7) 
-  late final List<bool> _heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
-  late final bool _arrowGo;//skeleton arrow
-  late final int _enemyIndex;//enemy player index
-  late final int _skillPoints; //player skill points
-  
-  MyVars(
+class MyVars extends Equatable {
+  final bool _move1; //left side move
+  final bool _move2; //right side move
+  final List<bool> _buttonIgnore; //can press button or not - [atack, superatack,  weakness, clear]
+  final List<PlayerModel> _list; // player (index 0)and enemies(indexes 1 to 5) and bosses (index 6 and 7) 
+  final List<bool> _heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
+  final bool _arrowGo;//skeleton arrow
+  final int _enemyIndex;//enemy player index
+  final int _skillPoints; //player skill points
+
+  const MyVars(
       {required bool move1,
       required bool move2,
       required List<bool> buttonIgnore,
@@ -66,6 +67,8 @@ class MyVars {
         arrowGo: arrowGo ?? _arrowGo,
         skillPoints: skillPoints ?? _skillPoints);
   }
+  @override
+  List<Object?> get props => [_move1, _move2, _buttonIgnore, _list, _heroEffect, _enemyIndex, _arrowGo, _skillPoints];
 }
 
 class GameState extends StateNotifier<MyVars> {
@@ -74,9 +77,9 @@ class GameState extends StateNotifier<MyVars> {
       : super(MyVars(
             move1: false,
             move2: false,
-            buttonIgnore: [false, false, false, false],
+            buttonIgnore: const [false, false, false, false],
             list: repositoryGame.playersStartStatsasPlayerModelList(),
-            heroEffect: [false, false, false, false],
+            heroEffect: const [false, false, false, false],
             index: 1,
             arrowGo: false,
             skillPoints: 5));

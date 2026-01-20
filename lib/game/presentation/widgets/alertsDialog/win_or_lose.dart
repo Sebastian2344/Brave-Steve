@@ -126,7 +126,7 @@ class CloseButton extends StatelessWidget {
                 case 1:
                   gameMetods.isLevelUp()
                       ? eqMethods.itemAdd(0, 0)
-                      : eqMethods.itemAdd(1, 0);
+                      : eqMethods.itemAdd(4, 0);
                   break;
                 case 2:
                   gameMetods.isLevelUp()

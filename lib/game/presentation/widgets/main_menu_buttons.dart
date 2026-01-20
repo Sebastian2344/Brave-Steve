@@ -22,14 +22,14 @@ class MainMenuButtons extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  color.withOpacity(0.5),
-                  color.withOpacity(0.3),
-                  color.withOpacity(0.5),
+                  color.withValues(alpha:0.5),
+                  color.withValues(alpha:0.3),
+                  color.withValues(alpha:0.5),
                 ],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha:0.2),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: const Offset(0, 3),

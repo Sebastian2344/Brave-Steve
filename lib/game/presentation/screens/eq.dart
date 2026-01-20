@@ -4,12 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../state_menegment/eq_state.dart';
 import '../widgets/alertsDialog/eq_dialogs.dart';
 
-class Equpment extends ConsumerWidget {
+class Equpment extends StatelessWidget {
   const Equpment({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(providerEQ);
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
