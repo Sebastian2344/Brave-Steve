@@ -7,7 +7,7 @@ class ItemPlaceModel extends Equatable {
   final bool isEmpty;
   final FieldTypeModel classField;
   final ItemModel item;
-  const ItemPlaceModel(this.id, this.isEmpty, this.classField, this.item);
+  const ItemPlaceModel({required this.id,required  this.isEmpty,required  this.classField,required  this.item});
 
   @override
   List<Object?> get props => [id, isEmpty, classField, item];
@@ -19,15 +19,17 @@ class ItemModel extends Equatable {
   final String image;
   final int statValue;
   final ItemTypeModel classItem;
+  final int price;
 
- const ItemModel(
-    this.name,
-    this.description,
-    this.image,
-    this.statValue,
-    this.classItem,
-  );
+ const ItemModel({
+    required this.name,
+    required this.description,
+    required this.image,
+    required this.statValue,
+    required this.classItem,
+    required this.price
+  });
 
   @override
-  List<Object?> get props => [name, description, image, statValue, classItem];
+  List<Object?> get props => [name, description, image, statValue, classItem, price];
 }

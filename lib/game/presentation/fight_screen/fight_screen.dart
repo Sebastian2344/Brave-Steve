@@ -1,24 +1,25 @@
-import 'package:brave_steve/game/presentation/screens/eq.dart';
-import 'package:brave_steve/game/presentation/widgets/alertsDialog/exit_to_menu.dart';
-import 'package:brave_steve/game/presentation/widgets/alertsDialog/save_game.dart';
+import 'package:brave_steve/game/presentation/eq_screen/eq.dart';
+import 'package:brave_steve/game/presentation/fight_screen/exit_to_menu_dialog.dart';
+import 'package:brave_steve/game/presentation/fight_screen/save_game_dialog.dart';
+import 'package:brave_steve/game/presentation/fight_screen/battle_view_widget.dart';
+import 'package:brave_steve/game/presentation/fight_screen/stats_view_widget.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../data_layer/models/player_model/player_body.dart';
-import '../widgets/action_buttons_view.dart';
-import '../widgets/player_view.dart';
+import 'action_buttons_view_widget.dart';
 
-class GameView extends ConsumerStatefulWidget {
-  const GameView(this.isNewGame, {super.key});
+class FightScreen extends ConsumerStatefulWidget {
+  const FightScreen(this.isNewGame, {super.key});
   final bool isNewGame;
 
   @override
-  ConsumerState<GameView> createState() => _GameViewState();
+  ConsumerState<FightScreen> createState() => _FightScreenState();
 }
 
-class _GameViewState extends ConsumerState<GameView> {
+class _FightScreenState extends ConsumerState<FightScreen> {
   // Klucze dla elementów paska
   final GlobalKey _keySave = GlobalKey();
   final GlobalKey _keyEq = GlobalKey();
@@ -27,6 +28,9 @@ class _GameViewState extends ConsumerState<GameView> {
   Widget build(BuildContext context) {
     final myVars = ref.watch(myStateProvider);
     final gameState = ref.watch(myStateProvider.notifier);
+    final Size mediaQuerySize = MediaQuery.of(context).size;
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    double fontSize = mediaQueryData.textScaler.scale(14.0);
 
     // POPRAWKA: 'builder' przyjmuje funkcję (context), a nie widget Builder.
     return ShowCaseWidget(
@@ -55,7 +59,8 @@ class _GameViewState extends ConsumerState<GameView> {
                   targetBorderRadius: BorderRadius.circular(50),
                   tooltipBackgroundColor: Colors.white,
                   textColor: Colors.black,
-                  titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                  titleTextStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
                   child: IconButton(
                     onPressed: () async {
                       showDialog(
@@ -79,7 +84,8 @@ class _GameViewState extends ConsumerState<GameView> {
                 targetBorderRadius: BorderRadius.circular(50),
                 tooltipBackgroundColor: Colors.white,
                 textColor: Colors.black,
-                titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                titleTextStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
                 child: IconButton(
                     onPressed: () {
                       if (gameState.isEq()) {
@@ -89,13 +95,13 @@ class _GameViewState extends ConsumerState<GameView> {
                     },
                     icon: gameState.isEq()
                         ? const Icon(
-                      Icons.boy_rounded,
-                      color: Colors.amber,
-                    )
+                            Icons.boy_rounded,
+                            color: Colors.amber,
+                          )
                         : const Icon(
-                      Icons.boy_rounded,
-                      color: Colors.grey,
-                    )),
+                            Icons.boy_rounded,
+                            color: Colors.grey,
+                          )),
               )
             ],
           ),
@@ -107,14 +113,38 @@ class _GameViewState extends ConsumerState<GameView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    PlayerView(
-                        image: PlayerBody.playerBody[0],
-                        player: myVars.list[0],
-                        side: 'left'),
-                    PlayerView(
-                        image: PlayerBody.playerBody[myVars.index],
-                        player: myVars.list[myVars.index],
-                        side: 'right')
+                    Column(
+                      children: [
+                        BattleView(
+                          image: PlayerBody.playerBody[0],
+                          side: 'left',
+                          player: myVars.list[0],
+                          fontSize: fontSize,
+                          mediaQuerySize: mediaQuerySize,
+                        ),
+                        StatsView(
+                            side: 'left',
+                            player: myVars.list[0],
+                            fontSize: fontSize,
+                            mediaQuerySize: mediaQuerySize)
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        BattleView(
+                          image: PlayerBody.playerBody[myVars.index],
+                          side: 'right',
+                          player: myVars.list[myVars.index],
+                          fontSize: fontSize,
+                          mediaQuerySize: mediaQuerySize,
+                        ),
+                        StatsView(
+                            side: 'right',
+                            player: myVars.list[myVars.index],
+                            fontSize: fontSize,
+                            mediaQuerySize: mediaQuerySize)
+                      ],
+                    ),
                   ],
                 ),
                 // Przekazujemy klucze do dolnego widgetu

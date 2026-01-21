@@ -7,59 +7,58 @@ part 'player.g.dart';
 @HiveType(typeId: 1)
 class Player extends HiveObject {
   @HiveField(0)
-  final String _name;
+  final String name;
   @HiveField(1)
-  final double _hp;
+  final double hp;
   @HiveField(2)
-  final double _maxHp;
+  final double maxHp;
   @HiveField(3)
-  final double _attack;
+  final double attack;
   @HiveField(4)
-  final double _mana;
+  final double mana;
   @HiveField(5)
-  final double _exp;
+  final double exp;
   @HiveField(6)
-  final double _armour;
+  final double armour;
   @HiveField(7)
-  final double _maxArmour;
+  final double maxArmour;
   @HiveField(8)
-  final int _lvl;
+  final int lvl;
   @HiveField(9)
-  final bool _weak;
+  final bool weak;
   @HiveField(10)
-  final int? _enemyIndex;
+  final int? enemyIndex;
   @HiveField(11)
-  final double _maxAttack;
- Player(this._name, this._hp, this._maxHp, this._attack, this._maxAttack,
-      this._mana, this._exp, this._armour,this._maxArmour,this._lvl, this._weak, 
-      [this._enemyIndex]);
+  final double maxAttack;
+  Player({required this.name, required this.hp, required this.maxHp, required this.attack, required this.maxAttack,
+      required this.mana, required this.exp, required this.armour,required this.maxArmour,required this.lvl, required this.weak,this.enemyIndex});
 
   static List<Player> toPlayer(List<PlayerModel> model) {
     List<Player> playersList = [];
     for(int i = 0; i < model.length; i++){
       playersList.add(Player(
-          model[i].getName(),
-          model[i].showHp(),
-          model[i].maxHpInfo(),
-          model[i].showAttack(),
-          model[i].getMaxAttack(),
-          model[i].showMana(),
-          model[i].showExp().toDouble(),
-          model[i].getArmour(),
-          model[i].getArmour(),
-          model[i].getlvl(), 
-          model[i].isWeak(),
-          model[i] == model.first? (model[i] as Steve).getEnemyIndex():null)
+          name: model[i].getName(),
+          hp: model[i].showHp(),
+          maxHp: model[i].maxHpInfo(),
+          attack: model[i].showAttack(),
+          maxAttack: model[i].getMaxAttack(),
+          mana: model[i].showMana(),
+          exp: model[i].showExp().toDouble(),
+          armour: model[i].getArmour(),
+          maxArmour: model[i].getArmour(),
+          lvl: model[i].getlvl(), 
+          weak: model[i].isWeak(),
+          enemyIndex: model[i] == model.first? (model[i] as Steve).getEnemyIndex():null)
         );
     }
     return playersList;
   }
 
   PlayerModel toPlayerModel() {
-    if(_enemyIndex != null){
-      return Steve(_name, _hp, _maxHp, _attack, _maxAttack,_mana,_exp,_armour,_maxArmour,_lvl, _weak,_enemyIndex);
+    if(enemyIndex != null){
+      return Steve(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak, enemyIndex);
     }else{
-      return Enemy(_name, _hp, _maxHp, _attack, _maxAttack, _mana, _exp,_armour,_maxArmour, _lvl,_weak);
+      return Enemy(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak);
     }    
   }
 }

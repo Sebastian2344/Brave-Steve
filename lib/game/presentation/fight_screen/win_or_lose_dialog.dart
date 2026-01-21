@@ -1,10 +1,10 @@
 import 'package:brave_steve/game/data_layer/models/eq_model/eq_model.dart';
-import 'package:brave_steve/game/presentation/widgets/alertsDialog/full_eq_dialog.dart';
+import 'package:brave_steve/game/presentation/eq_screen/full_eq_dialog.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../state_menegment/eq_state.dart';
+import '../../state_menegment/eq_state.dart';
 
 class WinOrLose extends ConsumerWidget {
   const WinOrLose({super.key, required this.win});

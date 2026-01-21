@@ -1,23 +1,25 @@
 import 'dart:math';
 import 'package:brave_steve/game/data_layer/models/save_model/save_model.dart';
 import 'package:brave_steve/game/data_layer/repo/repository.dart';
-import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
 import '../data_layer/models/player_model/player_model.dart';
 import '../data_layer/models/player_model/steve.dart';
-enum Stan{
-  koniecGry,wygrana,przegrana,graTrwa
-}
+
+enum Stan { koniecGry, wygrana, przegrana, graTrwa }
+
 class MyVars extends Equatable {
   final bool _move1; //left side move
   final bool _move2; //right side move
-  final List<bool> _buttonIgnore; //can press button or not - [atack, superatack,  weakness, clear]
-  final List<PlayerModel> _list; // player (index 0)and enemies(indexes 1 to 5) and bosses (index 6 and 7) 
-  final List<bool> _heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
-  final bool _arrowGo;//skeleton arrow
-  final int _enemyIndex;//enemy player index
+  final List<bool>
+      _buttonIgnore; //can press button or not - [atack, superatack,  weakness, clear]
+  final List<PlayerModel>
+      _list; // player (index 0)and enemies(indexes 1 to 5) and bosses (index 6 and 7)
+  final List<bool>
+      _heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
+  final bool _arrowGo; //skeleton arrow
+  final int _enemyIndex; //enemy player index
   final int _skillPoints; //player skill points
 
   const MyVars(
@@ -28,16 +30,15 @@ class MyVars extends Equatable {
       required List<bool> heroEffect,
       required int index,
       required bool arrowGo,
-      required int skillPoints}) : 
-    _move1 = move1,
-    _move2 = move2,
-    _buttonIgnore = buttonIgnore,
-    _list = list,
-    _heroEffect = heroEffect,
-    _enemyIndex = index,
-    _arrowGo = arrowGo,
-    _skillPoints = skillPoints;
-  
+      required int skillPoints})
+      : _move1 = move1,
+        _move2 = move2,
+        _buttonIgnore = buttonIgnore,
+        _list = list,
+        _heroEffect = heroEffect,
+        _enemyIndex = index,
+        _arrowGo = arrowGo,
+        _skillPoints = skillPoints;
 
   bool get move1 => _move1;
   bool get move2 => _move2;
@@ -67,13 +68,23 @@ class MyVars extends Equatable {
         arrowGo: arrowGo ?? _arrowGo,
         skillPoints: skillPoints ?? _skillPoints);
   }
+
   @override
-  List<Object?> get props => [_move1, _move2, _buttonIgnore, _list, _heroEffect, _enemyIndex, _arrowGo, _skillPoints];
+  List<Object?> get props => [
+        _move1,
+        _move2,
+        _buttonIgnore,
+        _list,
+        _heroEffect,
+        _enemyIndex,
+        _arrowGo,
+        _skillPoints
+      ];
 }
 
 class GameState extends StateNotifier<MyVars> {
   RepositoryGame repositoryGame;
-  GameState(this.repositoryGame)
+  GameState({required this.repositoryGame})
       : super(MyVars(
             move1: false,
             move2: false,
@@ -89,11 +100,10 @@ class GameState extends StateNotifier<MyVars> {
     await repositoryGame.openGameDB();
     List<PlayerModel> l = await repositoryGame.listPlayerToListPlayerModel();
     state = state.copyWith(
-      list: l,
-      buttonIgnore: defaultSetList,
-      heroEffect: defaultSetList,
-      index: Random().nextInt(5) + 1
-    );
+        list: l,
+        buttonIgnore: defaultSetList,
+        heroEffect: defaultSetList,
+        index: 1);
   }
 
   void loadGame(int index) {
@@ -111,10 +121,9 @@ class GameState extends StateNotifier<MyVars> {
     }
   }
 
-  Future<void> saveGame(String name, WidgetRef ref) async {
-    (state._list[0]as Steve).setEnemyIndex(state.index);
-    final List<ItemPlaceModel> itemList = ref.read(providerEQ);
-    await repositoryGame.addSaveGame(state._list, name,itemList);
+  Future<void> saveGame(String name, List<ItemPlaceModel> itemList) async {
+    (state._list[0] as Steve).setEnemyIndex(state.index);
+    await repositoryGame.addSaveGame(state._list, name, itemList);
   }
 
   Future<void> closeGameDB() async {
@@ -166,8 +175,11 @@ class GameState extends StateNotifier<MyVars> {
     return Stan.graTrwa;
   }
 
-  bool isEq(){
-    return state._list[state.index].showHp() == state._list[state.index].maxHpInfo() && state._list[state.index].getMaxArmour() == state._list[state.index].getArmour();
+  bool isEq() {
+    return state._list[state.index].showHp() ==
+            state._list[state.index].maxHpInfo() &&
+        state._list[state.index].getMaxArmour() ==
+            state._list[state.index].getArmour();
   }
 
   bool isLevelUp() {
@@ -176,15 +188,15 @@ class GameState extends StateNotifier<MyVars> {
 
   void chooseStats(int attack, int hp) {
     state = state.copyWith(list: [
-            (state._list[0] as Steve).growStatsMyHero(attack,hp),
-            state._list[1],
-            state._list[2],
-            state._list[3],
-            state._list[4],
-            state._list[5],
-            state._list[6],
-            state._list[7]
-    ],skillPoints: state._skillPoints - 1);
+      (state._list[0] as Steve).growStatsMyHero(attack, hp),
+      state._list[1],
+      state._list[2],
+      state._list[3],
+      state._list[4],
+      state._list[5],
+      state._list[6],
+      state._list[7]
+    ], skillPoints: state._skillPoints - 1);
   }
 
   void levelUp() {
@@ -211,21 +223,21 @@ class GameState extends StateNotifier<MyVars> {
               ? 6
               : state._list[0].getlvl() == 10
                   ? 7
-                  : state.index);   
+                  : _setEnemyIndex(state.index));
     }
   }
-  
-  int lvl(){
+
+  int lvl() {
     return state._list[0].getlvl();
   }
 
-  void setStats((double,double,bool)record){
-    if(record.$3){
+  void setStats((double, double, bool) record) {
+    if (record.$3) {
       state._list[0].setArmour = record.$1;
       state._list[0].setMaxArmour = record.$1;
       state._list[0].setAttack = record.$2 + state._list[0].getMaxAttack();
       state._list[0].setMaxAttack = record.$2 + state._list[0].getMaxAttack();
-    }else{
+    } else {
       state._list[0].setArmour = record.$1 + state._list[0].getArmour();
       state._list[0].setMaxArmour = record.$1 + state._list[0].getMaxArmour();
       state._list[0].setAttack = record.$2 + state._list[0].getMaxAttack();
@@ -237,8 +249,7 @@ class GameState extends StateNotifier<MyVars> {
     const List<bool> effects = [false, false, false, false];
     win
         ? {
-            if (state._list[0].showExp() != 100)
-              {
+            if (state._list[0].showExp() != 100){
                 state._list[0].addExpirience(),
                 state = state.copyWith(
                   heroEffect: effects,
@@ -252,20 +263,19 @@ class GameState extends StateNotifier<MyVars> {
                     state._list[6],
                     state._list[7]
                   ],
+                  move2: false
                 )
               },
-            if (state._list[0].getlvl() != 4 &&
-                    state._list[0].showExp() != 100 ||
-                state._list[0].getlvl() != 9 && state._list[0].showExp() != 100)
-              state = state.copyWith(index: Random().nextInt(5) + 1),
+              if(state._list[0].showExp() != 100){
+                state = state.copyWith(index: _setEnemyIndex(state.index))
+              }
           }
         : {
             state = state.copyWith(
-              list: repositoryGame.playersStartStatsasPlayerModelList(),
-              heroEffect: effects,
-              index: Random().nextInt(5) + 1,
-              move2: false
-            )
+                list: repositoryGame.playersStartStatsasPlayerModelList(),
+                heroEffect: effects,
+                index: 1,
+                move2: false)
           };
   }
 
@@ -277,6 +287,15 @@ class GameState extends StateNotifier<MyVars> {
 //===================================================================================//
   // Private Methods
 //===================================================================================//
+  int _setEnemyIndex(int index) {
+    if (index > 0 && index < state._list.length - 3) {
+      index += 1;
+    } else {
+      index = 1;
+    }
+    return index;
+  }
+
   void _firstPlayerCome(bool cleary) {
     state = state.copyWith(
         heroEffect: [state.effect[0], state.effect[1], false, false],
@@ -328,11 +347,15 @@ class GameState extends StateNotifier<MyVars> {
             state._list[state._enemyIndex].showMana() >=
                 state._list[state._enemyIndex].showManaCost('clearMe')) {
           state._list[state._enemyIndex].clearMe();
-          state = state
-              .copyWith(heroEffect: [state.effect[0], false, false, true]);
+          state =
+              state.copyWith(heroEffect: [state.effect[0], false, false, true]);
         } else {
-         int newOption = Random().nextInt(3);
-         if(newOption != option){_enemyTurn(newOption);}else{state._list[state._enemyIndex].makeAttack(state.list[0]);}
+          int newOption = Random().nextInt(3);
+          if (newOption != option) {
+            _enemyTurn(newOption);
+          } else {
+            state._list[state._enemyIndex].makeAttack(state.list[0]);
+          }
         }
       }
     } else if (option == 2) {
@@ -341,11 +364,15 @@ class GameState extends StateNotifier<MyVars> {
             state._list[state._enemyIndex].showMana() >=
                 state._list[state._enemyIndex].showManaCost('weakness')) {
           state._list[state._enemyIndex].weakness(state._list[0]);
-          state = state
-              .copyWith(heroEffect: [true, state.effect[1], false, false]);
+          state =
+              state.copyWith(heroEffect: [true, state.effect[1], false, false]);
         } else {
           int newOption = Random().nextInt(3);
-          if(newOption != option){_enemyTurn(newOption);}else{state._list[state._enemyIndex].makeAttack(state.list[0]);}
+          if (newOption != option) {
+            _enemyTurn(newOption);
+          } else {
+            state._list[state._enemyIndex].makeAttack(state.list[0]);
+          }
         }
       }
     }
@@ -356,24 +383,40 @@ class GameState extends StateNotifier<MyVars> {
   void _setButtonsbuttonIgnore() {
     if (state._list[0].showMana() >=
         state._list[0].showManaCost('SuperAttack')) {
-      state = state
-          .copyWith(buttonIgnore: [false, false, state.buttonIgnore[2], state.buttonIgnore[3]]);
+      state = state.copyWith(buttonIgnore: [
+        false,
+        false,
+        state.buttonIgnore[2],
+        state.buttonIgnore[3]
+      ]);
     }
     if (state._list[0].showMana() >= state._list[0].showManaCost('weakness')) {
-      state = state
-          .copyWith(buttonIgnore: [false, state.buttonIgnore[1], false, state.buttonIgnore[3]]);
+      state = state.copyWith(buttonIgnore: [
+        false,
+        state.buttonIgnore[1],
+        false,
+        state.buttonIgnore[3]
+      ]);
     }
     if (state._list[0].showMana() >= state._list[0].showManaCost('clearMe')) {
-      state = state
-          .copyWith(buttonIgnore: [false, state.buttonIgnore[1], state.buttonIgnore[2], false]);
+      state = state.copyWith(buttonIgnore: [
+        false,
+        state.buttonIgnore[1],
+        state.buttonIgnore[2],
+        false
+      ]);
     } else {
-      state = state.copyWith(
-          buttonIgnore: [false, state.buttonIgnore[1], state.buttonIgnore[2], state.buttonIgnore[3]]);
+      state = state.copyWith(buttonIgnore: [
+        false,
+        state.buttonIgnore[1],
+        state.buttonIgnore[2],
+        state.buttonIgnore[3]
+      ]);
     }
   }
 }
 
 final myStateProvider = StateNotifierProvider<GameState, MyVars>((ref) {
   final repo = ref.watch(repoProvider);
-  return GameState(repo);
+  return GameState(repositoryGame: repo);
 });

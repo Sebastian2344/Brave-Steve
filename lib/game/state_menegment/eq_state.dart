@@ -6,27 +6,27 @@ import '../data_layer/models/eq_model/eq_model.dart';
 final providerEQ =
     StateNotifierProvider<EqStateMenagment, List<ItemPlaceModel>>((ref) {
       final myRepo = ref.watch(repoProvider);
-      return EqStateMenagment(myRepo);});
+      return EqStateMenagment(repositoryGame: myRepo);});
 
 class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
-  EqStateMenagment(this.repositoryGame) : super(const [
-    ItemPlaceModel(0, true, FieldTypeModel.helmet, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(1, true, FieldTypeModel.sword, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(2, true, FieldTypeModel.chestplate, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(3, true, FieldTypeModel.pants, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(4, true, FieldTypeModel.boots, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(5, true, FieldTypeModel.backpack,ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(6, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(7, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(8, true, FieldTypeModel.backpack,  ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(9, true, FieldTypeModel.backpack,  ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(10, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(11, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(12, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(13, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(14, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(15, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
-    ItemPlaceModel(16, true, FieldTypeModel.backpack, ItemModel('','','',0,ItemTypeModel.none)),
+  EqStateMenagment({required this.repositoryGame}) : super(const [
+    ItemPlaceModel(id:0,isEmpty: true, classField: FieldTypeModel.helmet, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:1, isEmpty: true, classField: FieldTypeModel.sword, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:2, isEmpty: true, classField: FieldTypeModel.chestplate, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:3, isEmpty: true, classField: FieldTypeModel.pants, item: ItemModel(name: '', description:'', image:'', statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:4, isEmpty:true, classField: FieldTypeModel.boots, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:5, isEmpty:true, classField: FieldTypeModel.backpack,item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:6, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:7, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:8, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description:'', image:'', statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:9, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:10, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:11, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:12, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:13, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:14, isEmpty:true, classField: FieldTypeModel.backpack, item:ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none,price: 0)),
+    ItemPlaceModel(id:15, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',statValue : 0,classItem : ItemTypeModel.none ,price: 0)),
+    ItemPlaceModel(id:16, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0)),
   ]);
   final RepositoryGame repositoryGame;
 
@@ -48,30 +48,30 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
           if (itemPlaceModel.classField == FieldTypeModel.helmet &&
               state[id].item.classItem == ItemTypeModel.helmet &&
               state[0].item.classItem == ItemTypeModel.none)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: false,classField: itemPlaceModel.classField, item: state[id].item)
           else if (itemPlaceModel.classField == FieldTypeModel.chestplate &&
               state[id].item.classItem == ItemTypeModel.chestplate &&
               state[2].item.classItem == ItemTypeModel.none)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: false,classField: itemPlaceModel.classField, item: state[id].item)
           else if (itemPlaceModel.classField == FieldTypeModel.sword &&
               state[id].item.classItem == ItemTypeModel.sword &&
               state[1].item.classItem == ItemTypeModel.none)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: false,classField: itemPlaceModel.classField, item: state[id].item)
           else if (itemPlaceModel.classField == FieldTypeModel.pants &&
               state[id].item.classItem == ItemTypeModel.pants &&
               state[3].item.classItem == ItemTypeModel.none)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: false,classField: itemPlaceModel.classField, item: state[id].item)
           else if (itemPlaceModel.classField == FieldTypeModel.boots &&
               state[id].item.classItem == ItemTypeModel.boots &&
               state[4].item.classItem == ItemTypeModel.none)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: false,classField: itemPlaceModel.classField, item: state[id].item)
           else
             itemPlaceModel
       ];
       state = [
         for (final itemPlaceModel in state)
-          if (itemPlaceModel.item != const ItemModel('','','',0,ItemTypeModel.none) && itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+          if (itemPlaceModel.item != const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0) && itemPlaceModel.id == id)
+            ItemPlaceModel(id:itemPlaceModel.id,isEmpty: true,classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else
             itemPlaceModel,
       ];
@@ -131,26 +131,26 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
           if (itemPlaceModel.classField == FieldTypeModel.backpack &&
               itemPlaceModel.isEmpty == true &&
               itemPlaceModel.id == first.id)
-            ItemPlaceModel(itemPlaceModel.id, false, itemPlaceModel.classField, state[id].item)
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: false, classField: itemPlaceModel.classField, item: state[id].item)
           else
             itemPlaceModel
       ];
       state = [
         for (final itemPlaceModel in state)
           if (itemPlaceModel.classField == FieldTypeModel.helmet && itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: true, classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else if (itemPlaceModel.classField == FieldTypeModel.chestplate &&
               itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: true, classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else if (itemPlaceModel.classField == FieldTypeModel.sword &&
               itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: true, classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else if (itemPlaceModel.classField == FieldTypeModel.pants &&
               itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: true, classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else if (itemPlaceModel.classField == FieldTypeModel.boots &&
               itemPlaceModel.id == id)
-            ItemPlaceModel(itemPlaceModel.id, true, itemPlaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+            ItemPlaceModel(id: itemPlaceModel.id, isEmpty: true, classField: itemPlaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
           else
             itemPlaceModel
       ];
@@ -168,7 +168,7 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
         if (itemplaceModel.classField == FieldTypeModel.backpack &&
             itemplaceModel.isEmpty == true &&
             firstFreeItemPlaceModel.id == itemplaceModel.id)
-          ItemPlaceModel(itemplaceModel.id, false, itemplaceModel.classField, item)
+          ItemPlaceModel(id: itemplaceModel.id, isEmpty: false, classField: itemplaceModel.classField, item: item)
         else
           itemplaceModel
     ];
@@ -179,7 +179,7 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
       for (final itemplaceModel in state)
         if (itemplaceModel.classField == FieldTypeModel.backpack &&
             itemplaceModel.isEmpty == false && itemplaceModel.id == id)
-          ItemPlaceModel(itemplaceModel.id, true, itemplaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+          ItemPlaceModel(id: itemplaceModel.id, isEmpty: true, classField: itemplaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
         else
           itemplaceModel
     ];
@@ -189,7 +189,7 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     state = [ 
       for (final itemplaceModel in state)
         if (itemplaceModel.isEmpty == false)
-          ItemPlaceModel(itemplaceModel.id, true, itemplaceModel.classField, const ItemModel('','','',0,ItemTypeModel.none))
+          ItemPlaceModel(id: itemplaceModel.id, isEmpty: true, classField: itemplaceModel.classField, item: const ItemModel(name: '', description: '', image: '', statValue: 0, classItem: ItemTypeModel.none, price: 0))
         else
           itemplaceModel
     ];

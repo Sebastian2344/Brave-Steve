@@ -2,8 +2,8 @@ import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../state_menegment/game_state.dart';
-import '../../screens/main_menu.dart';
+import '../../state_menegment/game_state.dart';
+import '../menu_screen/main_menu.dart';
 
 class GameOver extends ConsumerWidget {
   const GameOver({super.key});

@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:brave_steve/game/presentation/screens/introduction.dart';
+import 'package:brave_steve/game/presentation/introduction_screen/introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../state_menegment/game_state.dart';
-import '../widgets/main_menu_buttons.dart';
-import 'show_saves.dart';
+import 'main_menu_buttons_widget.dart';
+import '../saves_screen/show_saves.dart';
 
 class MainMenu extends ConsumerWidget {
   const MainMenu({super.key});

@@ -13,10 +13,10 @@ class ItemPlace extends HiveObject {
   final FieldType classField;
   @HiveField(3)
   final Item item;
-  ItemPlace(this.id, this.isEmpty, this.classField, this.item);
+  ItemPlace({required this.id,required  this.isEmpty,required  this.classField,required  this.item});
 
   ItemPlaceModel toItemPlaceModel() {
-    return ItemPlaceModel(id, isEmpty, classField.toFieldTypeModel(classField), item.toItemModel());
+    return ItemPlaceModel(id: id, isEmpty: isEmpty, classField: classField.toFieldTypeModel(classField), item: item.toItemModel());
   }
 
   static List<ItemPlace> toItemPlace(List<ItemPlaceModel> model) {
@@ -24,10 +24,10 @@ class ItemPlace extends HiveObject {
     int i = 0;
     while (itemPlaceList.length < model.length) {
       itemPlaceList.add(ItemPlace(
-          model[i].id,
-          model[i].isEmpty,
-          FieldType.toFieldType(model[i].classField),
-          Item.toItem(model[i].item)));
+          id:model[i].id,
+          isEmpty: model[i].isEmpty,
+          classField: FieldType.toFieldType(model[i].classField),
+          item: Item.toItem(model[i].item)));
       i++;
     }
     return itemPlaceList;
@@ -46,16 +46,19 @@ class Item {
   final int statValue;
   @HiveField(4)
   final ItemType classItem;
+  @HiveField(5)
+  final int price;
   const Item({
     required this.name,
     required this.description,
     required this.image,
     required this.statValue,
     required this.classItem,
+    required this.price,
   });
 
   ItemModel toItemModel() {
-    return ItemModel(name, description, image, statValue, classItem.toItemTypeModel(classItem));
+    return ItemModel(name: name, description: description, image: image, statValue: statValue, classItem: classItem.toItemTypeModel(classItem), price: price);
   }
 
   static Item toItem(ItemModel model) {
@@ -64,7 +67,8 @@ class Item {
         description: model.description,
         image: model.image,
         statValue: model.statValue,
-        classItem: ItemType.toItemType(model));
+        classItem: ItemType.toItemType(model),
+        price: model.price);
   }
 }
 

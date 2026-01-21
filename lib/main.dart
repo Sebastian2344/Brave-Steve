@@ -1,4 +1,4 @@
-import 'package:brave_steve/game/presentation/screens/main_menu.dart';
+import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

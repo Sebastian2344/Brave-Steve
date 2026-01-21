@@ -1,4 +1,4 @@
-import 'package:brave_steve/game/presentation/screens/main_menu.dart';
+import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data_layer/models/player_model/steve.dart';
@@ -6,7 +6,7 @@ import '../../data_layer/models/save_model/save_model.dart';
 import '../../state_menegment/eq_state.dart';
 import '../../state_menegment/game_state.dart';
 
-import 'game_view.dart';
+import '../fight_screen/fight_screen.dart';
 
 class ShowSaves extends ConsumerStatefulWidget {
   const ShowSaves({super.key});
@@ -181,7 +181,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) {
-                      return const GameView(false);
+                      return const FightScreen(false);
                     },
                   ),
                 );

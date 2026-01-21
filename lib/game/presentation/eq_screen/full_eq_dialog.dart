@@ -1,4 +1,4 @@
-import 'package:brave_steve/game/presentation/screens/eq.dart';
+import 'package:brave_steve/game/presentation/eq_screen/eq.dart';
 import 'package:flutter/material.dart';
 
 class FullEqDialog extends StatelessWidget {

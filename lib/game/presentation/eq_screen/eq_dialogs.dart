@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../state_menegment/eq_state.dart';
-import '../../../state_menegment/game_state.dart';
+import '../../state_menegment/eq_state.dart';
+import '../../state_menegment/game_state.dart';
 
 class AlertDialogW extends ConsumerWidget {
   const AlertDialogW({required this.id, super.key});

@@ -1,5 +1,5 @@
-import 'package:brave_steve/game/presentation/screens/game_view.dart';
-import 'package:brave_steve/game/presentation/screens/main_menu.dart';
+import 'package:brave_steve/game/presentation/fight_screen/fight_screen.dart';
+import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -172,7 +172,7 @@ class IntroductionScreen extends ConsumerWidget {
                             if (context.mounted) {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) {
-                                    return GameView(isNewGame);
+                                    return FightScreen(isNewGame);
                                   }));
                             }
                           },

@@ -10,7 +10,7 @@ import '../data_source/save/save.dart';
 
 class RepositoryGame{
   final DataBox dataSource;
-  RepositoryGame(this.dataSource);
+  RepositoryGame({required this.dataSource});
   Future<List<PlayerModel>> listPlayerToListPlayerModel() async {
     final List<Player> players = await dataSource.putPlayers();
     List<PlayerModel> playersInModel = players.map((e) => e.toPlayerModel()).toList();
@@ -58,4 +58,4 @@ class RepositoryGame{
 
 }
 
-final repoProvider = Provider((ref) => RepositoryGame(DataBox()));
+final repoProvider = Provider((ref) => RepositoryGame(dataSource: DataBox()));

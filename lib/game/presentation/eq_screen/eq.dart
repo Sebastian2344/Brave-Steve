@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_menegment/eq_state.dart';
-import '../widgets/alertsDialog/eq_dialogs.dart';
+import 'eq_dialogs.dart';
 
 class Equpment extends StatelessWidget {
   const Equpment({super.key});

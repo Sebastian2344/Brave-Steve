@@ -1,15 +1,15 @@
+import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../state_menegment/game_state.dart';
-import '../../screens/show_saves.dart';
+import '../../state_menegment/game_state.dart';
+import '../saves_screen/show_saves.dart';
 
 class SaveGame extends ConsumerWidget {
   SaveGame({super.key});
   final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final game = ref.watch(myStateProvider.notifier);
     return AlertDialog(
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
@@ -35,7 +35,7 @@ class SaveGame extends ConsumerWidget {
           onPressed: () async {
             textEditingController.text.isNotEmpty
                 ? {
-                    await game.saveGame(textEditingController.text, ref),
+                    await ref.read(myStateProvider.notifier).saveGame(textEditingController.text, ref.read(providerEQ)),
                     if (context.mounted)
                       {
                         Navigator.pop(context),

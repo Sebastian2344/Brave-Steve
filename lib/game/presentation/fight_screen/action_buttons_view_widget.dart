@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../state_menegment/game_state.dart';
-import 'alertsDialog/game_over.dart';
-import 'alertsDialog/win_or_lose.dart';
+import 'game_over_dialog.dart';
+import 'win_or_lose_dialog.dart';
 
 class ActionInGame extends ConsumerStatefulWidget {
   const ActionInGame({
@@ -66,8 +66,10 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
 
   @override
   Widget build(BuildContext context) {
-    final gameFields = ref.watch(myStateProvider);
-    final gameMetods = ref.watch(myStateProvider.notifier);
+    final buttonIgnore = ref.watch(myStateProvider.select(  
+          (g) => g.buttonIgnore,
+    ));
+    final gameMetods = ref.read(myStateProvider.notifier);
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double fontSize = mediaQueryData.textScaler.scale(16.0);
     final widthButton = mediaQueryData.size.width * 0.4;
@@ -86,7 +88,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   globalKey: _keyAtak,
                   description: 'Zadaje obrażenia takie jakie są w statystykach',
                   fontSize: fontSize,
-                  buttonIgnore: gameFields.buttonIgnore[0],
+                  buttonIgnore: buttonIgnore[0],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
                       superAtack: false, cleary: false, weakOnEnemy: false,
@@ -110,7 +112,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   globalKey: _keySuperAtak,
                   description: 'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
                   fontSize: fontSize,
-                  buttonIgnore: gameFields.buttonIgnore[1],
+                  buttonIgnore: buttonIgnore[1],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
                       superAtack: true, cleary: false, weakOnEnemy: false,
@@ -139,7 +141,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   globalKey: _keyOslabienie,
                   description: 'Obniża atak przeciwnika o 30 procent',
                   fontSize: fontSize,
-                  buttonIgnore: gameFields.buttonIgnore[2],
+                  buttonIgnore: buttonIgnore[2],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
                       superAtack: false, cleary: false, weakOnEnemy: true,
@@ -163,7 +165,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   globalKey: _keyOczyszczenie,
                   description: 'Zdejmuje efekt osłabienia',
                   fontSize: fontSize - 1,
-                  buttonIgnore: gameFields.buttonIgnore[3],
+                  buttonIgnore: buttonIgnore[3],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
                       superAtack: false, cleary: true, weakOnEnemy: false,

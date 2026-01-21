@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/1024px_items/buty_3_na_3/Nowy_folder/
+    - assets/images/enemies/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

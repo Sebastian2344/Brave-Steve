@@ -2,15 +2,14 @@ import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../state_menegment/game_state.dart';
-import '../../screens/main_menu.dart';
+import '../../state_menegment/game_state.dart';
+import '../menu_screen/main_menu.dart';
 
 class ExitToMenu extends ConsumerWidget {
   const ExitToMenu({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final game = ref.watch(myStateProvider.notifier);
+  Widget build(BuildContext context, WidgetRef ref) {    
     return AlertDialog(
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
@@ -24,7 +23,7 @@ class ExitToMenu extends ConsumerWidget {
           children: [
             ElevatedButton(
                 onPressed: () async {
-                  await game.closeGameDB();
+                  await ref.read(myStateProvider.notifier).closeGameDB();
                   ref.read(providerEQ.notifier).deleteItems();
                   if (context.mounted) {
                     Navigator.pop(context);

@@ -17,18 +17,18 @@ class PlayerAdapter extends TypeAdapter<Player> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Player(
-      fields[0] as String,
-      fields[1] as double,
-      fields[2] as double,
-      fields[3] as double,
-      fields[11] as double,
-      fields[4] as double,
-      fields[5] as double,
-      fields[6] as double,
-      fields[7] as double,
-      fields[8] as int,
-      fields[9] as bool,
-      fields[10] as int?,
+      name: fields[0] as String,
+      hp: fields[1] as double,
+      maxHp: fields[2] as double,
+      attack: fields[3] as double,
+      maxAttack: fields[11] as double,
+      mana: fields[4] as double,
+      exp: fields[5] as double,
+      armour: fields[6] as double,
+      maxArmour: fields[7] as double,
+      lvl: fields[8] as int,
+      weak: fields[9] as bool,
+      enemyIndex: fields[10] as int?,
     );
   }
 
@@ -37,29 +37,29 @@ class PlayerAdapter extends TypeAdapter<Player> {
     writer
       ..writeByte(12)
       ..writeByte(0)
-      ..write(obj._name)
+      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj._hp)
+      ..write(obj.hp)
       ..writeByte(2)
-      ..write(obj._maxHp)
+      ..write(obj.maxHp)
       ..writeByte(3)
-      ..write(obj._attack)
+      ..write(obj.attack)
       ..writeByte(4)
-      ..write(obj._mana)
+      ..write(obj.mana)
       ..writeByte(5)
-      ..write(obj._exp)
+      ..write(obj.exp)
       ..writeByte(6)
-      ..write(obj._armour)
+      ..write(obj.armour)
       ..writeByte(7)
-      ..write(obj._maxArmour)
+      ..write(obj.maxArmour)
       ..writeByte(8)
-      ..write(obj._lvl)
+      ..write(obj.lvl)
       ..writeByte(9)
-      ..write(obj._weak)
+      ..write(obj.weak)
       ..writeByte(10)
-      ..write(obj._enemyIndex)
+      ..write(obj.enemyIndex)
       ..writeByte(11)
-      ..write(obj._maxAttack);
+      ..write(obj.maxAttack);
   }
 
   @override

@@ -17,10 +17,10 @@ class ItemPlaceAdapter extends TypeAdapter<ItemPlace> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ItemPlace(
-      fields[0] as int,
-      fields[1] as bool,
-      fields[2] as FieldType,
-      fields[3] as Item,
+      id: fields[0] as int,
+      isEmpty: fields[1] as bool,
+      classField: fields[2] as FieldType,
+      item: fields[3] as Item,
     );
   }
 
@@ -65,13 +65,14 @@ class ItemAdapter extends TypeAdapter<Item> {
       image: fields[2] as String,
       statValue: fields[3] as int,
       classItem: fields[4] as ItemType,
+      price: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -81,7 +82,9 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(3)
       ..write(obj.statValue)
       ..writeByte(4)
-      ..write(obj.classItem);
+      ..write(obj.classItem)
+      ..writeByte(5)
+      ..write(obj.price);
   }
 
   @override
