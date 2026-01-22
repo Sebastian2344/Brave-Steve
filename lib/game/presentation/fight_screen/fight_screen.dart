@@ -11,23 +11,23 @@ import 'package:showcaseview/showcaseview.dart';
 import '../../data_layer/models/player_model/player_body.dart';
 import 'action_buttons_view_widget.dart';
 
-class FightScreen extends ConsumerStatefulWidget {
+class FightScreen extends StatefulWidget {
   const FightScreen(this.isNewGame, {super.key});
   final bool isNewGame;
 
   @override
-  ConsumerState<FightScreen> createState() => _FightScreenState();
+  State<FightScreen> createState() => _FightScreenState();
 }
 
-class _FightScreenState extends ConsumerState<FightScreen> {
+class _FightScreenState extends State<FightScreen> {
   // Klucze dla elementów paska
   final GlobalKey _keySave = GlobalKey();
   final GlobalKey _keyEq = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final myVars = ref.watch(myStateProvider);
-    final gameState = ref.watch(myStateProvider.notifier);
+    //final myVars = ref.watch(myStateProvider);
+    //final gameState = ref.watch(myStateProvider.notifier);
     final Size mediaQuerySize = MediaQuery.of(context).size;
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double fontSize = mediaQueryData.textScaler.scale(14.0);
@@ -77,32 +77,31 @@ class _FightScreenState extends ConsumerState<FightScreen> {
             actions: [
               // === EKWIPUNEK / LUDZIK ===
               Showcase(
-                key: _keyEq,
-                title: 'Ekwipunek',
-                description: 'Sprawdź statystyki i ulepsz postać.',
-                overlayColor: Colors.black.withValues(alpha: 0.7),
-                targetBorderRadius: BorderRadius.circular(50),
-                tooltipBackgroundColor: Colors.white,
-                textColor: Colors.black,
-                titleTextStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
-                child: IconButton(
-                    onPressed: () {
-                      if (gameState.isEq()) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const Equpment()));
-                      }
+                  key: _keyEq,
+                  title: 'Ekwipunek',
+                  description: 'Sprawdź statystyki i ulepsz postać.',
+                  overlayColor: Colors.black.withValues(alpha: 0.7),
+                  targetBorderRadius: BorderRadius.circular(50),
+                  tooltipBackgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  titleTextStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      ref.watch(myStateProvider);
+                      return IconButton(
+                          onPressed: () {
+                            if (ref.read(myStateProvider.notifier).isEq()) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Equpment()));
+                            }
+                          },
+                          icon: Icon(
+                            Icons.person,
+                            color:ref.read(myStateProvider.notifier).isEq() ? Colors.amber : Colors.grey,
+                          ));
                     },
-                    icon: gameState.isEq()
-                        ? const Icon(
-                            Icons.boy_rounded,
-                            color: Colors.amber,
-                          )
-                        : const Icon(
-                            Icons.boy_rounded,
-                            color: Colors.grey,
-                          )),
-              )
+                  ))
             ],
           ),
           body: SizedBox(
@@ -118,32 +117,36 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                         BattleView(
                           image: PlayerBody.playerBody[0],
                           side: 'left',
-                          player: myVars.list[0],
                           fontSize: fontSize,
                           mediaQuerySize: mediaQuerySize,
                         ),
                         StatsView(
                             side: 'left',
-                            player: myVars.list[0],
                             fontSize: fontSize,
                             mediaQuerySize: mediaQuerySize)
                       ],
                     ),
-                    Column(
-                      children: [
-                        BattleView(
-                          image: PlayerBody.playerBody[myVars.index],
-                          side: 'right',
-                          player: myVars.list[myVars.index],
-                          fontSize: fontSize,
-                          mediaQuerySize: mediaQuerySize,
-                        ),
-                        StatsView(
-                            side: 'right',
-                            player: myVars.list[myVars.index],
-                            fontSize: fontSize,
-                            mediaQuerySize: mediaQuerySize)
-                      ],
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final index = ref.watch(myStateProvider.select(
+                          (gameState) => gameState.index,
+                        ));
+
+                        return Column(
+                          children: [
+                            BattleView(
+                              image: PlayerBody.playerBody[index],
+                              side: 'right',
+                              fontSize: fontSize,
+                              mediaQuerySize: mediaQuerySize,
+                            ),
+                            StatsView(
+                                side: 'right',
+                                fontSize: fontSize,
+                                mediaQuerySize: mediaQuerySize)
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),

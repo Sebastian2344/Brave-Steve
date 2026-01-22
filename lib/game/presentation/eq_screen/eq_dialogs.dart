@@ -88,7 +88,8 @@ class DeleteItemDialog extends ConsumerWidget {
       actions: [
         ElevatedButton(
             onPressed: () {
-              ref.read(providerEQ.notifier).deleteItem(id);
+              ref.read(myStateProvider.notifier).setStats(
+                  ref.read(providerEQ.notifier).deleteItem(id));
               Navigator.of(context).pop();
             },
             child: const Text('Tak')),

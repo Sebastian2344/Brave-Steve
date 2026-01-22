@@ -43,22 +43,26 @@ class Item {
   @HiveField(2)
   final String image;
   @HiveField(3)
-  final int statValue;
-  @HiveField(4)
   final ItemType classItem;
-  @HiveField(5)
+  @HiveField(4)
   final int price;
+  @HiveField(5)
+  final int attack;
+  @HiveField(6)
+  final int armour;
+
   const Item({
     required this.name,
     required this.description,
     required this.image,
-    required this.statValue,
     required this.classItem,
     required this.price,
+    required this.attack,
+    required this.armour,
   });
 
   ItemModel toItemModel() {
-    return ItemModel(name: name, description: description, image: image, statValue: statValue, classItem: classItem.toItemTypeModel(classItem), price: price);
+    return ItemModel(name: name, description: description, image: image, attack: attack, armour: armour, classItem: classItem.toItemTypeModel(classItem), price: price);
   }
 
   static Item toItem(ItemModel model) {
@@ -66,9 +70,10 @@ class Item {
         name: model.name,
         description: model.description,
         image: model.image,
-        statValue: model.statValue,
         classItem: ItemType.toItemType(model),
-        price: model.price);
+        price: model.price,
+        attack: model.attack,
+        armour: model.armour);
   }
 }
 

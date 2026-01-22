@@ -231,18 +231,11 @@ class GameState extends StateNotifier<MyVars> {
     return state._list[0].getlvl();
   }
 
-  void setStats((double, double, bool) record) {
-    if (record.$3) {
-      state._list[0].setArmour = record.$1;
-      state._list[0].setMaxArmour = record.$1;
-      state._list[0].setAttack = record.$2 + state._list[0].getMaxAttack();
-      state._list[0].setMaxAttack = record.$2 + state._list[0].getMaxAttack();
-    } else {
+  void setStats((double, double) record) {
       state._list[0].setArmour = record.$1 + state._list[0].getArmour();
       state._list[0].setMaxArmour = record.$1 + state._list[0].getMaxArmour();
       state._list[0].setAttack = record.$2 + state._list[0].getMaxAttack();
       state._list[0].setMaxAttack = record.$2 + state._list[0].getMaxAttack();
-    }
   }
 
   void winnerOrLoser(bool win) {

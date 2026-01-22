@@ -1,5 +1,4 @@
 //----------------------------------------------BattleView------------------------------------------------
-import 'package:brave_steve/game/data_layer/models/player_model/player_model.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,13 +8,11 @@ class BattleView extends StatelessWidget {
     super.key,
     required this.image,
     required this.side,
-    required this.player,
     required this.fontSize,
     required this.mediaQuerySize,
   });
   final List<String> image;
   final String side;
-  final PlayerModel player;
   final double fontSize;
   final Size mediaQuerySize;
 
@@ -32,7 +29,9 @@ class BattleView extends StatelessWidget {
       width: mediaQuerySize.width / 2,
       child: Stack(fit: StackFit.expand, children: [
         Consumer(builder: (context, ref, child) {
+
           final game = ref.watch(myStateProvider);
+          final player = ref.read(myStateProvider).list[side == 'left' ? 0 : ref.read(myStateProvider).index];
           return AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               left: side == 'left'
@@ -76,24 +75,24 @@ class BattleView extends StatelessWidget {
                       height: mediaQuerySize.height / 2.25, //postac wysokość
                     ));
         }),
-        player.getName() == 'Skeleton' && side == 'right'
-            ? Consumer(builder: (context, ref, child) {
-                final game = ref.watch(myStateProvider);
-                return AnimatedPositioned(
-                    duration: const Duration(milliseconds: 500),
-                    left: game.arrowGo ? 0 : mediaQuerySize.width / 2 / 4,
-                    top: mediaQuerySize.height / 3 / 2,
-                    child: Visibility(
-                      visible: game.move2 && !game.effect[3],
-                      child: Transform.rotate(
-                          angle: 3.14,
-                          child: SizedBox(
-                              width: mediaQuerySize.width * 0.1,
-                              height: mediaQuerySize.height * 0.05,
-                              child: Image.asset(image[2]))),
-                    ));
-              })
-            : const SizedBox()
+        //player.getName() == 'Skeleton' && side == 'right'
+         //   ? Consumer(builder: (context, ref, child) {
+          //      final game = ref.watch(myStateProvider);
+          //      return AnimatedPositioned(
+            //        duration: const Duration(milliseconds: 500),
+             //       left: game.arrowGo ? 0 : mediaQuerySize.width / 2 / 4,
+            //        top: mediaQuerySize.height / 3 / 2,
+             //       child: Visibility(
+              //        visible: game.move2 && !game.effect[3],
+               //       child: Transform.rotate(
+              //            angle: 3.14,
+              //            child: SizedBox(
+                          //    width: mediaQuerySize.width * 0.1,
+               //               height: mediaQuerySize.height * 0.05,
+              //                child: Image.asset(image[2]))),
+              //      ));
+             // })
+           // : const SizedBox()
       ]),
     );
   }

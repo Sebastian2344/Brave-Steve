@@ -17,7 +17,8 @@ class ItemModel extends Equatable {
   final String name;
   final String description;
   final String image;
-  final int statValue;
+  final int attack;
+  final int armour;
   final ItemTypeModel classItem;
   final int price;
 
@@ -25,11 +26,12 @@ class ItemModel extends Equatable {
     required this.name,
     required this.description,
     required this.image,
-    required this.statValue,
+    required this.attack,
+    required this.armour,
     required this.classItem,
     required this.price
   });
 
   @override
-  List<Object?> get props => [name, description, image, statValue, classItem, price];
+  List<Object?> get props => [name, description, image, attack, armour, classItem, price];
 }
