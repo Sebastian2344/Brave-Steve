@@ -3,6 +3,7 @@ import 'package:brave_steve/game/presentation/fight_screen/exit_to_menu_dialog.d
 import 'package:brave_steve/game/presentation/fight_screen/save_game_dialog.dart';
 import 'package:brave_steve/game/presentation/fight_screen/battle_view_widget.dart';
 import 'package:brave_steve/game/presentation/fight_screen/stats_view_widget.dart';
+import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,7 +99,9 @@ class _FightScreenState extends State<FightScreen> {
                           },
                           icon: Icon(
                             Icons.person,
-                            color:ref.read(myStateProvider.notifier).isEq() ? Colors.amber : Colors.grey,
+                            color: ref.read(myStateProvider.notifier).isEq()
+                                ? Colors.amber
+                                : Colors.grey,
                           ));
                     },
                   ))
@@ -107,57 +110,70 @@ class _FightScreenState extends State<FightScreen> {
           body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        BattleView(
-                          image: PlayerBody.playerBody[0],
-                          side: 'left',
-                          fontSize: fontSize,
-                          mediaQuerySize: mediaQuerySize,
-                        ),
-                        StatsView(
+            child: Stack(alignment: Alignment.topRight, children: [
+              Column(
+                children: [
+                  Container(
+                    height: mediaQuerySize.height / 3,
+                    width: mediaQuerySize.width,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/images/LandScape.jpg'),
+                      ),
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          BattleView(
+                            image: PlayerBody.playerBody[0],
                             side: 'left',
                             fontSize: fontSize,
-                            mediaQuerySize: mediaQuerySize)
-                      ],
-                    ),
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final index = ref.watch(myStateProvider.select(
-                          (gameState) => gameState.index,
-                        ));
+                            mediaQuerySize: mediaQuerySize,
+                          ),
+                          Consumer(
+                            builder: (context, ref, child) {
+                              final index = ref.watch(myStateProvider.select(
+                                (gameState) => gameState.index,
+                              ));
 
-                        return Column(
-                          children: [
-                            BattleView(
-                              image: PlayerBody.playerBody[index],
-                              side: 'right',
-                              fontSize: fontSize,
-                              mediaQuerySize: mediaQuerySize,
-                            ),
-                            StatsView(
-                                side: 'right',
-                                fontSize: fontSize,
-                                mediaQuerySize: mediaQuerySize)
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                // Przekazujemy klucze do dolnego widgetu
-                ActionInGame(
-                  isNewGame: widget.isNewGame,
-                  keySave: _keySave,
-                  keyEq: _keyEq,
-                )
-              ],
-            ),
+                              return Column(
+                                children: [
+                                  BattleView(
+                                    image: PlayerBody.playerBody[index],
+                                    side: 'right',
+                                    fontSize: fontSize,
+                                    mediaQuerySize: mediaQuerySize,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ]),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      StatsView(
+                          side: 'left',
+                          fontSize: fontSize,
+                          mediaQuerySize: mediaQuerySize),
+                      StatsView(
+                          side: 'right',
+                          fontSize: fontSize,
+                          mediaQuerySize: mediaQuerySize)
+                    ],
+                  ),
+                  // Przekazujemy klucze do dolnego widgetu
+                  ActionInGame(
+                    isNewGame: widget.isNewGame,
+                    keySave: _keySave,
+                    keyEq: _keyEq,
+                  )
+                ],
+              ),
+              const MoneyWidget()
+            ]),
           ),
         );
       },

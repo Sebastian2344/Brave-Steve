@@ -18,18 +18,12 @@ class BattleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(side == 'left'
-                  ? 'assets/images/LandScape1.jpg'
-                  : 'assets/images/LandScape2.jpg'),
-              fit: BoxFit.cover)),
+    return SizedBox(
       height: mediaQuerySize.height / 3,
       width: mediaQuerySize.width / 2,
       child: Stack(fit: StackFit.expand, children: [
         Consumer(builder: (context, ref, child) {
-
+      
           final game = ref.watch(myStateProvider);
           final player = ref.read(myStateProvider).list[side == 'left' ? 0 : ref.read(myStateProvider).index];
           return AnimatedPositioned(

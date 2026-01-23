@@ -176,7 +176,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                 ),
               ),
               onTap: () {
-                ref.read(myStateProvider.notifier).loadGame(index);
+                ref.read(myStateProvider.notifier).loadPlayerAndMobs(index);
                 ref.read(providerEQ.notifier).loadItemPlaceModels(index);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(

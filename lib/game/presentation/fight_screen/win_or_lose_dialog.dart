@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/data_layer/models/eq_model/eq_model.dart';
 import 'package:brave_steve/game/presentation/eq_screen/full_eq_dialog.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
+import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,7 @@ class WinOrLose extends ConsumerWidget {
     int numberSkillPoints = ref.watch(myStateProvider).skillPoints;
     final gameMetods = ref.read(myStateProvider.notifier);
     final eqMethods = ref.watch(providerEQ.notifier);
+    final moneyMethods = ref.read(moneyProvider.notifier);
 
     return AlertDialog(
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
@@ -32,7 +34,7 @@ class WinOrLose extends ConsumerWidget {
             numberSkillPoints: numberSkillPoints,
             gameMetods: gameMetods,
             eqMethods: eqMethods,
-            win: win)
+            win: win, moneyProvider: moneyMethods,)
       ],
     );
   }
@@ -110,17 +112,21 @@ class CloseButton extends StatelessWidget {
       required this.numberSkillPoints,
       required this.gameMetods,
       required this.eqMethods,
-      required this.win});
+      required this.win, required this.moneyProvider});
   final int numberSkillPoints;
   final GameState gameMetods;
   final EqStateMenagment eqMethods;
   final bool win;
+  final CashRegisterNotifier moneyProvider;
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: numberSkillPoints > 0 && gameMetods.isLevelUp(),
       child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            if (win){
+              await moneyProvider.addmoney(50.0);
+            }
             if (win && eqMethods.isSpace() == EqState.haveFreeSpace) {
               switch (gameMetods.lvl()) {
                 case 1:
@@ -182,8 +188,8 @@ class CloseButton extends StatelessWidget {
             }else{
               eqMethods.deleteItems();
             }
-            Navigator.of(context).pop();
-            if (eqMethods.isSpace() == EqState.notEnoughtSpace){
+            if(context.mounted) Navigator.of(context).pop();
+            if (eqMethods.isSpace() == EqState.notEnoughtSpace && context.mounted){
               showDialog(
                   context: context,
                   builder: (context) => FullEqDialog(win: win));

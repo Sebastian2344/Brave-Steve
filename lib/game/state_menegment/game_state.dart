@@ -83,7 +83,7 @@ class MyVars extends Equatable {
 }
 
 class GameState extends StateNotifier<MyVars> {
-  RepositoryGame repositoryGame;
+  final RepositoryGame repositoryGame;
   GameState({required this.repositoryGame})
       : super(MyVars(
             move1: false,
@@ -106,7 +106,7 @@ class GameState extends StateNotifier<MyVars> {
         index: 1);
   }
 
-  void loadGame(int index) {
+  void loadPlayerAndMobs(int index) {
     final players = repositoryGame.getPlayersfromDBasPlayerModelList(index);
     if (players.isNotEmpty) {
       state = state.copyWith(

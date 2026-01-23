@@ -55,7 +55,6 @@ class RepositoryGame{
   List<ItemPlaceModel> getListFieldTypeModelFromDB(int index){
     return dataSource.getItemPlacesFromDB(index).map((e) => e.toItemPlaceModel()).toList();
   }
-
 }
 
 final repoProvider = Provider((ref) => RepositoryGame(dataSource: DataBox()));
