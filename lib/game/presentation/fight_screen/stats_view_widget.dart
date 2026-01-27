@@ -39,7 +39,7 @@ class StatsView extends StatelessWidget {
             final name = ref.watch(myStateProvider.select(
               (gameState) => side == 'left'
                   ? gameState.list[0].getName()
-                  : gameState.list[gameState.index].getName(),
+                  : gameState.list[gameState.enemyIndex].getName(),
             ));
             return Text(
               name,
@@ -52,7 +52,7 @@ class StatsView extends StatelessWidget {
             final level = ref.watch(myStateProvider.select(
               (gameState) => side == 'left'
                   ? gameState.list[0].getlvl()
-                  : gameState.list[gameState.index].getlvl(),
+                  : gameState.list[gameState.enemyIndex].getlvl(),
             ));
             return Text(
               "Poziom $level",
@@ -66,7 +66,7 @@ class StatsView extends StatelessWidget {
             final attack = ref.watch(myStateProvider.select(
               (gameState) => side == 'left'
                   ? gameState.list[0].showAttack()
-                  : gameState.list[gameState.index].showAttack(),
+                  : gameState.list[gameState.enemyIndex].showAttack(),
             ));
             return Text("Atak  $attack",
                 style: TextStyle(color: Colors.blueGrey, fontSize: fontSize));
@@ -127,9 +127,9 @@ class HealthBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(myStateProvider.select(
-      (gameState) => side ? gameState.list[0].showHp() : gameState.list[gameState.index].showHp(),
+      (gameState) => side ? gameState.list[0].showHp() : gameState.list[gameState.enemyIndex].showHp(),
     ));
-    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).index];
+    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).enemyIndex];
     return Stack(
       alignment: Alignment.centerLeft,
       children: [
@@ -181,9 +181,9 @@ class ManaBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(myStateProvider.select(
-      (gameState) => side ? gameState.list[0].showMana() : gameState.list[gameState.index].showMana(),
+      (gameState) => side ? gameState.list[0].showMana() : gameState.list[gameState.enemyIndex].showMana(),
     ));
-    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).index];
+    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).enemyIndex];
     return Stack(
       alignment: Alignment.centerLeft,
       children: [
@@ -235,9 +235,9 @@ class ArmourBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(providerEQ);
     ref.watch(myStateProvider.select(
-      (gameState) => side ? gameState.list[0].getArmour() : gameState.list[gameState.index].getArmour(),
+      (gameState) => side ? gameState.list[0].getArmour() : gameState.list[gameState.enemyIndex].getArmour(),
     ));
-    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).index];
+    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).enemyIndex];
     return Stack(
       alignment: Alignment.centerLeft,
       children: [
@@ -286,9 +286,9 @@ class ExpBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(myStateProvider.select(
-      (gameState) => side ? gameState.list[0].showExp() : gameState.list[gameState.index].showExp(),
+      (gameState) => side ? gameState.list[0].showExp() : gameState.list[gameState.enemyIndex].showExp(),
     ));
-    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).index];
+    final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).enemyIndex];
     return Stack(
       alignment: Alignment.centerLeft,
       children: [

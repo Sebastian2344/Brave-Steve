@@ -28,9 +28,10 @@ class GameOver extends ConsumerWidget {
           ),
           actions: [
             ElevatedButton(
-                onPressed: (){ 
-                  ref.read(myStateProvider.notifier).gameComplited();
+                onPressed: (){
+                  ref.read(myStateProvider.notifier).gameOver();
                   ref.read(providerEQ.notifier).deleteItems();
+                  ref.read(myStateProvider.notifier).closeGameDB();
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const MainMenu()));

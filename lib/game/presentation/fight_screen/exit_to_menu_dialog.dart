@@ -25,10 +25,11 @@ class ExitToMenu extends ConsumerWidget {
                 onPressed: () async {
                   await ref.read(myStateProvider.notifier).closeGameDB();
                   ref.read(providerEQ.notifier).deleteItems();
+                  ref.read(myStateProvider.notifier).gameOver();
                   if (context.mounted) {
-                    Navigator.pop(context);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const MainMenu()));
+                    Navigator.pop(context); 
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                        builder: (context) => const MainMenu()), (route) => false);
                   }
                 },
                 style: ElevatedButton.styleFrom(

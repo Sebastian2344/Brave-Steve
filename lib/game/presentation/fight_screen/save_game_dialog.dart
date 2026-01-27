@@ -39,7 +39,7 @@ class SaveGame extends ConsumerWidget {
                     if (context.mounted)
                       {
                         Navigator.pop(context),
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const ShowSaves(),
                           ),

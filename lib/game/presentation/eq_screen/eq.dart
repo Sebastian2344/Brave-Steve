@@ -12,7 +12,7 @@ class Equpment extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Equpment'),
+        title: const Text('Equipment'),
         centerTitle: true,
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,
@@ -103,7 +103,7 @@ class WindowEQ extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(providerEQ);
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         !ref.read(providerEQ.notifier).isEmpty(id)
             ? showDialog(

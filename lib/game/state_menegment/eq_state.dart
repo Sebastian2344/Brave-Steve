@@ -32,9 +32,10 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
 
   void loadItemPlaceModels(int index){
     List<ItemPlaceModel> o = repositoryGame.getListFieldTypeModelFromDB(index);
-    for(int i = 0;i<state.length;i++){
-      state[i] = o[i];
-    }
+    state = [
+      for (final itemPlaceModel in o)
+        itemPlaceModel
+    ];
   }
 
   (double,double) ubracsie(int id) {

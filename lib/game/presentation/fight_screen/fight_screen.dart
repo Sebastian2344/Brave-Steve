@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-import '../../data_layer/models/player_model/player_body.dart';
 import 'action_buttons_view_widget.dart';
 
 class FightScreen extends StatefulWidget {
@@ -27,8 +26,6 @@ class _FightScreenState extends State<FightScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final myVars = ref.watch(myStateProvider);
-    //final gameState = ref.watch(myStateProvider.notifier);
     final Size mediaQuerySize = MediaQuery.of(context).size;
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double fontSize = mediaQueryData.textScaler.scale(14.0);
@@ -107,73 +104,38 @@ class _FightScreenState extends State<FightScreen> {
                   ))
             ],
           ),
-          body: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(alignment: Alignment.topRight, children: [
-              Column(
+          body: Column(
+            children: [
+              Stack(
+                alignment: Alignment.topRight,
                 children: [
-                  Container(
-                    height: mediaQuerySize.height / 3,
-                    width: mediaQuerySize.width,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/LandScape.jpg'),
-                      ),
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          BattleView(
-                            image: PlayerBody.playerBody[0],
-                            side: 'left',
-                            fontSize: fontSize,
-                            mediaQuerySize: mediaQuerySize,
-                          ),
-                          Consumer(
-                            builder: (context, ref, child) {
-                              final index = ref.watch(myStateProvider.select(
-                                (gameState) => gameState.index,
-                              ));
-
-                              return Column(
-                                children: [
-                                  BattleView(
-                                    image: PlayerBody.playerBody[index],
-                                    side: 'right',
-                                    fontSize: fontSize,
-                                    mediaQuerySize: mediaQuerySize,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ]),
+                  BattleView(
+                    fontSize: fontSize,
+                    mediaQuerySize: mediaQuerySize,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      StatsView(
-                          side: 'left',
-                          fontSize: fontSize,
-                          mediaQuerySize: mediaQuerySize),
-                      StatsView(
-                          side: 'right',
-                          fontSize: fontSize,
-                          mediaQuerySize: mediaQuerySize)
-                    ],
-                  ),
-                  // Przekazujemy klucze do dolnego widgetu
-                  ActionInGame(
-                    isNewGame: widget.isNewGame,
-                    keySave: _keySave,
-                    keyEq: _keyEq,
-                  )
+                  const MoneyWidget(),
                 ],
               ),
-              const MoneyWidget()
-            ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  StatsView(
+                      side: 'left',
+                      fontSize: fontSize,
+                      mediaQuerySize: mediaQuerySize),
+                  StatsView(
+                      side: 'right',
+                      fontSize: fontSize,
+                      mediaQuerySize: mediaQuerySize)
+                ],
+              ),
+              // Przekazujemy klucze do dolnego widgetu
+              ActionInGame(
+                isNewGame: widget.isNewGame,
+                keySave: _keySave,
+                keyEq: _keyEq,
+              )
+            ],
           ),
         );
       },
