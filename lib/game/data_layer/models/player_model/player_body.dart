@@ -1,6 +1,6 @@
 class PlayerBody{
   static const List<List<String>> playerBody = [
-    ['assets/images/steve.png','assets/images/steve.png'],
+    ['assets/images/player/player.png','assets/images/player/player.png'],
     ['assets/images/enemies/kostucha.png','assets/images/enemies/kostucha.png'],
     ['assets/images/enemies/szkielet.png','assets/images/enemies/szkielet.png'],
     ['assets/images/enemies/wampir.png','assets/images/enemies/wampir.png'],
