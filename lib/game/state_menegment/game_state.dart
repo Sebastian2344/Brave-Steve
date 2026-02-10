@@ -18,7 +18,6 @@ class MyVars extends Equatable {
       list; // player (index 0)and enemies(indexes 1 to 5) and bosses (index 6 and 7)
   final List<bool>
       heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
-  final bool arrowGo; //skeleton arrow
   final int enemyIndex; //enemy player index
   final int skillPoints; //player skill points
   final Enum gameState;
@@ -30,7 +29,6 @@ class MyVars extends Equatable {
       required this.list,
       required this.heroEffect,
       required this.enemyIndex,
-      required this.arrowGo,
       required this.skillPoints,
       required this.gameState});
 
@@ -41,7 +39,6 @@ class MyVars extends Equatable {
       final List<PlayerModel>? list,
       final List<bool>? heroEffect,
       final int? enemyIndex,
-      final bool? arrowGo,
       final int? skillPoints,
       final Enum? gameState}) {
     return MyVars(
@@ -51,7 +48,6 @@ class MyVars extends Equatable {
         list: list ?? this.list,
         heroEffect: heroEffect ?? this.heroEffect,
         enemyIndex: enemyIndex ?? this.enemyIndex,
-        arrowGo: arrowGo ?? this.arrowGo,
         skillPoints: skillPoints ?? this.skillPoints,
         gameState: gameState ?? this.gameState);
   }
@@ -64,7 +60,6 @@ class MyVars extends Equatable {
         list,
         heroEffect,
         enemyIndex,
-        arrowGo,
         skillPoints,
         gameState
       ];
@@ -80,7 +75,6 @@ class GameState extends StateNotifier<MyVars> {
             list: repositoryGame.playersStartStatsasPlayerModelList(),
             heroEffect: const [false, false, false, false],
             enemyIndex: 1,
-            arrowGo: false,
             skillPoints: 5,
             gameState: Stan.graNieRozpoczeta));
 
@@ -104,7 +98,6 @@ class GameState extends StateNotifier<MyVars> {
         list: repositoryGame.playersStartStatsasPlayerModelList(),
         heroEffect: const [false, false, false, false],
         enemyIndex: 1,
-        arrowGo: false,
         skillPoints: 5,
         gameState: Stan.graNieRozpoczeta);
   }
@@ -158,9 +151,7 @@ class GameState extends StateNotifier<MyVars> {
     }
     if (state.list[state.enemyIndex].isLive() && state.list[0].isLive()) {
       int option = _enemyCome();
-      state = state.copyWith(arrowGo: true);
       await Future.delayed(const Duration(milliseconds: 500));
-      state = state.copyWith(arrowGo: false);
       _enemyTurn(option);
       await Future.delayed(const Duration(milliseconds: 500));
     }

@@ -10,7 +10,7 @@ import '../data_source/save/save.dart';
 
 class RepositoryGame{
   final DataBox dataSource;
-  RepositoryGame({required this.dataSource});
+  const RepositoryGame({required this.dataSource});
   Future<List<PlayerModel>> listPlayerToListPlayerModel() async {
     final List<Player> players = await dataSource.putPlayers();
     List<PlayerModel> playersInModel = players.map((e) => e.toPlayerModel()).toList();
@@ -47,14 +47,6 @@ class RepositoryGame{
   void removeSave(int index){
     dataSource.removeSave(index);
   }
-
-  ItemModel addItem(int listIndex,int itemIndex){
-    return dataSource.getItem(listIndex,itemIndex);
-  }
-
-  List<ItemPlaceModel> getListFieldTypeModelFromDB(int index){
-    return dataSource.getItemPlacesFromDB(index).map((e) => e.toItemPlaceModel()).toList();
-  }
 }
 
-final repoProvider = Provider((ref) => RepositoryGame(dataSource: DataBox()));
+final repoProvider = Provider((ref) => RepositoryGame(dataSource: ref.watch(dataBoxProvider)));

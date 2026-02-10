@@ -41,6 +41,7 @@ dependencies:
   showcaseview: ^5.0.1
   equatable: ^2.0.8
   flutter_secure_storage: ^10.0.0
+  window_manager: ^0.5.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,7 +68,21 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/images/1024px_items/buty_3_na_3/Nowy_folder/
+    - assets/images/512px_items/buty/set_1/
+    - assets/images/512px_items/buty/set_2/
+    - assets/images/512px_items/buty/set_3/
+    - assets/images/512px_items/spodnie/set_1/
+    - assets/images/512px_items/spodnie/set_2/
+    - assets/images/512px_items/spodnie/set_3/
+    - assets/images/512px_items/miecze/set_1/
+    - assets/images/512px_items/miecze/set_2/
+    - assets/images/512px_items/miecze/set_3/
+    - assets/images/512px_items/napierśniki/set_1/
+    - assets/images/512px_items/napierśniki/set_2/
+    - assets/images/512px_items/napierśniki/set_3/
+    - assets/images/512px_items/hełmy/set_1/
+    - assets/images/512px_items/hełmy/set_2/
+    - assets/images/512px_items/hełmy/set_3/
     - assets/images/enemies/
     - assets/images/player/
   #   - images/a_dot_ham.jpeg

@@ -1,3 +1,4 @@
+import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -75,8 +76,8 @@ class AlertDialogW extends ConsumerWidget {
   }
 }
 
-class DeleteItemDialog extends ConsumerWidget {
-  const DeleteItemDialog({super.key, required this.id});
+class SellItemDialog extends ConsumerWidget {
+  const SellItemDialog({super.key, required this.id});
   final int id;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,12 +85,14 @@ class DeleteItemDialog extends ConsumerWidget {
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
       backgroundColor: const Color.fromARGB(255, 23, 12, 6),
-      title: const Text("Chcesz usunąć przedmiot?"),
+      title: const Text("Czy chcesz sprzedać przedmiot?"),
+      content: SizedBox(height: MediaQuery.of(context).size.height / 2,child: ref.read(providerEQ.notifier).showItemInfo(id)),
       actions: [
         ElevatedButton(
             onPressed: () {
+              ref.read(moneyProvider.notifier).addmoney(ref.read(providerEQ.notifier).getPrice(id));
               ref.read(myStateProvider.notifier).setStats(
-                  ref.read(providerEQ.notifier).deleteItem(id));
+                  ref.read(providerEQ.notifier).deleteItem(id));     
               Navigator.of(context).pop();
             },
             child: const Text('Tak')),

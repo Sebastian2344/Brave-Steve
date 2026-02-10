@@ -1,4 +1,3 @@
-import 'package:brave_steve/game/data_layer/models/eq_model/eq_model.dart';
 import 'package:brave_steve/game/presentation/eq_screen/full_eq_dialog.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
@@ -27,7 +26,7 @@ class WinOrLose extends ConsumerWidget {
           ? LvlupStats(
               numberSkillPoints: numberSkillPoints, gameMetods: gameMetods)
           : win
-              ? const Text('Brawo pokonałeś przeciwnika! Pamiętaj że za każym razem jak kogoś pokonasz dostajesz przedmiot do ekwipunku.')
+              ? const Text('Brawo pokonałeś przeciwnika! Pamiętaj że za każym razem jak kogoś pokonasz masz szansę na drop przedmiotu o ile posiadasz miejsce w ekwipunku.')
               : const Text('Przeciwnik Cię pokonał!'),
       actions: [
         CloseButton(
@@ -126,70 +125,13 @@ class CloseButton extends StatelessWidget {
           onPressed: () async {
             if (win){
               await moneyProvider.addmoney(50.0);
+              gameMetods.isLevelUp() ? gameMetods.levelUp() : null; 
             }
-            if (win && eqMethods.isSpace() == EqState.haveFreeSpace) {
-              switch (gameMetods.lvl()) {
-                case 1:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(0, 0)
-                      : eqMethods.itemAdd(4, 0);
-                  break;
-                case 2:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(2, 0)
-                      : eqMethods.itemAdd(3, 0);
-                  break;
-                case 3:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(4, 0)
-                      : eqMethods.itemAdd(0, 1);
-                  break;
-                case 4:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(1, 1)
-                      : eqMethods.itemAdd(2, 1);
-                  break;
-                case 5:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(3, 1)
-                      : eqMethods.itemAdd(4, 1);
-                  break;
-                case 6:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(0, 2)
-                      : eqMethods.itemAdd(1, 2);
-                  break;
-                case 7:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(2, 2)
-                      : eqMethods.itemAdd(3, 2);
-
-                  break;
-                case 8:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(4, 2)
-                      : eqMethods.itemAdd(0, 3);
-
-                  break;
-                case 9:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(1, 3)
-                      : eqMethods.itemAdd(2, 3);
-
-                  break;
-                case 10:
-                  gameMetods.isLevelUp()
-                      ? eqMethods.itemAdd(3, 3)
-                      : eqMethods.itemAdd(4, 3);
-
-                  break;
-              }
-              gameMetods.isLevelUp() ? gameMetods.levelUp() : null;  
-            }else{
-              eqMethods.deleteItems();
+            if (win && eqMethods.isSpace()) {
+              eqMethods.randomItemDropToEQ(50);
             }
             if(context.mounted) Navigator.of(context).pop();
-            if (eqMethods.isSpace() == EqState.notEnoughtSpace && context.mounted){
+            if (!eqMethods.isSpace() && context.mounted){
               showDialog(
                   context: context,
                   builder: (context) => FullEqDialog(win: win));

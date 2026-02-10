@@ -90,6 +90,23 @@ class Equpment extends StatelessWidget {
                 )
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                WindowEQ(
+                  id: 17,
+                ),
+                WindowEQ(
+                  id: 18,
+                ),
+                WindowEQ(
+                  id: 19,
+                ),
+                WindowEQ(
+                  id: 20,
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -118,7 +135,7 @@ class WindowEQ extends ConsumerWidget {
             ? showDialog(
                 context: context,
                 builder: (context) {
-                  return DeleteItemDialog(
+                  return SellItemDialog(
                     id: id,
                   );
                 })
@@ -127,22 +144,22 @@ class WindowEQ extends ConsumerWidget {
       child: ref.read(providerEQ.notifier).isEmpty(id)
           ? Container(
               margin: const EdgeInsets.all(8),
-              width: MediaQuery.of(context).size.width / 4.85,
-              height: MediaQuery.of(context).size.width / 4.85,
+              width: MediaQuery.of(context).size.width / 5,
+              height: MediaQuery.of(context).size.width / 5,
               decoration: BoxDecoration(
                   color: Colors.brown[800],
                   border: Border.all(
                       color: const Color.fromARGB(255, 62, 39, 35), width: 2)),
             )
           : Container(
-              width: MediaQuery.of(context).size.width / 4.85,
-              height: MediaQuery.of(context).size.width / 4.85,
+              width: MediaQuery.of(context).size.width / 5,
+              height: MediaQuery.of(context).size.width / 5,
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   border: Border.all(
                       color: const Color.fromARGB(255, 62, 39, 35), width: 2)),
               child: Image.asset(
-                ref.read(providerEQ.notifier).itemUrl(id),
+                ref.read(providerEQ.notifier).itemUrl(id),fit: BoxFit.fill,
               ),
             ),
     );

@@ -1,15 +1,15 @@
-import 'package:brave_steve/game/data_layer/repo/repository.dart';
+import 'package:brave_steve/game/data_layer/repo/eq_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
 
 final providerEQ =
     StateNotifierProvider<EqStateMenagment, List<ItemPlaceModel>>((ref) {
-      final myRepo = ref.watch(repoProvider);
-      return EqStateMenagment(repositoryGame: myRepo);});
+      final myEqRepo = ref.watch(eqRepoProvider);
+      return EqStateMenagment(eqRepo: myEqRepo);});
 
 class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
-  EqStateMenagment({required this.repositoryGame}) : super(const [
+  EqStateMenagment({required this.eqRepo}) : super(const [
     ItemPlaceModel(id:0,isEmpty: true, classField: FieldTypeModel.helmet, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
     ItemPlaceModel(id:1, isEmpty: true, classField: FieldTypeModel.sword, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
     ItemPlaceModel(id:2, isEmpty: true, classField: FieldTypeModel.chestplate, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
@@ -19,19 +19,23 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     ItemPlaceModel(id:6, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
     ItemPlaceModel(id:7, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', attack : 0, armour : 0,classItem : ItemTypeModel.none ,price : 0)),
     ItemPlaceModel(id:8, isEmpty : true ,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
-    ItemPlaceModel(id :9 ,isEmpty:true,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
-    ItemPlaceModel(id :10 ,isEmpty:true,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
+    ItemPlaceModel(id:9 ,isEmpty:true,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
+    ItemPlaceModel(id:10 ,isEmpty:true,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
     ItemPlaceModel(id:11, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price: 0)),
     ItemPlaceModel(id:12, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price: 0)),
     ItemPlaceModel(id:13, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price: 0)),
     ItemPlaceModel(id:14, isEmpty:true, classField: FieldTypeModel.backpack, item:ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none,price: 0)),
     ItemPlaceModel(id:15, isEmpty:true, classField: FieldTypeModel.backpack, item: ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price: 0)),
     ItemPlaceModel(id:16, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:17 ,isEmpty:true,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
+    ItemPlaceModel(id:18, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', attack: 0, armour: 0, classItem: ItemTypeModel.none, price: 0)),
+    ItemPlaceModel(id:19, isEmpty: true, classField: FieldTypeModel.backpack, item: ItemModel(name: '', description: '', image: '', attack : 0, armour : 0,classItem : ItemTypeModel.none ,price : 0)),
+    ItemPlaceModel(id:20, isEmpty : true ,classField : FieldTypeModel.backpack,item : ItemModel(name:'',description:'',image:'',attack : 0 ,armour : 0,classItem : ItemTypeModel.none ,price : 0)),
   ]);
-  final RepositoryGame repositoryGame;
+  final EqRepo eqRepo;
 
   void loadItemPlaceModels(int index){
-    List<ItemPlaceModel> o = repositoryGame.getListFieldTypeModelFromDB(index);
+    List<ItemPlaceModel> o = eqRepo.getListFieldTypeModelFromDB(index);
     state = [
       for (final itemPlaceModel in o)
         itemPlaceModel
@@ -156,8 +160,11 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     return (armour,attack);
   }
 
-  void itemAdd(int listIndex,int itemIndex) {
-    final item = repositoryGame.addItem(listIndex,itemIndex);
+  void randomItemDropToEQ(int dropRate) {
+    final item = eqRepo.getDrawnItem(dropRate);
+    if(item == null){
+      return;
+    }
     final firstFreeItemPlaceModel = state.firstWhere((element) =>
         element.isEmpty == true && element.classField == FieldTypeModel.backpack);
     state = [
@@ -206,7 +213,11 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     return state[id].item.image;
   }
 
-  EqState isSpace(){
+  double getPrice(int id){
+    return state[id].item.price.toDouble();
+  }
+
+  bool isSpace(){
     int fullPlace = 0;int allPlace = 0;
     for (final itemplaceModel in state){
        if (itemplaceModel.classField == FieldTypeModel.backpack &&
@@ -214,9 +225,9 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
       if (itemplaceModel.classField == FieldTypeModel.backpack)allPlace++;
     }
     if(fullPlace == allPlace){
-      return EqState.notEnoughtSpace;
+      return false;
     }   
-    return EqState.haveFreeSpace; 
+    return true; 
   }
 
   int eqLength(){
@@ -231,6 +242,8 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     String itemName = state[id].item.name;
     String description = state[id].item.description;
     String image = state[id].item.image;
+    String attack = state[id].item.attack.toString();
+    String armour = state[id].item.armour.toString();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -238,6 +251,9 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
           Text(itemName),
           Image.asset(image, cacheWidth: 256, cacheHeight: 256),
           Text(description),
+          Text('Cena: ${state[id].item.price}'),
+          if (state[id].item.attack > 0) Text('Atak: $attack'),
+          if (state[id].item.armour > 0) Text('Pancerz: $armour'),
         ],
       ),
     );

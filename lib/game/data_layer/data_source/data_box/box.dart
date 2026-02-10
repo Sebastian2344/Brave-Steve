@@ -1,7 +1,7 @@
 import 'package:brave_steve/game/data_layer/data_source/eq/eq.dart';
 import 'package:brave_steve/game/data_layer/data_source/player/player.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../models/eq_model/eq_model.dart';
 import '../save/save.dart';
 
 class DataBox {
@@ -33,139 +33,6 @@ class DataBox {
       Player(name:'Smok', hp :450 ,maxHp :450 ,attack :35 ,maxAttack :35 ,mana :10 ,exp :0 ,armour :60,maxArmour: 60,lvl: 10, weak: false), //enemy
     ];
   }
-    
-  static const List<List<ItemModel>> _listItems = [
-    [
-      ItemModel(
-          name: 'Drewniany Miecz',
-          description: 'Dodaje 4 do ataku',
-          image: 'assets/images/wodden_sword.png',
-          classItem: ItemTypeModel.sword,
-          price: 10, attack: 4, armour: 0),
-      ItemModel(
-          name: 'Kamienny Miecz',
-          description: 'Dodaje 5 do ataku',
-          image: 'assets/images/stone_sword.png',
-          classItem: ItemTypeModel.sword,
-          price: 15, attack: 5, armour: 0),
-      ItemModel(
-          name: 'Żelazny miecz',
-          description: 'Dodaje 6 do ataku',
-          image: 'assets/images/iron_sword.png',
-          classItem: ItemTypeModel.sword,
-          price: 20, attack: 6, armour: 0),
-      ItemModel(
-          name: 'Diamentowy Miecz',
-          description: 'Dodaje 7 do ataku',
-          image: 'assets/images/diamond_sword.png',
-          classItem: ItemTypeModel.sword,
-          price: 25, attack: 7, armour: 0),
-    ],
-    [
-      ItemModel(
-          name: 'Skórzany Chełm',
-          description: 'Dodaje 3 pancerza',
-          image: 'assets/images/brown_helmet.png',
-          classItem: ItemTypeModel.helmet,
-          price: 10, attack: 0, armour: 3),
-      ItemModel(
-          name: 'Kolczy Chełm',
-          description: 'Dodaje 5 pancerza',
-          image: 'assets/images/two_colors_helmet.png',
-          classItem: ItemTypeModel.helmet,
-          price: 15, attack: 0, armour: 5),
-      ItemModel(
-          name: 'Żelazny Chełm',
-          description: 'Dodaje 7 pancerza',
-          image: 'assets/images/silver_helmet.png',
-          classItem: ItemTypeModel.helmet,
-          price: 20, attack: 0, armour: 7),
-      ItemModel(
-          name: 'Diamentowy Chełm',
-          description: 'Dodaje 9 pancerza',
-          image: 'assets/images/blue_helmet.png',
-          classItem: ItemTypeModel.helmet,
-          price: 25, attack: 0, armour: 9),
-    ],
-    [
-      ItemModel(
-          name: 'Skórzany Napierśnik',
-          description: 'Dodaje 8 pancerza',
-          image: 'assets/images/brown_chestplate.png',
-          classItem: ItemTypeModel.chestplate,
-          price: 10, attack: 0, armour: 8),
-          ItemModel(
-          name: 'Kolczy Napierśnik',
-          description: 'Dodaje 10 pancerza',
-          image: 'assets/images/two_colors_chestplate.png',
-          classItem: ItemTypeModel.chestplate,
-          price: 15, attack: 0, armour: 10),
-          ItemModel(
-          name: 'Żelazny Napierśnik',
-          description: 'Dodaje 12 pancerza',
-          image: 'assets/images/silver_chestplate.png',
-          classItem: ItemTypeModel.chestplate,
-          price: 20, attack: 0, armour: 12),
-          ItemModel(
-          name: 'Diamentowy Napierśnik',
-          description: 'Dodaje 14 pancerza',
-          image: 'assets/images/blue_chestplate.png',
-          classItem: ItemTypeModel.chestplate,
-          price: 25, attack: 0, armour: 14),
-    ],
-    [
-      ItemModel(
-          name: 'Skórzane Spodnie',
-          description: 'Dodają 4 pancerza',
-          image: 'assets/images/brown_pants.png',
-          classItem: ItemTypeModel.pants,
-          price: 10, attack: 0, armour: 4),
-       ItemModel(
-          name: 'Kolcze Spodnie',
-          description: 'Dodają 6 pancerza',
-          image: 'assets/images/two_colors_pants.png',
-          classItem: ItemTypeModel.pants,
-          price: 15, attack: 0, armour: 6),
-       ItemModel(
-          name: 'Żelazne Spodnie',
-          description: 'Dodają 8 pancerza',
-          image: 'assets/images/silver_pants.png',
-          classItem: ItemTypeModel.pants,
-          price: 20, attack: 0, armour: 8),
-       ItemModel(
-          name: 'Diamentowe Spodnie',
-          description: 'Dodają 10 pancerza',
-          image: 'assets/images/blue_pants.png',
-          classItem: ItemTypeModel.pants,
-          price: 25, attack: 0, armour: 10),
-    ],
-    [
-      ItemModel(
-          name: 'Skórzane Buty',
-          description: 'Dodają 1 pancerza',
-          image: 'assets/images/1024px_items/buty_3_na_3/Nowy_folder/b1.jpg',
-          classItem: ItemTypeModel.boots,
-          price: 10, attack: 0, armour: 1),
-      ItemModel(
-          name: 'Kolcze Buty',
-          description: 'Dodają 3 pancerza',
-          image: 'assets/images/two_colors_boots.png',
-          classItem: ItemTypeModel.boots,
-          price: 15, attack: 0, armour: 3),
-      ItemModel(
-          name: 'Żelazne Buty',
-          description: 'Dodają 5 pancerza',
-          image: 'assets/images/silver_boots.png',
-          classItem: ItemTypeModel.boots,
-          price: 20, attack: 0, armour: 5),
-      ItemModel(
-          name: 'Diamentowe Buty',
-          description: 'Dodają 7 pancerza',
-          image: 'assets/images/blue_boots.png',
-          classItem: ItemTypeModel.boots,
-          price: 25, attack: 0, armour: 7),
-    ]
-  ];
 
   List<Player> getPlayersfromDB(int index) {
     List<Player> listPlayersToReturn = playersStartStats;
@@ -201,8 +68,6 @@ class DataBox {
   List<ItemPlace> getItemPlacesFromDB(int index){
     return _boxData.values.elementAt(index).itemPlace;
   }
-
-  ItemModel getItem(int listIndex,int itemIndex) {
-    return _listItems.elementAt(listIndex).elementAt(itemIndex);
-  }
 }
+
+Provider<DataBox> dataBoxProvider = Provider((ref) => DataBox());
