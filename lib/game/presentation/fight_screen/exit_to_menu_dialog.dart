@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
+import 'package:brave_steve/game/state_menegment/map_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,7 @@ class ExitToMenu extends ConsumerWidget {
                   await ref.read(myStateProvider.notifier).closeGameDB();
                   ref.read(providerEQ.notifier).deleteItems();
                   ref.read(myStateProvider.notifier).gameOver();
+                  ref.read(mapNotifierProvider.notifier).resetEnemyAndBoss();
                   if (context.mounted) {
                     Navigator.pop(context); 
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(

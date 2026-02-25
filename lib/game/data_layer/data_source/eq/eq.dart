@@ -4,7 +4,7 @@ import '../../models/eq_model/eq_model.dart';
 part 'eq.g.dart';
 
 @HiveType(typeId: 2)
-class ItemPlace extends HiveObject {
+class ItemPlace {
   @HiveField(0)
   final int id;
   @HiveField(1)
@@ -13,7 +13,7 @@ class ItemPlace extends HiveObject {
   final FieldType classField;
   @HiveField(3)
   final Item item;
-  ItemPlace({required this.id,required  this.isEmpty,required  this.classField,required  this.item});
+  const ItemPlace({required this.id,required  this.isEmpty,required  this.classField,required  this.item});
 
   ItemPlaceModel toItemPlaceModel() {
     return ItemPlaceModel(id: id, isEmpty: isEmpty, classField: classField.toFieldTypeModel(classField), item: item.toItemModel());

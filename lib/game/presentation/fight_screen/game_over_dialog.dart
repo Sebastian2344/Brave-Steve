@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
+import 'package:brave_steve/game/state_menegment/map_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,8 +22,13 @@ class GameOver extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Brawo ukończyłeś gre.Udało ci się pokonać złodzieja i odzyskać złoto.'),
-                SizedBox(height:MediaQuery.of(context).size.height / 5,width:MediaQuery.of(context).size.width / 2.5,child: Image.asset('assets/images/złoto.png'))
+                const Text('Brawo ukończyłeś gre. Udało ci się zdobyć 4 potrzebne przedmioty'),
+                GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 8,mainAxisSpacing: 8),children: [
+                  SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png')),
+                  SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png')),
+                  SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png')),
+                  SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png'))
+                ],)
               ],
             ),
           ),
@@ -32,6 +38,7 @@ class GameOver extends ConsumerWidget {
                   ref.read(myStateProvider.notifier).gameOver();
                   ref.read(providerEQ.notifier).deleteItems();
                   ref.read(myStateProvider.notifier).closeGameDB();
+                  ref.read(mapNotifierProvider.notifier).resetEnemyAndBoss();
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const MainMenu()));

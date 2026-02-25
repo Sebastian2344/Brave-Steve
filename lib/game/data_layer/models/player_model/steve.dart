@@ -124,16 +124,13 @@ class Steve extends PlayerModel {
 
   @override
   Steve levelUp() {
+    _lvl++;
+    _attack = _attack + 2;
+    _maxAttack = _attack;
     _mana = 10;
+    _maxHp = _maxHp + 20;
     _hp = _maxHp;
     _exp = 0;
-    _lvl++;
-    return this;
-  }
-
-  Steve growStatsMyHero(int attackPoint, int hpx10) {
-    _maxAttack = _attack += attackPoint;
-    _maxHp += hpx10;
     return this;
   }
 
@@ -169,7 +166,13 @@ class Steve extends PlayerModel {
   bool isWeak() => _weak;
 
   @override
-  void addExpirience() => _exp += 50;
+  void addExpirience(double multiply,double exp) {
+    if(_exp + exp * multiply >= 100){
+      _exp = 100;
+    } else {
+      _exp += exp * multiply;
+    }
+  } 
 
   @override
   int showExp() => _exp.toInt();

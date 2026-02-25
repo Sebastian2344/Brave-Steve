@@ -1,4 +1,3 @@
-import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,7 +34,7 @@ class SaveGame extends ConsumerWidget {
           onPressed: () async {
             textEditingController.text.isNotEmpty
                 ? {
-                    await ref.read(myStateProvider.notifier).saveGame(textEditingController.text, ref.read(providerEQ)),
+                    await ref.read(myStateProvider.notifier).saveGame(textEditingController.text,ref),
                     if (context.mounted)
                       {
                         Navigator.pop(context),

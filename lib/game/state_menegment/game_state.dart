@@ -1,9 +1,10 @@
 import 'dart:math';
 import 'package:brave_steve/game/data_layer/models/save_model/save_model.dart';
 import 'package:brave_steve/game/data_layer/repo/repository.dart';
+import 'package:brave_steve/game/state_menegment/eq_state.dart';
+import 'package:brave_steve/game/state_menegment/map_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data_layer/models/eq_model/eq_model.dart';
 import '../data_layer/models/player_model/player_model.dart';
 import '../data_layer/models/player_model/steve.dart';
 
@@ -19,8 +20,8 @@ class MyVars extends Equatable {
   final List<bool>
       heroEffect; //index 0(left player) 1(right player) weakness,index 2(left player) 3(right player) clearance
   final int enemyIndex; //enemy player index
-  final int skillPoints; //player skill points
   final Enum gameState;
+  final double expMultiply; 
 
   const MyVars(
       {required this.move1,
@@ -29,8 +30,7 @@ class MyVars extends Equatable {
       required this.list,
       required this.heroEffect,
       required this.enemyIndex,
-      required this.skillPoints,
-      required this.gameState});
+      required this.gameState, required this.expMultiply});
 
   MyVars copyWith(
       {final bool? move1,
@@ -39,8 +39,8 @@ class MyVars extends Equatable {
       final List<PlayerModel>? list,
       final List<bool>? heroEffect,
       final int? enemyIndex,
-      final int? skillPoints,
-      final Enum? gameState}) {
+      final Enum? gameState,
+      final double? expMultiply}) {
     return MyVars(
         move1: move1 ?? this.move1,
         move2: move2 ?? this.move2,
@@ -48,8 +48,7 @@ class MyVars extends Equatable {
         list: list ?? this.list,
         heroEffect: heroEffect ?? this.heroEffect,
         enemyIndex: enemyIndex ?? this.enemyIndex,
-        skillPoints: skillPoints ?? this.skillPoints,
-        gameState: gameState ?? this.gameState);
+        gameState: gameState ?? this.gameState, expMultiply: expMultiply ?? this.expMultiply);
   }
 
   @override
@@ -60,8 +59,8 @@ class MyVars extends Equatable {
         list,
         heroEffect,
         enemyIndex,
-        skillPoints,
-        gameState
+        gameState,
+        expMultiply
       ];
 }
 
@@ -75,7 +74,7 @@ class GameState extends StateNotifier<MyVars> {
             list: repositoryGame.playersStartStatsasPlayerModelList(),
             heroEffect: const [false, false, false, false],
             enemyIndex: 1,
-            skillPoints: 5,
+            expMultiply: 1,
             gameState: Stan.graNieRozpoczeta));
 
   Future<void> newGame() async {
@@ -87,6 +86,7 @@ class GameState extends StateNotifier<MyVars> {
         buttonIgnore: defaultSetList,
         heroEffect: defaultSetList,
         enemyIndex: 1,
+        expMultiply: 1,
         gameState: Stan.graTrwa);
   }
 
@@ -98,7 +98,7 @@ class GameState extends StateNotifier<MyVars> {
         list: repositoryGame.playersStartStatsasPlayerModelList(),
         heroEffect: const [false, false, false, false],
         enemyIndex: 1,
-        skillPoints: 5,
+        expMultiply: 1,
         gameState: Stan.graNieRozpoczeta);
   }
 
@@ -113,13 +113,19 @@ class GameState extends StateNotifier<MyVars> {
             false,
             false
           ],
-          enemyIndex: (players[0] as Steve).getEnemyIndex());
+          enemyIndex: (players[0] as Steve).getEnemyIndex(),
+          );
     }
   }
 
-  Future<void> saveGame(String name, List<ItemPlaceModel> itemList) async {
+  void loadExpMultiply(int index){
+    final expMultiply = repositoryGame.loadExpMultiple(index);
+    state = state.copyWith(expMultiply: expMultiply);
+  }
+
+  Future<void> saveGame(String name, WidgetRef ref) async {
     (state.list[0] as Steve).setEnemyIndex(state.enemyIndex);
-    await repositoryGame.addSaveGame(state.list, name, itemList);
+    await repositoryGame.addSaveGame(state.list, name, ref.read(providerEQ),ref.read(mapNotifierProvider),state.expMultiply);
   }
 
   Future<void> closeGameDB() async {
@@ -180,45 +186,22 @@ class GameState extends StateNotifier<MyVars> {
     return state.list[0].showExp() == 100;
   }
 
-  void chooseStats(int attack, int hp) {
+  void levelUp() {
     state = state.copyWith(list: [
-      (state.list[0] as Steve).growStatsMyHero(attack, hp),
-      state.list[1],
-      state.list[2],
-      state.list[3],
-      state.list[4],
-      state.list[5],
+      state.list[0].levelUp(),
+      state.list[1].levelUp(),
+      state.list[2].levelUp(),
+      state.list[3].levelUp(),
+      state.list[4].levelUp(),
+      state.list[5].levelUp(),
       state.list[6],
       state.list[7]
-    ], skillPoints: state.skillPoints - 1);
-  }
-
-  void levelUp() {
-    if (state.list[0].showExp() == 100) {
-      state = state.copyWith(
-          list: [
-            state.list[0].levelUp(),
-            state.list[1].levelUp(),
-            state.list[2].levelUp(),
-            state.list[3].levelUp(),
-            state.list[4].levelUp(),
-            state.list[5].levelUp(),
-            state.list[6],
-            state.list[7]
-          ],
-          heroEffect: [
-            false,
-            false,
-            false,
-            false
-          ],
-          skillPoints: 5,
-          enemyIndex: state.list[0].getlvl() == 5
-              ? 6
-              : state.list[0].getlvl() == 10
-                  ? 7
-                  : _setEnemyIndex(state.enemyIndex));
-    }
+    ], heroEffect: [
+      false,
+      false,
+      false,
+      false
+    ]);
   }
 
   int lvl() {
@@ -232,45 +215,37 @@ class GameState extends StateNotifier<MyVars> {
     state.list[0].setMaxAttack = record.$2 + state.list[0].getMaxAttack();
   }
 
-  void winnerOrLoser(bool win) {
+  void statsResetAfterWin() {
     const List<bool> effects = [false, false, false, false];
-    win
-        ? {
-            if (state.list[0].showExp() != 100)
-              {
-                state.list[0].addExpirience(),
-                state = state.copyWith(
-                    heroEffect: effects,
-                    list: [
-                      state.list[0].setPlayerAgain(),
-                      state.list[1].setPlayerAgain(),
-                      state.list[2].setPlayerAgain(),
-                      state.list[3].setPlayerAgain(),
-                      state.list[4].setPlayerAgain(),
-                      state.list[5].setPlayerAgain(),
-                      state.list[6],
-                      state.list[7]
-                    ],
-                    move2: false)
-              },
-            if (state.list[0].showExp() != 100)
-              {
-                state =
-                    state.copyWith(enemyIndex: _setEnemyIndex(state.enemyIndex))
-              }
-          }
-        : {
-            state = state.copyWith(
-                list: repositoryGame.playersStartStatsasPlayerModelList(),
-                heroEffect: effects,
-                enemyIndex: 1,
-                move2: false)
-          };
+    state.list[0].addExpirience(state.expMultiply,50);
+    state = state.copyWith(
+        heroEffect: effects,
+        list: [
+          state.list[0].setPlayerAgain(),
+          state.list[1].setPlayerAgain(),
+          state.list[2].setPlayerAgain(),
+          state.list[3].setPlayerAgain(),
+          state.list[4].setPlayerAgain(),
+          state.list[5].setPlayerAgain(),
+          state.list[6],
+          state.list[7]
+        ],
+        move2: false,
+        enemyIndex: _setEnemyIndex(state.enemyIndex));
+  }
+
+  void setStatsAfterLose() {
+    const List<bool> effects = [false, false, false, false];
+    final listPlayer = repositoryGame.playersStartStatsasPlayerModelList();
+    listPlayer[0] = state.list[0].setPlayerAgain();
+    state = state.copyWith(
+        list: listPlayer, heroEffect: effects, enemyIndex: 1, move2: false,expMultiply: 1);
   }
 
 //===================================================================================//
   // Private Methods
 //===================================================================================//
+
   int _setEnemyIndex(int index) {
     if (index > 0 && index < state.list.length - 3) {
       index += 1;

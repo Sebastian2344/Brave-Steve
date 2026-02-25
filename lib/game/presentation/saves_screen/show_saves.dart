@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
+import 'package:brave_steve/game/state_menegment/map_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data_layer/models/player_model/steve.dart';
@@ -190,6 +191,8 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                           .read(myStateProvider.notifier)
                           .loadPlayerAndMobs(index);
                       ref.read(providerEQ.notifier).loadItemPlaceModels(index);
+                      ref.read(mapNotifierProvider.notifier).fromSave(index);
+                      ref.read(myStateProvider.notifier).loadExpMultiply(index);
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const FightScreen(false),

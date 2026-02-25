@@ -146,7 +146,7 @@ class Enemy extends PlayerModel {
   bool isWeak() => _weak;
 
   @override
-  void addExpirience() => _exp += 50;
+  void addExpirience(double multiply,double exp) => _exp += exp * multiply;
 
   @override
   int showExp() => _exp.toInt();

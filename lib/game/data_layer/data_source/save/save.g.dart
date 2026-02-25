@@ -20,19 +20,26 @@ class SaveAdapter extends TypeAdapter<Save> {
       list: (fields[0] as List).cast<Player>(),
       name: fields[1] as String,
       itemPlace: (fields[2] as List).cast<ItemPlace>(),
+      enemyCounter:
+          fields[3] == null ? const CounterEnemy() : fields[3] as CounterEnemy,
+      expMultiply: fields[4] == null ? 1 : fields[4] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Save obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.list)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.itemPlace);
+      ..write(obj.itemPlace)
+      ..writeByte(3)
+      ..write(obj.enemyCounter)
+      ..writeByte(4)
+      ..write(obj.expMultiply);
   }
 
   @override

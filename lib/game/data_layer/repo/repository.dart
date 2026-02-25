@@ -1,4 +1,6 @@
+import 'package:brave_steve/game/data_layer/data_source/counter_enemy/counter_enemy.dart';
 import 'package:brave_steve/game/data_layer/data_source/data_box/box.dart';
+import 'package:brave_steve/game/data_layer/models/counterenemy_model/counter_enemy_model.dart';
 import 'package:brave_steve/game/data_layer/models/player_model/player_model.dart';
 import 'package:brave_steve/game/data_layer/models/save_model/save_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,8 +29,12 @@ class RepositoryGame{
    return dataSource.playersStartStats.map((e) => e.toPlayerModel()).toList();
   }
 
-  Future<void> addSaveGame(List<PlayerModel> list,String name,List<ItemPlaceModel> itemPlace) async {
-    await dataSource.addSaveGame(Player.toPlayer(list),name,ItemPlace.toItemPlace(itemPlace));
+  double loadExpMultiple(int index){
+    return dataSource.loadExpMultiple(index);
+  }
+
+  Future<void> addSaveGame(List<PlayerModel> list,String name,List<ItemPlaceModel> itemPlace,CounterEnemyModel e,double expMultiply) async {
+    await dataSource.addSaveGame(Player.toPlayer(list),name,ItemPlace.toItemPlace(itemPlace),CounterEnemy.toCounterEnemy(e),expMultiply);
   }
 
     Future<void> closeGameDB() async {

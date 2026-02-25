@@ -5,7 +5,7 @@ abstract class PlayerModel{
   void makeSuperAttack(PlayerModel e);
   void weakness(PlayerModel e);
   void clearMe();
-  void addExpirience();
+  void addExpirience(double multiply,double exp);
   PlayerModel levelUp();
   PlayerModel setPlayerAgain();
   String getName();

@@ -87,8 +87,16 @@ class EqStateMenagment extends StateNotifier<List<ItemPlaceModel>> {
     return (armour,attack);
   }
 
-  (String, {int value}) getRecord() {
-  return ("example", value: 42);
+  (double,double) getAllItemsStats() {
+    double attack = 0;
+    double armour = 0;
+    for (final itemPlaceModel in state) {
+      if (itemPlaceModel.isEmpty == false && itemPlaceModel.classField != FieldTypeModel.backpack) {
+        attack += itemPlaceModel.item.attack.toDouble();
+        armour += itemPlaceModel.item.armour.toDouble();
+      }
+    }
+    return (attack,armour);
   }
 
   bool czyPustePole(int id) {

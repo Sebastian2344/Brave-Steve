@@ -1,3 +1,7 @@
+import 'package:brave_steve/game/presentation/eq_screen/full_eq_dialog.dart';
+import 'package:brave_steve/game/state_menegment/eq_state.dart';
+import 'package:brave_steve/game/state_menegment/map_state.dart';
+import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +9,7 @@ import 'package:showcaseview/showcaseview.dart';
 
 import '../../state_menegment/game_state.dart';
 import 'game_over_dialog.dart';
-import 'win_or_lose_dialog.dart';
+import 'lose_dialog.dart';
 
 class ActionInGame extends ConsumerStatefulWidget {
   const ActionInGame({
@@ -37,37 +41,52 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
         // POPRAWKA: Używamy ShowCaseWidget.of(context).startShowCase
         // To jest standardowa metoda, która przyjmuje listę [].
         ShowCaseWidget.of(context).startShowCase([
-          widget.keySave,       // 1. Dyskietka
-          widget.keyEq,         // 2. Ludzik
-          _keyAtak,             // 3. Atak
-          _keySuperAtak,        // 4. SuperAtak
-          _keyOslabienie,       // 5. Osłabienie
-          _keyOczyszczenie,     // 6. Oczyszczenie
+          widget.keySave, // 1. Dyskietka
+          widget.keyEq, // 2. Ludzik
+          _keyAtak, // 3. Atak
+          _keySuperAtak, // 4. SuperAtak
+          _keyOslabienie, // 5. Osłabienie
+          _keyOczyszczenie, // 6. Oczyszczenie
         ]);
       });
     }
   }
 
-  void dialogWindow(Enum a, BuildContext context) {
-    Stan.koniecGry == a
-        ? showDialog(barrierDismissible: false, context: context, builder: (context) => const GameOver())
-        : Stan.wygrana == a
-        ? showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) => const WinOrLose(win: true))
-        : Stan.przegrana == a
-        ? showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) => const WinOrLose(win: false))
-        : null;
+  Future<void> dialogWindow(Enum a, BuildContext context, WidgetRef ref) async {
+    final gameMetods = ref.read(myStateProvider.notifier);
+    final eqMethods = ref.watch(providerEQ.notifier);
+    final moneyMethods = ref.read(moneyProvider.notifier);
+    final mapMethods = ref.read(mapNotifierProvider.notifier);
+    if (Stan.koniecGry == a) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const GameOver());
+    } else if (Stan.przegrana == a) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => const Lose());
+    } else if (Stan.wygrana == a) {
+      await moneyMethods.addmoney(50.0);
+      mapMethods.incrementEnemy();
+      gameMetods.isLevelUp() ? gameMetods.levelUp() : null;
+
+      if (eqMethods.isSpace()) {
+        eqMethods.randomItemDropToEQ(50);
+      }
+
+      if (!eqMethods.isSpace() && context.mounted) {
+        showDialog(
+            context: context, builder: (context) => FullEqDialog(win: true));
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final buttonIgnore = ref.watch(myStateProvider.select(  
-          (g) => g.buttonIgnore,
+    final buttonIgnore = ref.watch(myStateProvider.select(
+      (g) => g.buttonIgnore,
     ));
     final gameMetods = ref.read(myStateProvider.notifier);
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -91,15 +110,17 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   buttonIgnore: buttonIgnore[0],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
-                      superAtack: false, cleary: false, weakOnEnemy: false,
+                      superAtack: false,
+                      cleary: false,
+                      weakOnEnemy: false,
                     );
                     if (context.mounted) {
                       a == Stan.wygrana
-                          ? gameMetods.winnerOrLoser(true)
+                          ? gameMetods.statsResetAfterWin()
                           : a == Stan.przegrana
-                          ? gameMetods.winnerOrLoser(false)
-                          : null;
-                      dialogWindow(a, context);
+                              ? gameMetods.setStatsAfterLose()
+                              : null;
+                      await dialogWindow(a, context, ref);
                     }
                   },
                   manaCost: '(+1 many)',
@@ -110,20 +131,23 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                 ),
                 ButtonWidget(
                   globalKey: _keySuperAtak,
-                  description: 'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
+                  description:
+                      'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
                   fontSize: fontSize,
                   buttonIgnore: buttonIgnore[1],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
-                      superAtack: true, cleary: false, weakOnEnemy: false,
+                      superAtack: true,
+                      cleary: false,
+                      weakOnEnemy: false,
                     );
                     if (context.mounted) {
                       a == Stan.wygrana
-                          ? gameMetods.winnerOrLoser(true)
+                          ? gameMetods.statsResetAfterWin()
                           : a == Stan.przegrana
-                          ? gameMetods.winnerOrLoser(false)
-                          : null;
-                      dialogWindow(a, context);
+                              ? gameMetods.setStatsAfterLose()
+                              : null;
+                      await dialogWindow(a, context, ref);
                     }
                   },
                   manaCost: '(4 many)',
@@ -144,15 +168,17 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   buttonIgnore: buttonIgnore[2],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
-                      superAtack: false, cleary: false, weakOnEnemy: true,
+                      superAtack: false,
+                      cleary: false,
+                      weakOnEnemy: true,
                     );
                     if (context.mounted) {
                       a == Stan.wygrana
-                          ? gameMetods.winnerOrLoser(true)
+                          ? gameMetods.statsResetAfterWin()
                           : a == Stan.przegrana
-                          ? gameMetods.winnerOrLoser(false)
-                          : null;
-                      dialogWindow(a, context);
+                              ? gameMetods.setStatsAfterLose()
+                              : null;
+                      await dialogWindow(a, context, ref);
                     }
                   },
                   manaCost: '(4 many)',
@@ -168,15 +194,17 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                   buttonIgnore: buttonIgnore[3],
                   battle: () async {
                     final Enum a = await gameMetods.battle(
-                      superAtack: false, cleary: true, weakOnEnemy: false,
+                      superAtack: false,
+                      cleary: true,
+                      weakOnEnemy: false,
                     );
                     if (context.mounted) {
                       a == Stan.wygrana
-                          ? gameMetods.winnerOrLoser(true)
+                          ? gameMetods.statsResetAfterWin()
                           : a == Stan.przegrana
-                          ? gameMetods.winnerOrLoser(false)
-                          : null;
-                      dialogWindow(a, context);
+                              ? gameMetods.setStatsAfterLose()
+                              : null;
+                      await dialogWindow(a, context, ref);
                     }
                   },
                   manaCost: '(3 many)',
@@ -232,15 +260,8 @@ class ButtonWidget extends StatelessWidget {
       tooltipBackgroundColor: Colors.white,
       textColor: Colors.black,
       titleTextStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.black
-      ),
-      descTextStyle: const TextStyle(
-          fontSize: 14,
-          color: Colors.black87
-      ),
-
+          fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+      descTextStyle: const TextStyle(fontSize: 14, color: Colors.black87),
       child: IgnorePointer(
         ignoring: buttonIgnore,
         child: ElevatedButton(

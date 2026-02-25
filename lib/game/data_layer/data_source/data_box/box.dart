@@ -1,3 +1,4 @@
+import 'package:brave_steve/game/data_layer/data_source/counter_enemy/counter_enemy.dart';
 import 'package:brave_steve/game/data_layer/data_source/eq/eq.dart';
 import 'package:brave_steve/game/data_layer/data_source/player/player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ class DataBox {
       Hive.registerAdapter(ItemAdapter());
       Hive.registerAdapter(FieldTypeAdapter());
       Hive.registerAdapter(ItemTypeAdapter());
+      Hive.registerAdapter(CounterEnemyAdapter());
     }
     if (!Hive.isBoxOpen('saveBox')) {
       _boxData = await Hive.openBox<Save>('saveBox');
@@ -23,7 +25,7 @@ class DataBox {
  
   List<Player> get playersStartStats{
     return[
-      Player(name: 'Steve', hp: 200, maxHp: 200, attack: 15, maxAttack: 15, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
+      Player(name:'Rycerz', hp: 200, maxHp: 200, attack: 15, maxAttack: 15, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
       Player(name:'Kostucha', hp: 150, maxHp: 150, attack: 17, maxAttack: 17, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false,), //enemy hasnot enemy index
       Player(name:'Szkielet', hp: 160, maxHp: 160, attack: 16, maxAttack: 16, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1 ,weak:false,), //enemy
       Player(name:'Wampir', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
@@ -51,9 +53,9 @@ class DataBox {
   }
 
   Future<void> addSaveGame(
-      List<Player> listPlayers, String name, List<ItemPlace> itemPlace) async {
+      List<Player> listPlayers, String name, List<ItemPlace> itemPlace,CounterEnemy enemy,double expMulti) async {
     await _boxData
-        .add(Save(list: listPlayers, name: name, itemPlace: itemPlace));
+        .add(Save(list: listPlayers, name: name, itemPlace: itemPlace,enemyCounter: enemy,expMultiply:expMulti));
   }
 
   void removeSave(int index) async {
@@ -67,6 +69,14 @@ class DataBox {
 
   List<ItemPlace> getItemPlacesFromDB(int index){
     return _boxData.values.elementAt(index).itemPlace;
+  }
+
+  CounterEnemy getCounerEnemy(int index){
+    return _boxData.values.elementAt(index).enemyCounter;
+  }
+
+  double loadExpMultiple(int index){
+    return _boxData.values.elementAt(index).expMultiply;
   }
 }
 
