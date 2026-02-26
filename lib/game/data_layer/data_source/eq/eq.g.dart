@@ -65,15 +65,18 @@ class ItemAdapter extends TypeAdapter<Item> {
       image: fields[2] as String,
       classItem: fields[3] as ItemType,
       price: fields[4] as int,
-      attack: fields[5] as int,
-      armour: fields[6] as int,
+      attack: fields[5] as int?,
+      armour: fields[6] as int?,
+      itemLevel: fields[7] == null ? 0 : fields[7] as int,
+      upgradePrice: fields[8] == null ? 0 : fields[8] as int,
+      rarity: fields[9] == null ? 'none' : fields[9] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -87,7 +90,13 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(5)
       ..write(obj.attack)
       ..writeByte(6)
-      ..write(obj.armour);
+      ..write(obj.armour)
+      ..writeByte(7)
+      ..write(obj.itemLevel)
+      ..writeByte(8)
+      ..write(obj.upgradePrice)
+      ..writeByte(9)
+      ..write(obj.rarity);
   }
 
   @override

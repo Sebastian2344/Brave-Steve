@@ -7,19 +7,19 @@ import '../player/player.dart';
 part 'save.g.dart';
 
 @HiveType(typeId: 0)
-class Save extends HiveObject {
+class Save {
 
   @HiveField(0)
-  List<Player> list;
+  final List<Player> list;
   @HiveField(1)
-  String name;
+  final String name;
   @HiveField(2)
-  List<ItemPlace> itemPlace;
+  final List<ItemPlace> itemPlace;
   @HiveField(3,defaultValue: CounterEnemy())
-  CounterEnemy enemyCounter;
+  final CounterEnemy enemyCounter;
   @HiveField(4, defaultValue: 1)
-  double expMultiply;
-  Save({
+  final double expMultiply;
+  const Save({
     required this.list,
     required this.name,
     required this.itemPlace,

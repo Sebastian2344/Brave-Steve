@@ -5,7 +5,7 @@ import '../../models/player_model/steve.dart';
 part 'player.g.dart';
 
 @HiveType(typeId: 1)
-class Player extends HiveObject {
+class Player {
   @HiveField(0)
   final String name;
   @HiveField(1)
@@ -30,7 +30,7 @@ class Player extends HiveObject {
   final int? enemyIndex;
   @HiveField(11)
   final double maxAttack;
-  Player({required this.name, required this.hp, required this.maxHp, required this.attack, required this.maxAttack,
+  const Player({required this.name, required this.hp, required this.maxHp, required this.attack, required this.maxAttack,
       required this.mana, required this.exp, required this.armour,required this.maxArmour,required this.lvl, required this.weak,this.enemyIndex});
 
   static List<Player> toPlayer(List<PlayerModel> model) {

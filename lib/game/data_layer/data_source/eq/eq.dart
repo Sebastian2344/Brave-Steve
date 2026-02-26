@@ -13,10 +13,18 @@ class ItemPlace {
   final FieldType classField;
   @HiveField(3)
   final Item item;
-  const ItemPlace({required this.id,required  this.isEmpty,required  this.classField,required  this.item});
+  const ItemPlace(
+      {required this.id,
+      required this.isEmpty,
+      required this.classField,
+      required this.item});
 
   ItemPlaceModel toItemPlaceModel() {
-    return ItemPlaceModel(id: id, isEmpty: isEmpty, classField: classField.toFieldTypeModel(classField), item: item.toItemModel());
+    return ItemPlaceModel(
+        id: id,
+        isEmpty: isEmpty,
+        classField: classField.toFieldTypeModel(classField),
+        item: item.toItemModel());
   }
 
   static List<ItemPlace> toItemPlace(List<ItemPlaceModel> model) {
@@ -24,7 +32,7 @@ class ItemPlace {
     int i = 0;
     while (itemPlaceList.length < model.length) {
       itemPlaceList.add(ItemPlace(
-          id:model[i].id,
+          id: model[i].id,
           isEmpty: model[i].isEmpty,
           classField: FieldType.toFieldType(model[i].classField),
           item: Item.toItem(model[i].item)));
@@ -47,22 +55,40 @@ class Item {
   @HiveField(4)
   final int price;
   @HiveField(5)
-  final int attack;
+  final int? attack;
   @HiveField(6)
-  final int armour;
+  final int? armour;
+  @HiveField(7, defaultValue: 0)
+  final int itemLevel;
+  @HiveField(8, defaultValue: 0)
+  final int upgradePrice;
+  @HiveField(9, defaultValue: 'none')
+  final String rarity;
 
-  const Item({
-    required this.name,
-    required this.description,
-    required this.image,
-    required this.classItem,
-    required this.price,
-    required this.attack,
-    required this.armour,
-  });
+  const Item(
+      {required this.name,
+      required this.description,
+      required this.image,
+      required this.classItem,
+      required this.price,
+      required this.attack,
+      required this.armour,
+      required this.itemLevel,
+      required this.upgradePrice,
+      required this.rarity});
 
   ItemModel toItemModel() {
-    return ItemModel(name: name, description: description, image: image, attack: attack, armour: armour, classItem: classItem.toItemTypeModel(classItem), price: price);
+    return ItemModel(
+        name: name,
+        description: description,
+        image: image,
+        attack: attack,
+        armour: armour,
+        classItem: classItem.toItemTypeModel(classItem),
+        price: price,
+        itemLevel: itemLevel,
+        upgradePrice: upgradePrice,
+        itemRarity: rarity);
   }
 
   static Item toItem(ItemModel model) {
@@ -73,7 +99,10 @@ class Item {
         classItem: ItemType.toItemType(model),
         price: model.price,
         attack: model.attack,
-        armour: model.armour);
+        armour: model.armour,
+        itemLevel: model.itemLevel,
+        upgradePrice: model.upgradePrice,
+        rarity: model.itemRarity);
   }
 }
 
@@ -108,15 +137,28 @@ enum FieldType {
     }
   }
 
-  FieldTypeModel toFieldTypeModel(FieldType type){
+  FieldTypeModel toFieldTypeModel(FieldType type) {
     FieldTypeModel w;
-    switch(type){
-      case FieldType.backpack: w = FieldTypeModel.backpack; break;
-      case FieldType.helmet: w = FieldTypeModel.helmet; break;
-      case FieldType.chestplate: w = FieldTypeModel.chestplate; break;
-      case FieldType.pants: w = FieldTypeModel.pants; break;
-      case FieldType.boots: w = FieldTypeModel.boots; break;
-      case FieldType.sword: w = FieldTypeModel.sword; break;}
+    switch (type) {
+      case FieldType.backpack:
+        w = FieldTypeModel.backpack;
+        break;
+      case FieldType.helmet:
+        w = FieldTypeModel.helmet;
+        break;
+      case FieldType.chestplate:
+        w = FieldTypeModel.chestplate;
+        break;
+      case FieldType.pants:
+        w = FieldTypeModel.pants;
+        break;
+      case FieldType.boots:
+        w = FieldTypeModel.boots;
+        break;
+      case FieldType.sword:
+        w = FieldTypeModel.sword;
+        break;
+    }
     return w;
   }
 }
@@ -147,20 +189,33 @@ enum ItemType {
       return ItemType.helmet;
     } else if (model.classItem == ItemTypeModel.sword) {
       return ItemType.sword;
-    }else {
+    } else {
       return ItemType.none;
     }
   }
 
-   ItemTypeModel toItemTypeModel(ItemType type){
+  ItemTypeModel toItemTypeModel(ItemType type) {
     ItemTypeModel w;
-    switch(type){
-      case ItemType.helmet: w = ItemTypeModel.helmet; break;
-      case ItemType.chestplate: w = ItemTypeModel.chestplate; break;
-      case ItemType.pants: w = ItemTypeModel.pants; break;
-      case ItemType.boots: w = ItemTypeModel.boots; break;
-      case ItemType.sword: w = ItemTypeModel.sword; break;
-      case ItemType.none: w = ItemTypeModel.none; break;}
+    switch (type) {
+      case ItemType.helmet:
+        w = ItemTypeModel.helmet;
+        break;
+      case ItemType.chestplate:
+        w = ItemTypeModel.chestplate;
+        break;
+      case ItemType.pants:
+        w = ItemTypeModel.pants;
+        break;
+      case ItemType.boots:
+        w = ItemTypeModel.boots;
+        break;
+      case ItemType.sword:
+        w = ItemTypeModel.sword;
+        break;
+      case ItemType.none:
+        w = ItemTypeModel.none;
+        break;
+    }
     return w;
   }
 }
