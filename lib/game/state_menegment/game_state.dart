@@ -125,7 +125,7 @@ class GameState extends StateNotifier<MyVars> {
 
   Future<void> saveGame(String name, WidgetRef ref) async {
     (state.list[0] as Steve).setEnemyIndex(state.enemyIndex);
-    await repositoryGame.addSaveGame(state.list, name, ref.read(providerEQ),ref.read(mapNotifierProvider),state.expMultiply);
+    await repositoryGame.addSaveGame(state.list, name, ref.read(providerEQ).eqList,ref.read(mapNotifierProvider),state.expMultiply);
   }
 
   Future<void> closeGameDB() async {
@@ -208,11 +208,12 @@ class GameState extends StateNotifier<MyVars> {
     return state.list[0].getlvl();
   }
 
-  void setStats((double, double) record) {
-    state.list[0].setArmour = record.$1 + state.list[0].getArmour();
-    state.list[0].setMaxArmour = record.$1 + state.list[0].getMaxArmour();
-    state.list[0].setAttack = record.$2 + state.list[0].getMaxAttack();
-    state.list[0].setMaxAttack = record.$2 + state.list[0].getMaxAttack();
+  void setStats(WidgetRef ref) {
+    final record = ref.watch(providerEQ).stats;
+    state.list[0].setArmour = record.armour + state.list[0].getArmour();
+    state.list[0].setMaxArmour = record.armour + state.list[0].getMaxArmour();
+    state.list[0].setAttack = record.attack + state.list[0].getMaxAttack();
+    state.list[0].setMaxAttack = record.attack + state.list[0].getMaxAttack();
   }
 
   void statsResetAfterWin() {

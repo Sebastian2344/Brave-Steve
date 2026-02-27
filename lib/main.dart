@@ -27,7 +27,7 @@ void main() async {
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
       fullScreen: false,
-      title: 'Labirynt',
+      title: 'Brave Steve',
     );
 
     // 4. Czekamy aż okno będzie gotowe do pokazania

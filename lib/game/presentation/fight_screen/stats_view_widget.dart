@@ -68,7 +68,7 @@ class StatsView extends StatelessWidget {
                   ? gameState.list[0].showAttack()
                   : gameState.list[gameState.enemyIndex].showAttack(),
             ));
-            return Text("Atak  $attack",
+            return Text("Atak  ${attack.toStringAsFixed(1)}",
                 style: TextStyle(color: Colors.blueGrey, fontSize: fontSize));
           },
         ),
@@ -158,7 +158,7 @@ class HealthBar extends ConsumerWidget {
           height: mediaQuerySize.height / 3 / 10,
           child: Center(
             child: Text(
-              '${player.showHp()} / ${player.maxHpInfo()}',
+              '${player.showHp().toStringAsFixed(1)} / ${player.maxHpInfo().toStringAsFixed(1)}',
               style: TextStyle(fontSize: fontSize, color: Colors.white),
             ),
           ),
@@ -211,7 +211,7 @@ class ManaBar extends ConsumerWidget {
           height: mediaQuerySize.height / 3 / 10,
           child: Center(
             child: Text(
-              '${player.showMana()} / 10',
+              '${player.showMana().toStringAsFixed(1)} / 10.0',
               style: TextStyle(fontSize: fontSize, color: Colors.white),
             ),
           ),
@@ -247,7 +247,7 @@ class ArmourBar extends ConsumerWidget {
           color: const Color.fromARGB(34, 170, 173, 170),
         ),
         Container(
-          width: mediaQuerySize.width / 2 * 0.9 * (player.getArmour() / 40),
+          width: player.getMaxArmour() > 0 ? mediaQuerySize.width / 2 * 0.9 * (player.getArmour() / player.getMaxArmour()) : 0,
           height: mediaQuerySize.height / 3 / 10,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -263,7 +263,7 @@ class ArmourBar extends ConsumerWidget {
           height: mediaQuerySize.height / 3 / 10,
           child: Center(
             child: Text(
-              '${player.getArmour()} / 40.0',
+              '${player.getArmour().toStringAsFixed(1)} / ${player.getMaxArmour().toStringAsFixed(1)}',
               style: TextStyle(fontSize: fontSize, color: Colors.white),
             ),
           ),
@@ -314,7 +314,7 @@ class ExpBar extends ConsumerWidget {
           height: mediaQuerySize.height / 3 / 10,
           child: Center(
             child: Text(
-              '${player.showExp()} / 100',
+              '${player.showExp().toStringAsFixed(1)} / 100.0',
               style: TextStyle(fontSize: fontSize, color: Colors.white),
             ),
           ),

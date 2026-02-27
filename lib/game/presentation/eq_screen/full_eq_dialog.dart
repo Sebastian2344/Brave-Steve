@@ -7,6 +7,10 @@ class FullEqDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height / 1.5,
+          maxWidth: MediaQuery.of(context).size.width / 1.5,
+        ),
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
       backgroundColor: const Color.fromARGB(255, 23, 12, 6),

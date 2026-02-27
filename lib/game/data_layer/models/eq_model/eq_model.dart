@@ -6,6 +6,33 @@ enum ItemTypeModel { helmet, chestplate, sword, pants, boots, none }
 
 enum EqState { notEnoughtSpace, haveFreeSpace }
 
+class EqModel extends Equatable {
+  final List<ItemPlaceModel> eqList;
+  final StatsModelToAddStatsPlayer stats;
+  const EqModel({required this.eqList, required this.stats});
+
+  EqModel copywith({List<ItemPlaceModel>? eqList, StatsModelToAddStatsPlayer? stats}) {
+    return EqModel(eqList: eqList ?? this.eqList, stats: stats ?? this.stats);
+  }
+
+  @override
+  List<Object?> get props => [eqList, stats];
+}
+
+class StatsModelToAddStatsPlayer extends Equatable{
+  final double attack;
+  final double armour;
+  const StatsModelToAddStatsPlayer({required this.attack, required this.armour});
+
+  StatsModelToAddStatsPlayer copywith({double? attack, double? armour}) {
+    return StatsModelToAddStatsPlayer(
+        attack: attack ?? this.attack, armour: armour ?? this.armour);
+  }
+
+  @override
+  List<Object?> get props => [attack, armour];
+}
+
 class ItemPlaceModel extends Equatable {
   final int id;
   final bool isEmpty;

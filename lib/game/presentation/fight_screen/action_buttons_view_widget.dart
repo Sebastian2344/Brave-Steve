@@ -63,11 +63,13 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
           context: context,
           builder: (context) => const GameOver());
     } else if (Stan.przegrana == a) {
+      gameMetods.setStatsAfterLose();
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (context) => const Lose());
     } else if (Stan.wygrana == a) {
+      gameMetods.statsResetAfterWin();
       await moneyMethods.addmoney(50.0);
       mapMethods.incrementEnemy();
       gameMetods.isLevelUp() ? gameMetods.levelUp() : null;
@@ -115,11 +117,6 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       weakOnEnemy: false,
                     );
                     if (context.mounted) {
-                      a == Stan.wygrana
-                          ? gameMetods.statsResetAfterWin()
-                          : a == Stan.przegrana
-                              ? gameMetods.setStatsAfterLose()
-                              : null;
                       await dialogWindow(a, context, ref);
                     }
                   },
@@ -142,11 +139,6 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       weakOnEnemy: false,
                     );
                     if (context.mounted) {
-                      a == Stan.wygrana
-                          ? gameMetods.statsResetAfterWin()
-                          : a == Stan.przegrana
-                              ? gameMetods.setStatsAfterLose()
-                              : null;
                       await dialogWindow(a, context, ref);
                     }
                   },
@@ -173,11 +165,6 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       weakOnEnemy: true,
                     );
                     if (context.mounted) {
-                      a == Stan.wygrana
-                          ? gameMetods.statsResetAfterWin()
-                          : a == Stan.przegrana
-                              ? gameMetods.setStatsAfterLose()
-                              : null;
                       await dialogWindow(a, context, ref);
                     }
                   },
@@ -199,11 +186,6 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       weakOnEnemy: false,
                     );
                     if (context.mounted) {
-                      a == Stan.wygrana
-                          ? gameMetods.statsResetAfterWin()
-                          : a == Stan.przegrana
-                              ? gameMetods.setStatsAfterLose()
-                              : null;
                       await dialogWindow(a, context, ref);
                     }
                   },

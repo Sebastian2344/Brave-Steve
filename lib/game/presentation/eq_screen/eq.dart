@@ -1,8 +1,12 @@
+import 'package:brave_steve/game/presentation/eq_screen/put_on_dialog.dart';
+import 'package:brave_steve/game/presentation/eq_screen/sell_item_dialog.dart';
+import 'package:brave_steve/game/presentation/eq_screen/take_off_dialog.dart';
+import 'package:brave_steve/game/presentation/eq_screen/exchange_item_dialog.dart';
+import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_menegment/eq_state.dart';
-import 'eq_dialogs.dart';
 
 class Equpment extends StatelessWidget {
   const Equpment({super.key});
@@ -21,59 +25,62 @@ class Equpment extends StatelessWidget {
       body: SafeArea(
         // SingleChildScrollView zapobiega błędom overflow na mniejszych ekranach
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children:[
-                const WindowEQ(id: 0),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    WindowEQ(id: 1),
-                    WindowEQ(id: 2),
-                  ],
-                ),
-                const WindowEQ(id: 3),
-                const WindowEQ(id: 4),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    WindowEQ(id: 5),
-                    WindowEQ(id: 6),
-                    WindowEQ(id: 7),
-                    WindowEQ(id: 8),
-                  ],
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    WindowEQ(id: 9),
-                    WindowEQ(id: 10),
-                    WindowEQ(id: 11),
-                    WindowEQ(id: 12),
-                  ],
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    WindowEQ(id: 13),
-                    WindowEQ(id: 14),
-                    WindowEQ(id: 15),
-                    WindowEQ(id: 16),
-                  ],
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    WindowEQ(id: 17),
-                    WindowEQ(id: 18),
-                    WindowEQ(id: 19),
-                    WindowEQ(id: 20),
-                  ],
-                ),
-              ],
+          child: Stack(alignment: Alignment.topRight, children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                children: [
+                  const WindowEQ(id: 0),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WindowEQ(id: 1),
+                      WindowEQ(id: 2),
+                    ],
+                  ),
+                  const WindowEQ(id: 3),
+                  const WindowEQ(id: 4),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WindowEQ(id: 5),
+                      WindowEQ(id: 6),
+                      WindowEQ(id: 7),
+                      WindowEQ(id: 8),
+                    ],
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WindowEQ(id: 9),
+                      WindowEQ(id: 10),
+                      WindowEQ(id: 11),
+                      WindowEQ(id: 12),
+                    ],
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WindowEQ(id: 13),
+                      WindowEQ(id: 14),
+                      WindowEQ(id: 15),
+                      WindowEQ(id: 16),
+                    ],
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      WindowEQ(id: 17),
+                      WindowEQ(id: 18),
+                      WindowEQ(id: 19),
+                      WindowEQ(id: 20),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+            MoneyWidget()
+          ]),
         ),
       ),
     );
@@ -98,6 +105,7 @@ class WindowEQ extends ConsumerWidget {
     // Dla 4 elementów daje to idealne dopasowanie bez wychodzenia poza ekran.
     final double boxSize = screenWidth * 0.18;
     final double marginSize = screenWidth * 0.02;
+    final bool czyPuste = ref.read(providerEQ.notifier).czyPustePole(id);
 
     return InkWell(
       onTap: () {
@@ -105,7 +113,13 @@ class WindowEQ extends ConsumerWidget {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialogW(id: id);
+              if (czyPuste && id > 4) {
+                return PutOnDialog(id: id);
+              } else if (id <= 4) {
+                return TakeOffDialog(id: id);
+              } else {
+                return ExchangeItemInEqDialog(id: id);
+              }
             },
           );
         }
@@ -135,9 +149,9 @@ class WindowEQ extends ConsumerWidget {
         child: isEmpty
             ? null
             : Image.asset(
-          ref.read(providerEQ.notifier).itemUrl(id),
-          fit: BoxFit.fill,
-        ),
+                ref.read(providerEQ.notifier).itemUrl(id),
+                fit: BoxFit.fill,
+              ),
       ),
     );
   }
