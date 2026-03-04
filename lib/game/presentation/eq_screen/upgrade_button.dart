@@ -13,7 +13,7 @@ class UpgradeButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final item = ref.watch(providerEQ).eqList[id];
     bool isNotVisible = ref.read(providerEQ.notifier).isMaxLevel(id);
-    double money = ref.watch(moneyProvider).money;
+    double money = ref.watch(moneyProvider).value!.money;
     return !item.isEmpty && !isNotVisible
         ? IgnorePointer(
           ignoring: item.item.upgradePrice > money,
@@ -21,22 +21,10 @@ class UpgradeButton extends ConsumerWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: item.item.upgradePrice > money ? Colors.grey : Colors.amber,),
               onPressed: () async {
-                final bill = ref
+                await ref
                     .read(providerEQ.notifier)
                     .upgradeItem(id, money);
-                ref.read(myStateProvider.notifier).setStats(ref);
-                if (bill.$1) {
-                  await ref
-                      .read(moneyProvider.notifier)
-                      .subtractmoney(bill.$2 ?? 0);
-                } else if (bill.$2 == null && bill.$1 == false) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Nie masz wystarczającej ilości waluty.')));
-                } else if (bill.$2 == null && bill.$1 == true) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text('Ulepszyłeś przedmiot na maksymalny poziom.')));
-                }
+                ref.read(myStateProvider.notifier).setStats();
               },
               child: const Text('Ulepszam')),
         )

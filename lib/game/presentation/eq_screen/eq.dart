@@ -97,7 +97,7 @@ class WindowEQ extends ConsumerWidget {
     ref.watch(providerEQ);
 
     // Zapisanie stanu do zmiennej, aby kod był czystszy i wydajniejszy
-    final isEmpty = ref.read(providerEQ.notifier).isEmpty(id);
+    final isEmpty = ref.read(providerEQ).eqList[id].isEmpty;
 
     // DYNAMICZNE DOPASOWANIE DO EKRANU:
     final screenWidth = MediaQuery.of(context).size.width;
@@ -149,7 +149,7 @@ class WindowEQ extends ConsumerWidget {
         child: isEmpty
             ? null
             : Image.asset(
-                ref.read(providerEQ.notifier).itemUrl(id),
+                ref.read(providerEQ).eqList[id].item.image,
                 fit: BoxFit.fill,
               ),
       ),

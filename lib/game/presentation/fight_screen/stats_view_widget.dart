@@ -233,10 +233,10 @@ class ArmourBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(providerEQ);
     ref.watch(myStateProvider.select(
       (gameState) => side ? gameState.list[0].getArmour() : gameState.list[gameState.enemyIndex].getArmour(),
     ));
+
     final player = ref.read(myStateProvider).list[side ? 0 : ref.read(myStateProvider).enemyIndex];
     return Stack(
       alignment: Alignment.centerLeft,

@@ -1,6 +1,7 @@
 //----------------------------------------------BattleView------------------------------------------------
 import 'package:brave_steve/game/data_layer/models/player_model/player_body.dart';
-import 'package:brave_steve/game/state_menegment/map_state.dart';
+import 'package:brave_steve/game/state_menegment/effects_state.dart';
+import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class BattleView extends StatelessWidget {
     //tło walki z postaciami
     return Consumer(
       builder: (context, ref, child) {
-        ref.watch(mapNotifierProvider.select((counter) => counter.boss));
+        ref.watch(counterEnemyNotifierProvider.select((counter) => counter.boss));
         return Container(
             height: mediaQuerySize.height / 3,
             width: mediaQuerySize.width,
@@ -27,7 +28,7 @@ class BattleView extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image:
-                    AssetImage(ref.read(mapNotifierProvider.notifier).getMap()),
+                    AssetImage(ref.read(counterEnemyNotifierProvider.notifier).getMap()),
               ),
             ),
             child: child);
@@ -39,14 +40,16 @@ class BattleView extends StatelessWidget {
           //gracz
           Consumer(
             builder: (context, ref, child) {
-              final game = ref.watch(myStateProvider);
+              final move1 = ref.watch(myStateProvider.select((counter) => counter.move1));
+              final heroEffect = ref.watch(effectsStateProvider.select((counter) => counter.isClearencePlayer));
+              final heroEffect2 = ref.watch(effectsStateProvider.select((counter) => counter.isWeaknessPlayer));
               return AnimatedPositioned(
                 duration: const Duration(milliseconds: 500),
-                left: game.move1 ? mediaQuerySize.width / 2 / 5 : 0,
-                child: game.heroEffect[0] || game.heroEffect[2]
+                left: move1 ? mediaQuerySize.width / 2 / 5 : 0,
+                child: heroEffect || heroEffect2
                     ? ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                            game.heroEffect[2] ? Colors.lightBlue : Colors.red,
+                            heroEffect ? Colors.lightBlue : Colors.red,
                             BlendMode.modulate),
                         child: Image.asset(
                           PlayerBody.playerBody[0][0],
@@ -67,17 +70,20 @@ class BattleView extends StatelessWidget {
           //przeciwnik
           Consumer(
             builder: (context, ref, child) {
-              final game = ref.watch(myStateProvider);
+              final move2 = ref.watch(myStateProvider.select((counter) => counter.move2));
+              final heroEffect = ref.watch(effectsStateProvider.select((counter) => counter.isClearenceEnemy));
+              final heroEffect2 = ref.watch(effectsStateProvider.select((counter) => counter.isWeaknessEnemy));
+              final enemyIndex = ref.watch(myStateProvider.select((counter) => counter.enemyIndex));
               return AnimatedPositioned(
                 duration: const Duration(milliseconds: 500),
-                right: game.move2 ? mediaQuerySize.width / 2 / 5 : 0,
-                child: game.heroEffect[1] || game.heroEffect[3]
+                right: move2 ? mediaQuerySize.width / 2 / 5 : 0,
+                child: heroEffect || heroEffect2
                     ? ColorFiltered(
                         colorFilter: ColorFilter.mode(
-                            game.heroEffect[3] ? Colors.lightBlue : Colors.red,
+                            heroEffect ? Colors.lightBlue : Colors.red,
                             BlendMode.modulate),
                         child: Image.asset(
-                          PlayerBody.playerBody[game.enemyIndex][0],
+                          PlayerBody.playerBody[enemyIndex][0],
                           width: mediaQuerySize.width /
                               2, //postac z efektem szerokość
                           height: mediaQuerySize.height /
@@ -85,7 +91,7 @@ class BattleView extends StatelessWidget {
                         ),
                       )
                     : Image.asset(
-                        PlayerBody.playerBody[game.enemyIndex][0],
+                        PlayerBody.playerBody[enemyIndex][0],
                         width: mediaQuerySize.width / 2, //postac szerokrść
                         height: mediaQuerySize.height / 3, //postac wysokość
                       ),

@@ -34,7 +34,7 @@ class PutOnDialog extends ConsumerWidget {
           FilledButton(
               onPressed: () {
                 ref.read(providerEQ.notifier).ubracsie(id);
-                ref.read(myStateProvider.notifier).setStats(ref);
+                ref.read(myStateProvider.notifier).setStats();
                 Navigator.of(context).pop();
               },
               child: const Text('Zakładam')),

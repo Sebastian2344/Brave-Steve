@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/presentation/eq_screen/full_eq_dialog.dart';
+import 'package:brave_steve/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
-import 'package:brave_steve/game/state_menegment/map_state.dart';
+import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -54,9 +55,9 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
 
   Future<void> dialogWindow(Enum a, BuildContext context, WidgetRef ref) async {
     final gameMetods = ref.read(myStateProvider.notifier);
-    final eqMethods = ref.watch(providerEQ.notifier);
+    final eqMethods = ref.read(providerEQ.notifier);
     final moneyMethods = ref.read(moneyProvider.notifier);
-    final mapMethods = ref.read(mapNotifierProvider.notifier);
+    final mapMethods = ref.read(counterEnemyNotifierProvider.notifier);
     if (Stan.koniecGry == a) {
       showDialog(
           barrierDismissible: false,
@@ -69,11 +70,9 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
           context: context,
           builder: (context) => const Lose());
     } else if (Stan.wygrana == a) {
-      gameMetods.statsResetAfterWin();
-      await moneyMethods.addmoney(50.0);
       mapMethods.incrementEnemy();
-      gameMetods.isLevelUp() ? gameMetods.levelUp() : null;
-
+      gameMetods.setStatsPlayerAndEnemyAfterWin();
+      await moneyMethods.addmoney(50.0);
       if (eqMethods.isSpace()) {
         eqMethods.randomItemDropToEQ(50);
       }
@@ -87,9 +86,6 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
 
   @override
   Widget build(BuildContext context) {
-    final buttonIgnore = ref.watch(myStateProvider.select(
-      (g) => g.buttonIgnore,
-    ));
     final gameMetods = ref.read(myStateProvider.notifier);
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double fontSize = mediaQueryData.textScaler.scale(16.0);
@@ -105,95 +101,115 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonWidget(
-                  globalKey: _keyAtak,
-                  description: 'Zadaje obrażenia takie jakie są w statystykach',
-                  fontSize: fontSize,
-                  buttonIgnore: buttonIgnore[0],
-                  battle: () async {
-                    final Enum a = await gameMetods.battle(
-                      superAtack: false,
-                      cleary: false,
-                      weakOnEnemy: false,
-                    );
-                    if (context.mounted) {
-                      await dialogWindow(a, context, ref);
-                    }
+                Consumer(
+                  builder: (context, ref, child) {
+                    final atack = ref.watch(actionButtonIgnoreProvider.select((state) => state.atack));
+                    return ButtonWidget(
+                    globalKey: _keyAtak,
+                    description: 'Zadaje obrażenia takie jakie są w statystykach',
+                    fontSize: fontSize,
+                    buttonIgnore: atack,
+                    battle: () async {
+                      final Enum a = await gameMetods.battle(
+                        superAtack: false,
+                        cleary: false,
+                        weakOnEnemy: false,
+                      );
+                      if (context.mounted) {
+                        await dialogWindow(a, context, ref);
+                      }
+                    },
+                    manaCost: '(+1 many)',
+                    textButton: 'Atak',
+                    color: const Color.fromARGB(255, 18, 50, 228),
+                    width: widthButton,
+                    height: heightButton,
+                  );
                   },
-                  manaCost: '(+1 many)',
-                  textButton: 'Atak',
-                  color: const Color.fromARGB(255, 18, 50, 228),
-                  width: widthButton,
-                  height: heightButton,
                 ),
-                ButtonWidget(
-                  globalKey: _keySuperAtak,
-                  description:
-                      'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
-                  fontSize: fontSize,
-                  buttonIgnore: buttonIgnore[1],
-                  battle: () async {
-                    final Enum a = await gameMetods.battle(
-                      superAtack: true,
-                      cleary: false,
-                      weakOnEnemy: false,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final superAtack = ref.watch(actionButtonIgnoreProvider.select((state) => state.superAtack));
+                    return ButtonWidget(
+                      globalKey: _keySuperAtak,
+                      description:
+                          'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
+                      fontSize: fontSize,
+                      buttonIgnore: superAtack,
+                      battle: () async {
+                        final Enum a = await gameMetods.battle(
+                          superAtack: true,
+                          cleary: false,
+                          weakOnEnemy: false,
+                        );
+                        if (context.mounted) {
+                          await dialogWindow(a, context, ref);
+                        }
+                      },
+                      manaCost: '(4 many)',
+                      textButton: 'SuperAtak',
+                      color: const Color.fromARGB(255, 12, 205, 18),
+                      width: widthButton,
+                      height: heightButton,
                     );
-                    if (context.mounted) {
-                      await dialogWindow(a, context, ref);
-                    }
                   },
-                  manaCost: '(4 many)',
-                  textButton: 'SuperAtak',
-                  color: const Color.fromARGB(255, 12, 205, 18),
-                  width: widthButton,
-                  height: heightButton,
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ButtonWidget(
-                  globalKey: _keyOslabienie,
-                  description: 'Obniża atak przeciwnika o 30 procent',
-                  fontSize: fontSize,
-                  buttonIgnore: buttonIgnore[2],
-                  battle: () async {
-                    final Enum a = await gameMetods.battle(
-                      superAtack: false,
-                      cleary: false,
-                      weakOnEnemy: true,
-                    );
-                    if (context.mounted) {
-                      await dialogWindow(a, context, ref);
-                    }
+                Consumer(
+                  builder: (context, ref, child) {
+                    final weakOnEnemy = ref.watch(actionButtonIgnoreProvider.select((state) => state.weakOnEnemy));
+                    return ButtonWidget(
+                      globalKey: _keyOslabienie,
+                      description: 'Obniża atak przeciwnika o 30 procent',
+                      fontSize: fontSize,
+                      buttonIgnore: weakOnEnemy,
+                    battle: () async {
+                      final Enum a = await gameMetods.battle(
+                        superAtack: false,
+                        cleary: false,
+                        weakOnEnemy: true,
+                      );
+                      if (context.mounted) {
+                        await dialogWindow(a, context, ref);
+                      }
+                    },
+                    manaCost: '(4 many)',
+                    textButton: 'Osłabienie',
+                    color: const Color.fromARGB(255, 105, 18, 228),
+                    width: widthButton,
+                    height: heightButton,
+                  );
                   },
-                  manaCost: '(4 many)',
-                  textButton: 'Osłabienie',
-                  color: const Color.fromARGB(255, 105, 18, 228),
-                  width: widthButton,
-                  height: heightButton,
                 ),
-                ButtonWidget(
-                  globalKey: _keyOczyszczenie,
-                  description: 'Zdejmuje efekt osłabienia',
-                  fontSize: fontSize - 1,
-                  buttonIgnore: buttonIgnore[3],
-                  battle: () async {
-                    final Enum a = await gameMetods.battle(
-                      superAtack: false,
-                      cleary: true,
-                      weakOnEnemy: false,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final cleary = ref.watch(actionButtonIgnoreProvider.select((state) => state.cleary));
+                    return ButtonWidget(
+                      globalKey: _keyOczyszczenie,
+                      description: 'Zdejmuje efekt osłabienia',
+                      fontSize: fontSize - 1,
+                      buttonIgnore: cleary,
+                      battle: () async {
+                        final Enum a = await gameMetods.battle(
+                          superAtack: false,
+                          cleary: true,
+                          weakOnEnemy: false,
+                        );
+                        if (context.mounted) {
+                          await dialogWindow(a, context, ref);
+                        }
+                      },
+                      manaCost: '(3 many)',
+                      textButton: 'Oczyszczenie',
+                      color: const Color.fromARGB(255, 12, 92, 205),
+                      width: widthButton,
+                      height: heightButton,
                     );
-                    if (context.mounted) {
-                      await dialogWindow(a, context, ref);
-                    }
                   },
-                  manaCost: '(3 many)',
-                  textButton: 'Oczyszczenie',
-                  color: const Color.fromARGB(255, 12, 92, 205),
-                  width: widthButton,
-                  height: heightButton,
                 ),
               ],
             ),

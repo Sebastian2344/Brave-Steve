@@ -16,6 +16,11 @@ enum Rarity {
 }
 
 class Items {
+  int maxLevelCommon = 5;
+  int maxLevelUncommon = 10;
+  int maxLevelRare = 15;
+  int maxLevelEpic = 25;
+  int maxLevelLegendary = 30;
   static const Map<ItemSet, Map<ItemTypeModel, Map<Rarity, ItemModel>>>
       _mapItems = {
     //--
@@ -878,5 +883,32 @@ class Items {
 
   ItemModel getItem(ItemSet itemSet, ItemTypeModel itemType, Rarity rarity) {
     return _mapItems[itemSet]![itemType]![rarity]!;
+  }
+
+  bool isItemMaxLevel(int level, String rarity) {
+    if (level == maxLevelCommon && rarity == 'common' ||
+        level == maxLevelUncommon && rarity == 'uncommon' ||
+        level == maxLevelRare && rarity == 'rare' ||
+        level == maxLevelEpic && rarity == 'epic' ||
+        level == maxLevelLegendary && rarity == 'legendary') {
+      return true;
+    }
+    return false;
+  }
+
+  String getMaxLevel(String rarity) {
+    if (rarity == 'common') {
+      return maxLevelCommon.toString();
+    } else if (rarity == 'uncommon') {
+      return maxLevelUncommon.toString();
+    } else if (rarity == 'rare') {
+      return maxLevelRare.toString();
+    } else if (rarity == 'epic') {
+      return maxLevelEpic.toString();
+    } else if (rarity == 'legendary') {
+      return maxLevelLegendary.toString();
+    } else {
+      return 'Nielimitowany';
+    }
   }
 }

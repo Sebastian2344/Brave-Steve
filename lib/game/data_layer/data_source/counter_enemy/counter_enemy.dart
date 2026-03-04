@@ -1,4 +1,4 @@
-import 'package:brave_steve/game/data_layer/models/counterenemy_model/counter_enemy_model.dart';
+import 'package:brave_steve/game/data_layer/models/counter_enemy_model/counter_enemy_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'counter_enemy.g.dart';
 

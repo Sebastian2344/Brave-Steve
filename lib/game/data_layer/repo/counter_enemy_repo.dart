@@ -1,5 +1,5 @@
 import 'package:brave_steve/game/data_layer/data_source/data_box/box.dart';
-import 'package:brave_steve/game/data_layer/models/counterenemy_model/counter_enemy_model.dart';
+import 'package:brave_steve/game/data_layer/models/counter_enemy_model/counter_enemy_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CounterEnemyRepo {

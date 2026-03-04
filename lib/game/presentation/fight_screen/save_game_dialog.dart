@@ -1,7 +1,6 @@
+import 'package:brave_steve/game/state_menegment/save_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../state_menegment/game_state.dart';
 import '../saves_screen/show_saves.dart';
 
 class SaveGame extends ConsumerWidget {
@@ -34,7 +33,7 @@ class SaveGame extends ConsumerWidget {
           onPressed: () async {
             textEditingController.text.isNotEmpty
                 ? {
-                    await ref.read(myStateProvider.notifier).saveGame(textEditingController.text,ref),
+                    await ref.read(saveStateProvider.notifier).saveGame(textEditingController.text),
                     if (context.mounted)
                       {
                         Navigator.pop(context),

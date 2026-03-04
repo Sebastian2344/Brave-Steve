@@ -25,14 +25,19 @@ class DataBox {
  
   List<Player> get playersStartStats{
     return[
-      Player(name:'Rycerz', hp: 200, maxHp: 200, attack: 15, maxAttack: 15, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
+      Player(name:'Rycerz', hp: 200, maxHp: 200, attack: 150, maxAttack: 150, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
+      Player(name:'Szczur', hp :180 ,maxHp :180 ,attack :14 ,maxAttack :14 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
+      Player(name:'Nietoperz', hp :190 ,maxHp :190 ,attack :13 ,maxAttack :13 ,mana :10 ,exp :0 ,armour :0,maxArmour :0,lvl : 1, weak: false),//enemy
+      Player(name:'Pies', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
+      Player(name:'Ghul', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
+      Player(name:'Duch', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
       Player(name:'Kostucha', hp: 150, maxHp: 150, attack: 17, maxAttack: 17, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false,), //enemy hasnot enemy index
       Player(name:'Szkielet', hp: 160, maxHp: 160, attack: 16, maxAttack: 16, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1 ,weak:false,), //enemy
+      Player(name:'Zombie', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
       Player(name:'Wampir', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
-      Player(name:'Szczur', hp :180 ,maxHp :180 ,attack :14 ,maxAttack :14 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
-      Player(name:'Nietoperz', hp :190 ,maxHp :190 ,attack :13 ,maxAttack :13 ,mana :10 ,exp :0 ,armour :0,maxArmour :0,lvl : 1, weak: false),
-      Player(name:'Wilkołak', hp :320,maxHp :320,attack :23,maxAttack :23,mana :10,exp :0,armour :40,maxArmour :40,lvl : 5, weak: false),
-      Player(name:'Smok', hp :450 ,maxHp :450 ,attack :35 ,maxAttack :35 ,mana :10 ,exp :0 ,armour :60,maxArmour: 60,lvl: 10, weak: false), //enemy
+      Player(name:'Nekromanta', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
+      Player(name:'Wilkołak', hp :170,maxHp :320,attack :18,maxAttack :18,mana :10,exp :0,armour :0,maxArmour :0,lvl : 1, weak: false),//enemy
+      Player(name:'Smok', hp :180 ,maxHp :180 ,attack :17 ,maxAttack :17 ,mana :10 ,exp :0 ,armour :0,maxArmour: 0,lvl: 1, weak: false), //enemy
     ];
   }
 

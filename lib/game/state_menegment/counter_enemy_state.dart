@@ -1,10 +1,15 @@
-import 'package:brave_steve/game/data_layer/models/counterenemy_model/counter_enemy_model.dart';
+import 'package:brave_steve/game/data_layer/models/counter_enemy_model/counter_enemy_model.dart';
 import 'package:brave_steve/game/data_layer/repo/counter_enemy_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MapNotifier extends StateNotifier<CounterEnemyModel> {
-  MapNotifier(this.counterEnemyRepo) : super(CounterEnemyModel(1,0));
-  final CounterEnemyRepo counterEnemyRepo;
+class CounterEnemyNotifier extends Notifier<CounterEnemyModel> {
+  CounterEnemyRepo get counterEnemyRepo => ref.read(counterEnemyRepoProvider);
+
+  @override
+  build(){
+    ref.watch(counterEnemyRepoProvider);
+    return CounterEnemyModel(1,0);
+  }
 
   void fromSave(int index){
     state = counterEnemyRepo.getCounterEnemyModel(index);
@@ -38,7 +43,7 @@ class MapNotifier extends StateNotifier<CounterEnemyModel> {
   }
 }
 
-final mapNotifierProvider =
-    StateNotifierProvider<MapNotifier, CounterEnemyModel>((ref) {
-  return MapNotifier(ref.watch(counterEnemyRepoProvider));
+final counterEnemyNotifierProvider =
+    NotifierProvider<CounterEnemyNotifier, CounterEnemyModel>(() {
+  return CounterEnemyNotifier();
 });

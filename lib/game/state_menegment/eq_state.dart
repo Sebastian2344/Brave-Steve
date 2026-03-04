@@ -1,122 +1,126 @@
 import 'package:brave_steve/game/data_layer/repo/eq_repo.dart';
+import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
 
-final providerEQ = StateNotifierProvider<EqStateMenagment, EqModel>((ref) {
-  final myEqRepo = ref.watch(eqRepoProvider);
-  return EqStateMenagment(eqRepo: myEqRepo);
+final providerEQ = NotifierProvider<EqStateMenagment, EqModel>(() {
+  return EqStateMenagment();
 });
 
-class EqStateMenagment extends StateNotifier<EqModel> {
-  EqStateMenagment({required this.eqRepo})
-      : super(const EqModel(eqList: [
-          ItemPlaceModel(
-              id: 0,
-              isEmpty: true,
-              classField: FieldTypeModel.helmet,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 1,
-              isEmpty: true,
-              classField: FieldTypeModel.sword,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 2,
-              isEmpty: true,
-              classField: FieldTypeModel.chestplate,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 3,
-              isEmpty: true,
-              classField: FieldTypeModel.pants,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 4,
-              isEmpty: true,
-              classField: FieldTypeModel.boots,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 5,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 6,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 7,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 8,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 9,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 10,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 11,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 12,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 13,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 14,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 15,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 16,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 17,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 18,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 19,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-          ItemPlaceModel(
-              id: 20,
-              isEmpty: true,
-              classField: FieldTypeModel.backpack,
-              item: ItemModel()),
-        ], stats: StatsModelToAddStatsPlayer(attack: 0, armour: 0)));
-  final EqRepo eqRepo;
+class EqStateMenagment extends Notifier<EqModel> {
+  EqRepo get eqRepo => ref.read(eqRepoProvider);
+
+  @override
+  build() {
+    ref.watch(eqRepoProvider);
+    return const EqModel(eqList: [
+      ItemPlaceModel(
+          id: 0,
+          isEmpty: true,
+          classField: FieldTypeModel.helmet,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 1,
+          isEmpty: true,
+          classField: FieldTypeModel.sword,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 2,
+          isEmpty: true,
+          classField: FieldTypeModel.chestplate,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 3,
+          isEmpty: true,
+          classField: FieldTypeModel.pants,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 4,
+          isEmpty: true,
+          classField: FieldTypeModel.boots,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 5,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 6,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 7,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 8,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 9,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 10,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 11,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 12,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 13,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 14,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 15,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 16,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 17,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 18,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 19,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+      ItemPlaceModel(
+          id: 20,
+          isEmpty: true,
+          classField: FieldTypeModel.backpack,
+          item: ItemModel()),
+    ], stats: StatsModelToAddStatsPlayer(attack: 0, armour: 0));
+  }
 
   void loadItemPlaceModels(int index) {
     List<ItemPlaceModel> o = eqRepo.getListFieldTypeModelFromDB(index);
@@ -124,36 +128,15 @@ class EqStateMenagment extends StateNotifier<EqModel> {
         .copywith(eqList: [for (final itemPlaceModel in o) itemPlaceModel]);
   }
 
-  bool isMaxLevel(int id) {
-    int level = state.eqList[id].item.itemLevel;
-    String rarity = state.eqList[id].item.itemRarity;
-    if (level == 5 && rarity == 'common' ||
-        level == 10 && rarity == 'uncommon' ||
-        level == 15 && rarity == 'rare' ||
-        level == 25 && rarity == 'epic' ||
-        level == 30 && rarity == 'legendary') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  (bool, double?) upgradeItem(int id, double money) {
+  Future<void> upgradeItem(int id, double money) async {
     if (money < state.eqList[id].item.upgradePrice) {
-      return (false, null);
+      return;
     }
-    String rarity = state.eqList[id].item.itemRarity;
-    int level = state.eqList[id].item.itemLevel;
     double bill = state.eqList[id].item.upgradePrice.toDouble();
-
-    if (level == 5 && rarity == 'common' ||
-        level == 10 && rarity == 'uncommon' ||
-        level == 15 && rarity == 'rare' ||
-        level == 25 && rarity == 'epic' ||
-        level == 30 && rarity == 'legendary') {
-      return (true, null);
+    if (eqRepo.isItemMaxLevel(
+        state.eqList[id].item.itemLevel, state.eqList[id].item.itemRarity)) {
+      return;
     }
-
     state = state.copywith(eqList: [
       for (final itemPlaceModel in state.eqList)
         if (itemPlaceModel.id == id)
@@ -173,16 +156,17 @@ class EqStateMenagment extends StateNotifier<EqModel> {
     if (state.eqList[id].classField != FieldTypeModel.backpack) {
       state = state.copywith(
           stats: state.stats.copywith(
-              attack: state.eqList[id].item.attack == null ? 0 : attackStatsBoost().toDouble(),
-              armour: state.eqList[id].item.armour == null ? 0 : armourStatsBoost().toDouble()));
+              attack: state.eqList[id].item.attack == null
+                  ? 0
+                  : attackStatsBoost().toDouble(),
+              armour: state.eqList[id].item.armour == null
+                  ? 0
+                  : armourStatsBoost().toDouble()));
     } else {
       state = state.copywith(stats: state.stats.copywith(attack: 0, armour: 0));
     }
-    return (true, bill);
+    await ref.read(moneyProvider.notifier).subtractmoney(bill);
   }
-
-  int attackStatsBoost() => 1;
-  int armourStatsBoost() => 1;
 
   void ubracsie(int id) {
     if (state.eqList[id].isEmpty == false &&
@@ -234,61 +218,44 @@ class EqStateMenagment extends StateNotifier<EqModel> {
     }
   }
 
-  int getIdToWear(int id) {
-    return state.eqList.firstWhere((e) =>
-            e.item.classItem == state.eqList[id].item.classItem && e.isEmpty == false)
-        .id;
-  }
-
   void podmiankaItemow(int id) {
     if (state.eqList[id].isEmpty == false &&
         state.eqList[id].classField == FieldTypeModel.backpack) {
-      
       ItemModel itemBeforePutOn = state.eqList[id].item;
-      int idToWear = state.eqList.firstWhere((e)=> e.item.classItem == state.eqList[id].item.classItem && e.isEmpty == false).id;
-
-      ItemModel itemBeforeTakeOff = state.eqList[idToWear].item;
+      int idItemBeforeTakeOff = state.eqList
+          .firstWhere(
+              (e) =>
+                  e.item.classItem == state.eqList[id].item.classItem &&
+                  e.isEmpty == false &&
+                  e.classField != FieldTypeModel.backpack,
+              orElse: () => ItemPlaceModel(
+                  id: -1,
+                  isEmpty: true,
+                  classField: FieldTypeModel.backpack,
+                  item: const ItemModel()))
+          .id;
+      if (idItemBeforeTakeOff == -1) {
+        return;
+      }
+      ItemModel itemBeforeTakeOff = state.eqList[idItemBeforeTakeOff].item;
 
       state = state.copywith(eqList: [
         for (final itemPlaceModel in state.eqList)
-          if(itemPlaceModel.id == idToWear)
+          if (itemPlaceModel.id == idItemBeforeTakeOff)
             itemPlaceModel.copywith(isEmpty: false, item: itemBeforePutOn)
-          else if(itemPlaceModel.id == id)
+          else if (itemPlaceModel.id == id)
             itemPlaceModel.copywith(isEmpty: false, item: itemBeforeTakeOff)
           else
             itemPlaceModel
       ]);
 
-      state = state.copywith(stats: state.stats.copywith(
-          attack: ((itemBeforeTakeOff.attack ?? 0).toDouble() * -1) + (itemBeforePutOn.attack ?? 0).toDouble(),
-          armour: ((itemBeforeTakeOff.armour ?? 0).toDouble() * -1) + (itemBeforePutOn.armour ?? 0).toDouble()));
+      state = state.copywith(
+          stats: state.stats.copywith(
+              attack: ((itemBeforeTakeOff.attack ?? 0).toDouble() * -1) +
+                  (itemBeforePutOn.attack ?? 0).toDouble(),
+              armour: ((itemBeforeTakeOff.armour ?? 0).toDouble() * -1) +
+                  (itemBeforePutOn.armour ?? 0).toDouble()));
     }
-  }
-
-  void getAllItemsStats() {
-    double attack = 0;
-    double armour = 0;
-    for (final itemPlaceModel in state.eqList) {
-      if (itemPlaceModel.isEmpty == false &&
-          itemPlaceModel.classField != FieldTypeModel.backpack) {
-        attack += (itemPlaceModel.item.attack ?? 0).toDouble();
-        armour += (itemPlaceModel.item.armour ?? 0).toDouble();
-      }
-    }
-    state = state.copywith(
-        stats: state.stats.copywith(attack: attack, armour: armour));
-  }
-
-  bool czyPustePole(int id) {
-    return state.eqList[id].item.classItem == ItemTypeModel.helmet
-        ? state.eqList[0].isEmpty
-        : state.eqList[id].item.classItem == ItemTypeModel.chestplate
-            ? state.eqList[2].isEmpty
-            : state.eqList[id].item.classItem == ItemTypeModel.sword
-                ? state.eqList[1].isEmpty
-                : state.eqList[id].item.classItem == ItemTypeModel.pants
-                    ? state.eqList[3].isEmpty
-                    : state.eqList[4].isEmpty;
   }
 
   void rozebracsie(int id) {
@@ -382,12 +349,25 @@ class EqStateMenagment extends StateNotifier<EqModel> {
     ]);
   }
 
-  String itemUrl(int id) {
-    return state.eqList[id].item.image;
+  int getIdItemBeforeTakeOff(int id) {
+    return state.eqList
+        .firstWhere((e) =>
+            e.item.classItem == state.eqList[id].item.classItem &&
+            e.isEmpty == false &&
+            e.classField != FieldTypeModel.backpack)
+        .id;
   }
 
-  double getPrice(int id) {
-    return state.eqList[id].item.price.toDouble();
+  bool czyPustePole(int id) {
+    return state.eqList[id].item.classItem == ItemTypeModel.helmet
+        ? state.eqList[0].isEmpty
+        : state.eqList[id].item.classItem == ItemTypeModel.chestplate
+            ? state.eqList[2].isEmpty
+            : state.eqList[id].item.classItem == ItemTypeModel.sword
+                ? state.eqList[1].isEmpty
+                : state.eqList[id].item.classItem == ItemTypeModel.pants
+                    ? state.eqList[3].isEmpty
+                    : state.eqList[4].isEmpty;
   }
 
   bool isSpace() {
@@ -406,7 +386,15 @@ class EqStateMenagment extends StateNotifier<EqModel> {
     return true;
   }
 
-  bool isEmpty(int id) {
-    return state.eqList[id].isEmpty;
+  bool isMaxLevel(int id) {
+    return eqRepo.isItemMaxLevel(
+        state.eqList[id].item.itemLevel, state.eqList[id].item.itemRarity);
   }
+
+  String getMaxLevel(String rarity) {
+    return eqRepo.getMaxLevel(rarity);
+  }
+
+  int attackStatsBoost() => 1;
+  int armourStatsBoost() => 1;
 }

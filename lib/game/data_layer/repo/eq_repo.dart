@@ -10,20 +10,33 @@ class EqRepo {
   final DataBox dataSource;
   const EqRepo({required this.items, required this.dataSource});
 
-  ItemModel? getDrawnItem(int dropRate){
+  ItemModel? getDrawnItem(int dropRate) {
     Rarity rarity = Rarity.common;
     int chance = Random().nextInt(100);
-    if(chance >= dropRate){
+    if (chance >= dropRate) {
       return null;
     }
     ItemSet itemSet = ItemSet.values[Random().nextInt(ItemSet.values.length)];
-    ItemTypeModel itemType = ItemTypeModel.values[Random().nextInt(ItemTypeModel.values.length-1)];
+    ItemTypeModel itemType =
+        ItemTypeModel.values[Random().nextInt(ItemTypeModel.values.length - 1)];
     return items.getItem(itemSet, itemType, rarity);
   }
 
-  List<ItemPlaceModel> getListFieldTypeModelFromDB(int index){
-    return dataSource.getItemPlacesFromDB(index).map((e) => e.toItemPlaceModel()).toList();
+  List<ItemPlaceModel> getListFieldTypeModelFromDB(int index) {
+    return dataSource
+        .getItemPlacesFromDB(index)
+        .map((e) => e.toItemPlaceModel())
+        .toList();
+  }
+
+  bool isItemMaxLevel(int level, String rarity) {
+    return items.isItemMaxLevel(level, rarity);
+  }
+
+  String getMaxLevel(String rarity) {
+    return items.getMaxLevel(rarity);
   }
 }
 
-Provider<EqRepo> eqRepoProvider = Provider((ref) => EqRepo(items: Items(), dataSource: ref.watch(dataBoxProvider)));
+Provider<EqRepo> eqRepoProvider = Provider(
+    (ref) => EqRepo(items: Items(), dataSource: ref.watch(dataBoxProvider)));

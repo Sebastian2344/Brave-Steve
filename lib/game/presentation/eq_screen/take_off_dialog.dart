@@ -34,7 +34,7 @@ class TakeOffDialog extends ConsumerWidget {
           FilledButton(
               onPressed: () {
                 ref.read(providerEQ.notifier).rozebracsie(id);
-                ref.read(myStateProvider.notifier).setStats(ref);
+                ref.read(myStateProvider.notifier).setStats();
                 Navigator.of(context).pop();
               },
               child: const Text('Zdejmuję')),

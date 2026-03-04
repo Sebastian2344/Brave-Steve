@@ -13,7 +13,7 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int idToWear = ref.read(providerEQ.notifier).getIdToWear(id);
+    int idToWear = ref.read(providerEQ.notifier).getIdItemBeforeTakeOff(id);
     return AlertDialog(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height / 1.25,
@@ -38,7 +38,7 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
           FilledButton(
               onPressed: () {
                 ref.read(providerEQ.notifier).podmiankaItemow(id);
-                ref.read(myStateProvider.notifier).setStats(ref);
+                ref.read(myStateProvider.notifier).setStats();
                 Navigator.of(context).pop();
               },
               child: const Text('Jeszcze jak')),

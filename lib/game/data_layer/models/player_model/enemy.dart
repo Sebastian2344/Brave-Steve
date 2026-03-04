@@ -78,7 +78,7 @@ class Enemy extends PlayerModel {
     _hp = _maxHp;
     _attack = _maxAttack;
     _mana = 10;
-    _armour = _maxArmour;
+    _armour = _maxArmour = 4 * (_lvl.toDouble() - 1);
     return this;
   }
 
@@ -103,14 +103,15 @@ class Enemy extends PlayerModel {
 
   @override
   PlayerModel levelUp() {
+    _weak = false;
     _lvl++;
-    _attack = _attack + 4;
-    _maxAttack = _attack;
+    _maxAttack = _maxAttack + 2;
+    _attack = _maxAttack;
     _mana = 10;
-    _maxHp = _maxHp + 40;
+    _maxHp = _maxHp + 20;
     _hp = _maxHp;
     _exp = 0;
-    _armour = _maxArmour = 4 * (_lvl.toDouble() - 1);
+    _armour = _maxArmour = 2 * (_lvl.toDouble() - 1);
     return this;
   }
 

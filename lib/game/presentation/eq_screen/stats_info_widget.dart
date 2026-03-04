@@ -9,22 +9,22 @@ class ShowItemInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref.watch(providerEQ).eqList[id];
+    final itemPlace = ref.watch(providerEQ).eqList[id];
 
-    return !item.isEmpty
+    return !itemPlace.isEmpty
         ? Column(
             children: [
-              Text(item.item.name),
-              Text('Poziom: ${item.item.itemLevel}'),
-              Image.asset(item.item.image, cacheWidth: 150, cacheHeight: 150),
-              Text(item.item.description),
-              Text('Cena: ${item.item.price}'),
+              Text(itemPlace.item.name),
+              Text('Poziom: ${itemPlace.item.itemLevel}'),
+              Image.asset(itemPlace.item.image, cacheWidth: 150, cacheHeight: 150),
+              Text(itemPlace.item.description),
+              Text('Cena: ${itemPlace.item.price}'),
               Column(
                 children: [
-                  if (item.item.attack != null)
-                    Text('Atak: ${item.item.attack}'),
-                  if (item.item.armour != null)
-                    Text('Pancerz: ${item.item.armour}'),
+                  if (itemPlace.item.attack != null)
+                    Text('Atak: ${itemPlace.item.attack}'),
+                  if (itemPlace.item.armour != null)
+                    Text('Pancerz: ${itemPlace.item.armour}'),
                 ],
               )
             ],
