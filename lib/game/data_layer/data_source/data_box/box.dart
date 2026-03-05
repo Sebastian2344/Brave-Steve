@@ -25,7 +25,7 @@ class DataBox {
  
   List<Player> get playersStartStats{
     return[
-      Player(name:'Rycerz', hp: 200, maxHp: 200, attack: 150, maxAttack: 150, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
+      Player(name:'Rycerz', hp: 200, maxHp: 200, attack: 15, maxAttack: 15, mana: 10, exp: 0, armour: 0, maxArmour: 0, lvl: 1, weak: false, enemyIndex: 1), // My hero has got enemyIndex
       Player(name:'Szczur', hp :180 ,maxHp :180 ,attack :14 ,maxAttack :14 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy
       Player(name:'Nietoperz', hp :190 ,maxHp :190 ,attack :13 ,maxAttack :13 ,mana :10 ,exp :0 ,armour :0,maxArmour :0,lvl : 1, weak: false),//enemy
       Player(name:'Pies', hp :170 ,maxHp :170 ,attack :15 ,maxAttack :15 ,mana :10 ,exp :0 ,armour :0 ,maxArmour :0 ,lvl :1 ,weak:false,), //enemy

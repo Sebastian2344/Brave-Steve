@@ -70,13 +70,14 @@ class ItemAdapter extends TypeAdapter<Item> {
       itemLevel: fields[7] == null ? 0 : fields[7] as int,
       upgradePrice: fields[8] == null ? 0 : fields[8] as int,
       rarity: fields[9] == null ? 'none' : fields[9] as String,
+      numerZestawu: fields[10] == null ? 4 : fields[10] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -96,7 +97,9 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(8)
       ..write(obj.upgradePrice)
       ..writeByte(9)
-      ..write(obj.rarity);
+      ..write(obj.rarity)
+      ..writeByte(10)
+      ..write(obj.numerZestawu);
   }
 
   @override

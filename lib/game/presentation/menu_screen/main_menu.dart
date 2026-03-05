@@ -21,7 +21,7 @@ class MainMenu extends ConsumerWidget {
           toolbarHeight: MediaQuery.of(context).size.height * 0.15,
           backgroundColor: Colors.grey,
           centerTitle: true,
-          title: Text('Brave Steve',
+          title: Text('Odważny rycerz (nazwa do zmiany)',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).textScaler.scale(50.0),
                   color: const Color.fromARGB(255, 57, 44, 30),

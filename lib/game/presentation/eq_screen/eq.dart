@@ -16,7 +16,7 @@ class Equpment extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Equipment'),
+        title: const Text('Ekwipunek'),
         centerTitle: true,
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,

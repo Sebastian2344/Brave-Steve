@@ -1,9 +1,11 @@
 import 'package:brave_steve/game/data_layer/models/eq_model/eq_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum ItemSet {
   set1,
   set2,
   set3,
+  free
 }
 
 enum Rarity {
@@ -36,7 +38,8 @@ class Items {
             price: 10,
             attack: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.uncommon: ItemModel(
             name: 'Kamienny Miecz',
             description: 'Dodaje 5 do ataku',
@@ -45,7 +48,8 @@ class Items {
             price: 15,
             attack: 5,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.rare: ItemModel(
             name: 'Żelazny miecz',
             description: 'Dodaje 6 do ataku',
@@ -54,7 +58,8 @@ class Items {
             price: 20,
             attack: 6,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Miecz',
             description: 'Dodaje 7 do ataku',
@@ -63,7 +68,8 @@ class Items {
             price: 25,
             attack: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Miecz',
             description: 'Dodaje 10 do ataku',
@@ -72,7 +78,8 @@ class Items {
             price: 50,
             attack: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Miecz',
             description: 'Dodaje 15 do ataku',
@@ -81,7 +88,8 @@ class Items {
             price: 100,
             attack: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
@@ -92,7 +100,8 @@ class Items {
             price: 10,
             armour: 3,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Chełm',
             description: 'Dodaje 5 pancerza',
@@ -101,7 +110,8 @@ class Items {
             price: 15,
             armour: 5,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.rare: ItemModel(
             name: 'Żelazny Chełm',
             description: 'Dodaje 7 pancerza',
@@ -110,7 +120,8 @@ class Items {
             price: 20,
             armour: 7,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Chełm',
             description: 'Dodaje 9 pancerza',
@@ -119,7 +130,8 @@ class Items {
             price: 25,
             armour: 9,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Chełm',
             description: 'Dodaje 15 pancerza',
@@ -128,7 +140,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Chełm',
             description: 'Dodaje 20 pancerza',
@@ -137,7 +150,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
@@ -148,7 +162,8 @@ class Items {
             price: 10,
             armour: 8,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Napierśnik',
             description: 'Dodaje 10 pancerza',
@@ -157,7 +172,8 @@ class Items {
             price: 15,
             armour: 10,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.rare: ItemModel(
             name: 'Żelazny Napierśnik',
             description: 'Dodaje 12 pancerza',
@@ -166,7 +182,8 @@ class Items {
             price: 20,
             armour: 12,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Napierśnik',
             description: 'Dodaje 14 pancerza',
@@ -175,7 +192,8 @@ class Items {
             price: 25,
             armour: 14,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Napierśnik',
             description: 'Dodaje 20 pancerza',
@@ -194,7 +212,8 @@ class Items {
             price: 100,
             armour: 25,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
@@ -205,7 +224,8 @@ class Items {
             price: 10,
             armour: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Spodnie',
             description: 'Dodają 6 pancerza',
@@ -214,7 +234,8 @@ class Items {
             price: 15,
             armour: 6,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.rare: ItemModel(
             name: 'Żelazne Spodnie',
             description: 'Dodają 8 pancerza',
@@ -223,7 +244,8 @@ class Items {
             price: 20,
             armour: 8,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Spodnie',
             description: 'Dodają 10 pancerza',
@@ -232,7 +254,8 @@ class Items {
             price: 25,
             armour: 10,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Spodnie',
             description: 'Dodają 15 pancerza',
@@ -241,7 +264,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Spodnie',
             description: 'Dodają 20 pancerza',
@@ -250,7 +274,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
@@ -261,7 +286,8 @@ class Items {
             price: 10,
             armour: 1,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Buty',
             description: 'Dodają 3 pancerza',
@@ -270,7 +296,8 @@ class Items {
             price: 15,
             armour: 3,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.rare: ItemModel(
             name: 'Żelazne Buty',
             description: 'Dodają 5 pancerza',
@@ -279,7 +306,8 @@ class Items {
             price: 20,
             armour: 5,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Buty',
             description: 'Dodają 7 pancerza',
@@ -288,7 +316,8 @@ class Items {
             price: 25,
             armour: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Buty',
             description: 'Dodają 10 pancerza',
@@ -297,7 +326,8 @@ class Items {
             price: 50,
             armour: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Buty',
             description: 'Dodają 15 pancerza',
@@ -306,7 +336,8 @@ class Items {
             price: 100,
             armour: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 1),
       }
     },
     //--
@@ -322,7 +353,8 @@ class Items {
             price: 10,
             attack: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.uncommon: ItemModel(
             name: 'Kamienny Miecz',
             description: 'Dodaje 5 do ataku',
@@ -331,7 +363,8 @@ class Items {
             price: 15,
             attack: 5,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.rare: ItemModel(
             name: 'Żelazny miecz',
             description: 'Dodaje 6 do ataku',
@@ -340,7 +373,8 @@ class Items {
             price: 20,
             attack: 6,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Miecz',
             description: 'Dodaje 7 do ataku',
@@ -349,7 +383,8 @@ class Items {
             price: 25,
             attack: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Miecz',
             description: 'Dodaje 10 do ataku',
@@ -358,7 +393,8 @@ class Items {
             price: 50,
             attack: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Miecz',
             description: 'Dodaje 15 do ataku',
@@ -367,7 +403,8 @@ class Items {
             price: 100,
             attack: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
@@ -378,7 +415,8 @@ class Items {
             price: 10,
             armour: 3,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Chełm',
             description: 'Dodaje 5 pancerza',
@@ -387,7 +425,8 @@ class Items {
             price: 15,
             armour: 5,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.rare: ItemModel(
             name: 'Żelazny Chełm',
             description: 'Dodaje 7 pancerza',
@@ -396,7 +435,8 @@ class Items {
             price: 20,
             armour: 7,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Chełm',
             description: 'Dodaje 9 pancerza',
@@ -405,7 +445,8 @@ class Items {
             price: 25,
             armour: 9,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Chełm',
             description: 'Dodaje 15 pancerza',
@@ -414,7 +455,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Chełm',
             description: 'Dodaje 20 pancerza',
@@ -423,7 +465,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
@@ -434,7 +477,8 @@ class Items {
             price: 10,
             armour: 8,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Napierśnik',
             description: 'Dodaje 10 pancerza',
@@ -443,7 +487,8 @@ class Items {
             price: 15,
             armour: 10,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.rare: ItemModel(
             name: 'Żelazny Napierśnik',
             description: 'Dodaje 12 pancerza',
@@ -452,7 +497,8 @@ class Items {
             price: 20,
             armour: 12,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Napierśnik',
             description: 'Dodaje 14 pancerza',
@@ -461,7 +507,8 @@ class Items {
             price: 25,
             armour: 14,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Napierśnik',
             description: 'Dodaje 20 pancerza',
@@ -470,7 +517,8 @@ class Items {
             price: 50,
             armour: 20,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Napierśnik',
             description: 'Dodaje 25 pancerza',
@@ -479,7 +527,8 @@ class Items {
             price: 100,
             armour: 25,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
@@ -490,7 +539,8 @@ class Items {
             price: 10,
             armour: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Spodnie',
             description: 'Dodają 6 pancerza',
@@ -499,7 +549,8 @@ class Items {
             price: 15,
             armour: 6,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.rare: ItemModel(
             name: 'Żelazne Spodnie',
             description: 'Dodają 8 pancerza',
@@ -508,7 +559,8 @@ class Items {
             price: 20,
             armour: 8,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Spodnie',
             description: 'Dodają 10 pancerza',
@@ -517,7 +569,8 @@ class Items {
             price: 25,
             armour: 10,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Spodnie',
             description: 'Dodają 15 pancerza',
@@ -526,7 +579,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Spodnie',
             description: 'Dodają 20 pancerza',
@@ -535,7 +589,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
@@ -546,7 +601,8 @@ class Items {
             price: 10,
             armour: 1,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Buty',
             description: 'Dodają 3 pancerza',
@@ -555,7 +611,8 @@ class Items {
             price: 15,
             armour: 3,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.rare: ItemModel(
             name: 'Żelazne Buty',
             description: 'Dodają 5 pancerza',
@@ -564,7 +621,8 @@ class Items {
             price: 20,
             armour: 5,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Buty',
             description: 'Dodają 7 pancerza',
@@ -573,7 +631,8 @@ class Items {
             price: 25,
             armour: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Buty',
             description: 'Dodają 10 pancerza',
@@ -582,7 +641,8 @@ class Items {
             price: 50,
             armour: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Buty',
             description: 'Dodają 15 pancerza',
@@ -591,7 +651,8 @@ class Items {
             price: 100,
             armour: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 2),
       }
     },
     //--
@@ -607,7 +668,8 @@ class Items {
             price: 10,
             attack: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.uncommon: ItemModel(
             name: 'Kamienny Miecz',
             description: 'Dodaje 5 do ataku',
@@ -616,7 +678,8 @@ class Items {
             price: 15,
             attack: 5,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.rare: ItemModel(
             name: 'Żelazny miecz',
             description: 'Dodaje 6 do ataku',
@@ -625,7 +688,8 @@ class Items {
             price: 20,
             attack: 6,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Miecz',
             description: 'Dodaje 7 do ataku',
@@ -634,7 +698,8 @@ class Items {
             price: 25,
             attack: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Miecz',
             description: 'Dodaje 10 do ataku',
@@ -643,7 +708,8 @@ class Items {
             price: 50,
             attack: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Miecz',
             description: 'Dodaje 15 do ataku',
@@ -652,7 +718,8 @@ class Items {
             price: 100,
             attack: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
@@ -663,7 +730,8 @@ class Items {
             price: 10,
             armour: 3,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Chełm',
             description: 'Dodaje 5 pancerza',
@@ -672,7 +740,8 @@ class Items {
             price: 15,
             armour: 5,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.rare: ItemModel(
             name: 'Żelazny Chełm',
             description: 'Dodaje 7 pancerza',
@@ -681,7 +750,8 @@ class Items {
             price: 20,
             armour: 7,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Chełm',
             description: 'Dodaje 9 pancerza',
@@ -690,7 +760,8 @@ class Items {
             price: 25,
             armour: 9,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Chełm',
             description: 'Dodaje 15 pancerza',
@@ -699,7 +770,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Chełm',
             description: 'Dodaje 20 pancerza',
@@ -708,7 +780,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
@@ -719,7 +792,8 @@ class Items {
             price: 10,
             armour: 8,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.uncommon: ItemModel(
             name: 'Kolczy Napierśnik',
             description: 'Dodaje 10 pancerza',
@@ -728,7 +802,8 @@ class Items {
             price: 15,
             armour: 10,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.rare: ItemModel(
             name: 'Żelazny Napierśnik',
             description: 'Dodaje 12 pancerza',
@@ -737,7 +812,8 @@ class Items {
             price: 20,
             armour: 12,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.epic: ItemModel(
             name: 'Diamentowy Napierśnik',
             description: 'Dodaje 14 pancerza',
@@ -746,7 +822,8 @@ class Items {
             price: 25,
             armour: 14,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Napierśnik',
             description: 'Dodaje 20 pancerza',
@@ -755,7 +832,8 @@ class Items {
             price: 50,
             armour: 20,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.mithic: ItemModel(
             name: 'Mityczny Napierśnik',
             description: 'Dodaje 25 pancerza',
@@ -764,7 +842,8 @@ class Items {
             price: 100,
             armour: 25,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
@@ -775,7 +854,8 @@ class Items {
             price: 10,
             armour: 4,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Spodnie',
             description: 'Dodają 6 pancerza',
@@ -784,7 +864,8 @@ class Items {
             price: 15,
             armour: 6,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.rare: ItemModel(
             name: 'Żelazne Spodnie',
             description: 'Dodają 8 pancerza',
@@ -793,7 +874,8 @@ class Items {
             price: 20,
             armour: 8,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Spodnie',
             description: 'Dodają 10 pancerza',
@@ -802,7 +884,8 @@ class Items {
             price: 25,
             armour: 10,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Spodnie',
             description: 'Dodają 15 pancerza',
@@ -811,7 +894,8 @@ class Items {
             price: 50,
             armour: 15,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Spodnie',
             description: 'Dodają 20 pancerza',
@@ -820,7 +904,8 @@ class Items {
             price: 100,
             armour: 20,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
@@ -831,7 +916,8 @@ class Items {
             price: 10,
             armour: 1,
             itemRarity: 'common',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.uncommon: ItemModel(
             name: 'Kolcze Buty',
             description: 'Dodają 3 pancerza',
@@ -840,7 +926,8 @@ class Items {
             price: 15,
             armour: 3,
             itemRarity: 'uncommon',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.rare: ItemModel(
             name: 'Żelazne Buty',
             description: 'Dodają 5 pancerza',
@@ -849,7 +936,8 @@ class Items {
             price: 20,
             armour: 5,
             itemRarity: 'rare',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.epic: ItemModel(
             name: 'Diamentowe Buty',
             description: 'Dodają 7 pancerza',
@@ -858,7 +946,8 @@ class Items {
             price: 25,
             armour: 7,
             itemRarity: 'epic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.legendary: ItemModel(
             name: 'Legendarny Buty',
             description: 'Dodają 10 pancerza',
@@ -867,7 +956,8 @@ class Items {
             price: 50,
             armour: 10,
             itemRarity: 'legendary',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
         Rarity.mithic: ItemModel(
             name: 'Mityczne Buty',
             description: 'Dodają 15 pancerza',
@@ -876,39 +966,81 @@ class Items {
             price: 100,
             armour: 15,
             itemRarity: 'mithic',
-            upgradePrice: 20),
+            upgradePrice: 20,
+            numerZestawu: 3),
       }
-    }
-  };
+    },
+    ItemSet.free : {
+      ItemTypeModel.sword: {
+        Rarity.common: ItemModel(
+            name: 'Drewniany Miecz',
+            description: 'Dodaje 4 do ataku',
+            image: 'assets/images/złoto.png',
+            classItem: ItemTypeModel.sword,
+            price: 10,
+            attack: 4,
+            itemRarity: 'common',
+            upgradePrice: 20,
+            numerZestawu: 4),
+      },
+      ItemTypeModel.helmet: {
+        Rarity.common: ItemModel(
+            name: 'Skórzany Chełm',
+            description: 'Dodaje 3 pancerza',
+            image: 'assets/images/złoto.png',
+            classItem: ItemTypeModel.helmet,
+            price: 10,
+            armour: 3,
+            itemRarity: 'common',
+            upgradePrice: 20,
+            numerZestawu: 4),
+      },
+      ItemTypeModel.chestplate: {
+        Rarity.common: ItemModel(
+            name: 'Skórzany Napierśnik',
+            description: 'Dodaje 8 pancerza',
+            image: 'assets/images/złoto.png',
+            classItem: ItemTypeModel.chestplate,
+            price: 10,
+            armour: 8,
+            itemRarity: 'common',
+            upgradePrice: 20,
+            numerZestawu: 4),
+      },
+  }
+};
 
   ItemModel getItem(ItemSet itemSet, ItemTypeModel itemType, Rarity rarity) {
     return _mapItems[itemSet]![itemType]![rarity]!;
   }
 
-  bool isItemMaxLevel(int level, String rarity) {
-    if (level == maxLevelCommon && rarity == 'common' ||
-        level == maxLevelUncommon && rarity == 'uncommon' ||
-        level == maxLevelRare && rarity == 'rare' ||
-        level == maxLevelEpic && rarity == 'epic' ||
-        level == maxLevelLegendary && rarity == 'legendary') {
+  bool isItemMaxLevel(int level, Rarity rarity) {
+    if (level == maxLevelCommon && rarity == Rarity.common ||
+        level == maxLevelUncommon && rarity == Rarity.uncommon ||
+        level == maxLevelRare && rarity == Rarity.rare ||
+        level == maxLevelEpic && rarity == Rarity.epic ||
+        level == maxLevelLegendary && rarity == Rarity.legendary) {
       return true;
     }
     return false;
   }
 
-  String getMaxLevel(String rarity) {
-    if (rarity == 'common') {
+  String getMaxLevel(Rarity rarity) {
+    if (rarity == Rarity.common) {
       return maxLevelCommon.toString();
-    } else if (rarity == 'uncommon') {
+    } else if (rarity == Rarity.uncommon) {
       return maxLevelUncommon.toString();
-    } else if (rarity == 'rare') {
+    } else if (rarity == Rarity.rare) {
       return maxLevelRare.toString();
-    } else if (rarity == 'epic') {
+    } else if (rarity == Rarity.epic) {
       return maxLevelEpic.toString();
-    } else if (rarity == 'legendary') {
+    } else if (rarity == Rarity.legendary) {
       return maxLevelLegendary.toString();
     } else {
       return 'Nielimitowany';
     }
   }
 }
+
+
+final itemsProvider = Provider((ref) => Items());

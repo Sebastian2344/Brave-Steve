@@ -91,7 +91,7 @@ class StatsView extends StatelessWidget {
             mediaQuerySize: mediaQuerySize,
             side: side == 'left' ? true : false),
         Text(
-          "Armour",
+          "Pancerz",
           style: TextStyle(
               color: const Color.fromARGB(255, 136, 137, 136),
               fontSize: fontSize),

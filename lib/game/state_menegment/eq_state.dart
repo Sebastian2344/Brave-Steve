@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/data_layer/repo/eq_repo.dart';
+import 'package:brave_steve/game/state_menegment/merge_item_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
@@ -126,6 +127,23 @@ class EqStateMenagment extends Notifier<EqModel> {
     List<ItemPlaceModel> o = eqRepo.getListFieldTypeModelFromDB(index);
     state = state
         .copywith(eqList: [for (final itemPlaceModel in o) itemPlaceModel]);
+  }
+
+  void addItemToEQ(){
+    final itemM = ref.read(providerMergeItem)[2];
+    ItemModel item = ItemModel(name: itemM.name, description: itemM.description, image: itemM.image, attack: itemM.attack, armour: itemM.armour, classItem: itemM.classItem, price: itemM.price, itemLevel: itemM.itemLevel, upgradePrice: itemM.upgradePrice, itemRarity: itemM.itemRarity);
+     final firstFreeItemPlaceModel = state.eqList.firstWhere((element) =>
+        element.isEmpty == true &&
+        element.classField == FieldTypeModel.backpack);
+    state = state.copywith(eqList: [
+      for (final itemplaceModel in state.eqList)
+        if (itemplaceModel.classField == FieldTypeModel.backpack &&
+            itemplaceModel.isEmpty == true &&
+            firstFreeItemPlaceModel.id == itemplaceModel.id)
+          itemplaceModel.copywith(isEmpty: false, item: item)
+        else
+          itemplaceModel
+    ]);
   }
 
   Future<void> upgradeItem(int id, double money) async {
@@ -317,6 +335,19 @@ class EqStateMenagment extends Notifier<EqModel> {
           itemplaceModel.copywith(isEmpty: false, item: item)
         else
           itemplaceModel
+    ]);
+  }
+
+  void delete2Items(){
+    final item1 = ref.read(providerMergeItem)[0];
+    final item2 = ref.read(providerMergeItem)[1];
+
+    state = state.copywith(eqList: [
+      for (final itemPlaceModel in state.eqList)
+        if (itemPlaceModel.id == item1.fromEQId || itemPlaceModel.id == item2.fromEQId)
+          itemPlaceModel.copywith(isEmpty: true, item: const ItemModel())
+        else
+          itemPlaceModel
     ]);
   }
 

@@ -68,6 +68,7 @@ class ItemModel extends Equatable {
   final int itemLevel;
   final int upgradePrice;
   final String itemRarity;
+  final int? numerZestawu;
 
   const ItemModel({
     this.name = '',
@@ -80,6 +81,7 @@ class ItemModel extends Equatable {
     this.itemLevel = 0,
     this.upgradePrice = 0,
     this.itemRarity = 'none',
+    this.numerZestawu, 
   });
 
   ItemModel copywith(
@@ -92,7 +94,8 @@ class ItemModel extends Equatable {
       int? price,
       int? itemLevel,
       int? upgradePrice,
-      String? itemRarity}) {
+      String? itemRarity,
+      int? numerZestawu}) {
     return ItemModel(
       name: name ?? this.name,
       description: description ?? this.description,
@@ -103,11 +106,12 @@ class ItemModel extends Equatable {
       upgradePrice: upgradePrice ?? this.upgradePrice,
       price: price ?? this.price,
       classItem: itemtypemodel ?? classItem,
-      itemRarity: itemRarity ?? this.itemRarity
+      itemRarity: itemRarity ?? this.itemRarity,
+      numerZestawu: numerZestawu ?? this.numerZestawu,
     );
   }
 
   @override
   List<Object?> get props =>
-      [name, description, image, attack, armour, classItem, price,upgradePrice,itemLevel,itemRarity];
+      [name, description, image, attack, armour, classItem, price,upgradePrice,itemLevel,itemRarity,numerZestawu];
 }

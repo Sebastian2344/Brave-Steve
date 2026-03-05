@@ -3,6 +3,7 @@ import 'package:brave_steve/game/presentation/fight_screen/exit_to_menu_dialog.d
 import 'package:brave_steve/game/presentation/fight_screen/save_game_dialog.dart';
 import 'package:brave_steve/game/presentation/fight_screen/battle_view_widget.dart';
 import 'package:brave_steve/game/presentation/fight_screen/stats_view_widget.dart';
+import 'package:brave_steve/game/presentation/merge_item_screen/merge_item_screen.dart';
 import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _FightScreenState extends State<FightScreen> {
   // Klucze dla elementów paska
   final GlobalKey _keySave = GlobalKey();
   final GlobalKey _keyEq = GlobalKey();
+  final GlobalKey _keyMerge = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class _FightScreenState extends State<FightScreen> {
                 ),
               ],
             ),
-            title: const Text('Brave Steve'),
+            title: const Text('Nazwa Gry'),
             centerTitle: true,
             backgroundColor: const Color(0xFF301b0a),
             actions: [
@@ -101,7 +103,22 @@ class _FightScreenState extends State<FightScreen> {
                                 : Colors.grey,
                           ));
                     },
-                  ))
+                  )),
+              Showcase(
+                key: _keyMerge,
+                title: 'Łączenie przedmiotów',
+                description: 'Tutaj możesz łączyć przedmioty, aby stworzyć nowe.',
+                overlayColor: Colors.black.withValues(alpha: 0.7),
+                targetBorderRadius: BorderRadius.circular(50),
+                tooltipBackgroundColor: Colors.white,
+                textColor: Colors.black,
+                titleTextStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
+                child: IconButton(
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MergeItemScreen())),
+                    icon: Icon(Icons.merge_type)),
+              )
             ],
           ),
           body: Column(
@@ -134,6 +151,7 @@ class _FightScreenState extends State<FightScreen> {
                 isNewGame: widget.isNewGame,
                 keySave: _keySave,
                 keyEq: _keyEq,
+                keyMerge: _keyMerge,
               )
             ],
           ),

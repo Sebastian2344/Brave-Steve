@@ -16,7 +16,7 @@ class EqRepo {
     if (chance >= dropRate) {
       return null;
     }
-    ItemSet itemSet = ItemSet.values[Random().nextInt(ItemSet.values.length)];
+    ItemSet itemSet = ItemSet.values[Random().nextInt(ItemSet.values.length - 1)];
     ItemTypeModel itemType =
         ItemTypeModel.values[Random().nextInt(ItemTypeModel.values.length - 1)];
     return items.getItem(itemSet, itemType, rarity);
@@ -30,13 +30,41 @@ class EqRepo {
   }
 
   bool isItemMaxLevel(int level, String rarity) {
-    return items.isItemMaxLevel(level, rarity);
+    late Rarity rarityEnum;
+    if(rarity == 'common'){
+      rarityEnum = Rarity.common;
+    } else if(rarity == 'uncommon'){
+      rarityEnum = Rarity.uncommon;
+    } else if(rarity == 'rare'){
+      rarityEnum = Rarity.rare;
+    } else if(rarity == 'epic'){
+      rarityEnum = Rarity.epic;
+    } else if(rarity == 'legendary'){
+      rarityEnum = Rarity.legendary;
+    } else {
+      rarityEnum = Rarity.mithic;
+    }
+    return items.isItemMaxLevel(level, rarityEnum);
   }
 
   String getMaxLevel(String rarity) {
-    return items.getMaxLevel(rarity);
+    late Rarity rarityEnum;
+    if(rarity == 'common'){
+      rarityEnum = Rarity.common;
+    } else if(rarity == 'uncommon'){
+      rarityEnum = Rarity.uncommon;
+    } else if(rarity == 'rare'){
+      rarityEnum = Rarity.rare;
+    } else if(rarity == 'epic'){
+      rarityEnum = Rarity.epic;
+    } else if(rarity == 'legendary'){
+      rarityEnum = Rarity.legendary;
+    } else {
+      rarityEnum = Rarity.mithic;
+    }
+    return items.getMaxLevel(rarityEnum);
   }
 }
 
 Provider<EqRepo> eqRepoProvider = Provider(
-    (ref) => EqRepo(items: Items(), dataSource: ref.watch(dataBoxProvider)));
+    (ref) => EqRepo(items: ref.watch(itemsProvider), dataSource: ref.watch(dataBoxProvider)));

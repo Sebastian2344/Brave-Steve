@@ -64,6 +64,8 @@ class Item {
   final int upgradePrice;
   @HiveField(9, defaultValue: 'none')
   final String rarity;
+  @HiveField(10, defaultValue: null)
+  final int? numerZestawu;
 
   const Item(
       {required this.name,
@@ -75,7 +77,8 @@ class Item {
       required this.armour,
       required this.itemLevel,
       required this.upgradePrice,
-      required this.rarity});
+      required this.rarity,
+      required this.numerZestawu});
 
   ItemModel toItemModel() {
     return ItemModel(
@@ -88,7 +91,8 @@ class Item {
         price: price,
         itemLevel: itemLevel,
         upgradePrice: upgradePrice,
-        itemRarity: rarity);
+        itemRarity: rarity,
+        numerZestawu: numerZestawu);
   }
 
   static Item toItem(ItemModel model) {
@@ -102,7 +106,8 @@ class Item {
         armour: model.armour,
         itemLevel: model.itemLevel,
         upgradePrice: model.upgradePrice,
-        rarity: model.itemRarity);
+        rarity: model.itemRarity,
+        numerZestawu: model.numerZestawu);
   }
 }
 

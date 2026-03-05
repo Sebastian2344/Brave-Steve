@@ -27,7 +27,7 @@ void main() async {
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
       fullScreen: false,
-      title: 'Brave Steve',
+      title: 'Narazie bez nazwy',
     );
 
     // 4. Czekamy aż okno będzie gotowe do pokazania
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Brave Steve',
+      title: 'Narazie bez nazwy',
       theme: ThemeData(
         useMaterial3: true,
       ),
