@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/state_menegment/save_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../saves_screen/show_saves.dart';
@@ -31,6 +32,7 @@ class SaveGame extends ConsumerWidget {
       actions: [
         ElevatedButton(
           onPressed: () async {
+            ref.read(soundManagerProvider.notifier).playButtonClick();
             textEditingController.text.isNotEmpty
                 ? {
                     await ref.read(saveStateProvider.notifier).saveGame(textEditingController.text),

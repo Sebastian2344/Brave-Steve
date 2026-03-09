@@ -3,6 +3,7 @@ import 'package:brave_steve/game/presentation/eq_screen/upgrade_button.dart';
 import 'package:brave_steve/game/presentation/eq_screen/upgrade_info_widget.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,6 +38,7 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
         actions: [
           FilledButton(
               onPressed: () {
+                ref.read(soundManagerProvider.notifier).playButtonClick();
                 ref.read(providerEQ.notifier).podmiankaItemow(id);
                 ref.read(myStateProvider.notifier).setStats();
                 Navigator.of(context).pop();
@@ -44,6 +46,7 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
               child: const Text('Jeszcze jak')),
         FilledButton(
               onPressed: () {
+                ref.read(soundManagerProvider.notifier).playButtonClick();
                 Navigator.of(context).pop();
               },
               child: const Text('Nie chce')),

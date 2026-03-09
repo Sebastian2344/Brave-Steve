@@ -3,16 +3,17 @@ import 'package:brave_steve/game/presentation/eq_screen/sell_item_dialog.dart';
 import 'package:brave_steve/game/presentation/eq_screen/take_off_dialog.dart';
 import 'package:brave_steve/game/presentation/eq_screen/exchange_item_dialog.dart';
 import 'package:brave_steve/game/presentation/money_widget.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_menegment/eq_state.dart';
 
-class Equpment extends StatelessWidget {
+class Equpment extends ConsumerWidget {
   const Equpment({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
@@ -20,6 +21,13 @@ class Equpment extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          )
       ),
       // SafeArea zapobiega ucinaniu ekranu przez notch (wycięcie na aparat)
       body: SafeArea(
@@ -110,6 +118,7 @@ class WindowEQ extends ConsumerWidget {
     return InkWell(
       onTap: () {
         if (!isEmpty) {
+          ref.read(soundManagerProvider.notifier).playButtonClick();
           showDialog(
             context: context,
             builder: (context) {

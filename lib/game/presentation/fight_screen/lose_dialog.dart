@@ -1,3 +1,4 @@
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +18,7 @@ class Lose extends ConsumerWidget {
       actions: [
         ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(
@@ -26,6 +28,7 @@ class Lose extends ConsumerWidget {
             child: const Text('Graj od nowa')),
         ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Reklama niedostępna.'),

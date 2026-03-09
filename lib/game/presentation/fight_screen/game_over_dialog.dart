@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,6 +36,7 @@ class GameOver extends ConsumerWidget {
           actions: [
             ElevatedButton(
                 onPressed: (){
+                  ref.read(soundManagerProvider.notifier).playButtonClick();
                   ref.read(myStateProvider.notifier).gameOver();
                   ref.read(providerEQ.notifier).deleteItems();
                   ref.read(myStateProvider.notifier).closeGameDB();

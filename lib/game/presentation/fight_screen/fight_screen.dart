@@ -6,21 +6,22 @@ import 'package:brave_steve/game/presentation/fight_screen/stats_view_widget.dar
 import 'package:brave_steve/game/presentation/merge_item_screen/merge_item_screen.dart';
 import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import 'action_buttons_view_widget.dart';
 
-class FightScreen extends StatefulWidget {
+class FightScreen extends ConsumerStatefulWidget {
   const FightScreen(this.isNewGame, {super.key});
   final bool isNewGame;
 
   @override
-  State<FightScreen> createState() => _FightScreenState();
+  ConsumerState<FightScreen> createState() => _FightScreenState();
 }
 
-class _FightScreenState extends State<FightScreen> {
+class _FightScreenState extends ConsumerState<FightScreen> {
   // Klucze dla elementów paska
   final GlobalKey _keySave = GlobalKey();
   final GlobalKey _keyEq = GlobalKey();
@@ -44,6 +45,7 @@ class _FightScreenState extends State<FightScreen> {
               children: [
                 IconButton(
                   onPressed: () async {
+                    ref.read(soundManagerProvider.notifier).playButtonClick();
                     showDialog(
                         context: context,
                         builder: (context) => const ExitToMenu());
@@ -63,6 +65,7 @@ class _FightScreenState extends State<FightScreen> {
                       fontWeight: FontWeight.bold, color: Colors.black),
                   child: IconButton(
                     onPressed: () async {
+                      ref.read(soundManagerProvider.notifier).playButtonClick();
                       showDialog(
                           context: context, builder: (context) => SaveGame());
                     },
@@ -92,6 +95,7 @@ class _FightScreenState extends State<FightScreen> {
                       return IconButton(
                           onPressed: () {
                             if (ref.read(myStateProvider.notifier).isEq()) {
+                              ref.read(soundManagerProvider.notifier).playButtonClick();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const Equpment()));
                             }
@@ -115,8 +119,11 @@ class _FightScreenState extends State<FightScreen> {
                 titleTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black),
                 child: IconButton(
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MergeItemScreen())),
+                    onPressed: () {
+                      ref.read(soundManagerProvider.notifier).playButtonClick();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MergeItemScreen()));
+                    },
                     icon: Icon(Icons.merge_type)),
               )
             ],

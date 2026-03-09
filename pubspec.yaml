@@ -42,6 +42,7 @@ dependencies:
   equatable: ^2.0.8
   flutter_secure_storage: ^10.0.0
   window_manager: ^0.5.1
+  soundpool: ^2.4.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -85,6 +86,7 @@ flutter:
     - assets/images/512px_items/hełmy/set_3/
     - assets/images/enemies/
     - assets/images/player/
+    - assets/sounds/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

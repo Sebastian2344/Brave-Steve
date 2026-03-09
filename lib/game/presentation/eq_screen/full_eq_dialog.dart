@@ -1,11 +1,13 @@
 import 'package:brave_steve/game/presentation/eq_screen/eq.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FullEqDialog extends StatelessWidget {
+class FullEqDialog extends ConsumerWidget {
   const FullEqDialog({super.key, required this.win});
   final bool win;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height / 1.5,
@@ -20,6 +22,7 @@ class FullEqDialog extends StatelessWidget {
       actions: [
         ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               Navigator.of(context).pop();
               win
                   ? Navigator.of(context).push(
@@ -29,6 +32,7 @@ class FullEqDialog extends StatelessWidget {
             child: const Text('Robie miejsce w ekwipunku')),
              ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               Navigator.of(context).pop();
             },
             child: const Text('Nie teraz')),

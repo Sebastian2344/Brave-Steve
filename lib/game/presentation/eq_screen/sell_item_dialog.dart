@@ -2,6 +2,7 @@ import 'package:brave_steve/game/presentation/eq_screen/stats_info_widget.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,6 +24,7 @@ class SellItemDialog extends ConsumerWidget {
       actions: [
         ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               ref
                   .read(moneyProvider.notifier)
                   .addmoney(ref.read(providerEQ).eqList[id].item.price.toDouble());
@@ -33,6 +35,7 @@ class SellItemDialog extends ConsumerWidget {
             child: const Text('Tak')),
         ElevatedButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               Navigator.of(context).pop();
             },
             child: const Text('Nie'))

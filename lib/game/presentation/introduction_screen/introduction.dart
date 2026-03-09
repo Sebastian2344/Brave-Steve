@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/presentation/fight_screen/fight_screen.dart';
 import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -149,6 +150,7 @@ class IntroductionScreen extends ConsumerWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          ref.read(soundManagerProvider.notifier).playButtonClick();
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) {
                                 return const MainMenu();
@@ -168,6 +170,7 @@ class IntroductionScreen extends ConsumerWidget {
                       ),
                       ElevatedButton(
                           onPressed: () async {
+                            ref.read(soundManagerProvider.notifier).playButtonClick();
                             await ref.read(myStateProvider.notifier).newGame();
                             if (context.mounted) {
                               Navigator.of(context).pushReplacement(

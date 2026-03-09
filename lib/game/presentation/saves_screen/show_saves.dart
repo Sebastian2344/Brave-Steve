@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/save_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data_layer/models/player_model/steve.dart';
@@ -24,6 +25,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               if (ref.read(myStateProvider).gameState ==
                   Stan.graNieRozpoczeta) {
                 ref.read(myStateProvider.notifier).closeGameDB();
@@ -188,6 +190,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                             child: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
+                                ref.read(soundManagerProvider.notifier).playButtonClick();
                                 ref
                                     .read(saveStateProvider.notifier)
                                     .removeSave(index);
@@ -198,6 +201,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                             ),
                           ),
                           onTap: () {
+                            ref.read(soundManagerProvider.notifier).playButtonClick();
                             ref
                                 .read(myStateProvider.notifier)
                                 .loadPlayerAndMobs(index);

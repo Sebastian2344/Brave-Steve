@@ -3,6 +3,7 @@ import 'package:brave_steve/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -113,6 +114,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                     fontSize: fontSize,
                     buttonIgnore: atack,
                     battle: () async {
+                      ref.read(soundManagerProvider.notifier).playButtonClick();
                       final Enum a = await gameMetods.battle(
                         superAtack: false,
                         cleary: false,
@@ -140,6 +142,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       fontSize: fontSize,
                       buttonIgnore: superAtack,
                       battle: () async {
+                        ref.read(soundManagerProvider.notifier).playButtonClick();
                         final Enum a = await gameMetods.battle(
                           superAtack: true,
                           cleary: false,
@@ -171,6 +174,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       fontSize: fontSize,
                       buttonIgnore: weakOnEnemy,
                     battle: () async {
+                      ref.read(soundManagerProvider.notifier).playButtonClick();
                       final Enum a = await gameMetods.battle(
                         superAtack: false,
                         cleary: false,
@@ -197,6 +201,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                       fontSize: fontSize - 1,
                       buttonIgnore: cleary,
                       battle: () async {
+                        ref.read(soundManagerProvider.notifier).playButtonClick();
                         final Enum a = await gameMetods.battle(
                           superAtack: false,
                           cleary: true,

@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/merge_item_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,6 +19,7 @@ class MergeItemScreen extends ConsumerWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
+              ref.read(soundManagerProvider.notifier).playButtonClick();
               ref.read(providerMergeItem.notifier).clear();
               Navigator.pop(context);
             }),
@@ -29,7 +31,15 @@ class MergeItemScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               WindowMerge(id: 0),
+              Text(
+                ' + ',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
               WindowMerge(id: 1),
+              Text(
+                ' = ',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
               WindowMerge(id: 2),
             ],
           ),
@@ -91,6 +101,7 @@ class WindowEQToMerge extends ConsumerWidget {
     return InkWell(
       onTap: () {
         if (isEmpty) return;
+        ref.read(soundManagerProvider.notifier).playButtonClick();
         ref.read(providerMergeItem.notifier).addMergeItem(id);
         if (ref.watch(providerMergeItem).length == 2) {
           ref.read(providerMergeItem.notifier).mergeItems();
@@ -170,6 +181,7 @@ class WindowMerge extends ConsumerWidget {
     return InkWell(
       onTap: () {
         if (isEmpty) return;
+        ref.read(soundManagerProvider.notifier).playButtonClick();
         if (id < 2) {
           ref.read(providerMergeItem.notifier).removeMergeItem(id);
         } else {
@@ -189,7 +201,10 @@ class WindowMerge extends ConsumerWidget {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        ref.read(soundManagerProvider.notifier).playButtonClick();
+                        Navigator.pop(context);
+                      },
                       child: const Text('Zamknij'),
                     ),
                   ],

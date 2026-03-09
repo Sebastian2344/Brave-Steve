@@ -13,18 +13,43 @@ class ShowItemInfo extends ConsumerWidget {
 
     return !itemPlace.isEmpty
         ? Column(
-            children: [
-              Text(itemPlace.item.name),
-              Text('Poziom: ${itemPlace.item.itemLevel}'),
+            children: [           
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(itemPlace.item.name),
+                  SizedBox(width: 10),
+                  Icon(Icons.star, color: Colors.yellow[700]),
+                  Text('${itemPlace.item.itemLevel}'),                 
+                ],
+              ),
               Image.asset(itemPlace.item.image, cacheWidth: 150, cacheHeight: 150),
               Text(itemPlace.item.description),
-              Text('Cena: ${itemPlace.item.price}'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.monetization_on, color: Colors.orange[700]),
+                  Text('${itemPlace.item.price}'),
+                ],
+              ),
               Column(
                 children: [
                   if (itemPlace.item.attack != null)
-                    Text('Atak: ${itemPlace.item.attack}'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.sports_mma_rounded, color: Colors.red[700]),
+                        Text('${itemPlace.item.attack}'),
+                      ],
+                    ),
                   if (itemPlace.item.armour != null)
-                    Text('Pancerz: ${itemPlace.item.armour}'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.shield, color: Colors.blueGrey[700]),
+                        Text('${itemPlace.item.armour}'),
+                      ],
+                    ),
                 ],
               )
             ],

@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +25,7 @@ class ExitToMenu extends ConsumerWidget {
           children: [
             ElevatedButton(
                 onPressed: () async {
+                  ref.read(soundManagerProvider.notifier).playButtonClick();
                   await ref.read(myStateProvider.notifier).closeGameDB();
                   ref.read(providerEQ.notifier).deleteItems();
                   ref.read(myStateProvider.notifier).gameOver();
@@ -41,6 +43,7 @@ class ExitToMenu extends ConsumerWidget {
                 child: const Text('Wychodze')),
             ElevatedButton(
                 onPressed: () {
+                  ref.read(soundManagerProvider.notifier).playButtonClick();
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(

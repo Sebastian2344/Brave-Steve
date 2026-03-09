@@ -5,6 +5,7 @@ import 'package:brave_steve/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/player_model/player_model.dart';
 import '../data_layer/models/player_model/steve.dart';
@@ -98,8 +99,10 @@ class GameState extends Notifier<MyVars> {
         return Stan.koniecGry;
       } else {
         if (state.list[0].isLive()) {
+          ref.read(soundManagerProvider.notifier).playDeath();
           return Stan.wygrana;
         }
+        ref.read(soundManagerProvider.notifier).playDeath();
         return Stan.przegrana;
       }
     }
@@ -184,14 +187,18 @@ class GameState extends Notifier<MyVars> {
 
   void _hit(bool superAtack, bool cleary, bool weakOnEnemy) {
     if (superAtack) {
+      ref.read(soundManagerProvider.notifier).playDamage();
       state.list[0].makeSuperAttack(state.list[state.enemyIndex]);
     } else if (cleary) {
-      state.list[0].clearMe();
+      ref.read(soundManagerProvider.notifier).playClearence();
+      state.list[0].clearMe();  
       ref.read(effectsStateProvider.notifier).setAllEffects(false,true, false, ref.read(effectsStateProvider).isWeaknessEnemy);
     } else if (weakOnEnemy && !state.list[state.enemyIndex].isWeak()) {
+      ref.read(soundManagerProvider.notifier).playWeakness();
       state.list[0].weakness(state.list[state.enemyIndex]);
       ref.read(effectsStateProvider.notifier).setAllEffects(ref.read(effectsStateProvider).isWeaknessPlayer, false, false, true);
     } else {
+      ref.read(soundManagerProvider.notifier).playDamage();
       state.list[0].makeAttack(state.list[state.enemyIndex]);
     }
     state = state.copyWith(move1: false);
@@ -216,6 +223,7 @@ class GameState extends Notifier<MyVars> {
       if (state.list[state.enemyIndex].showMana() >=
           state.list[state.enemyIndex].showManaCost('SuperAttack')) {
         state.list[state.enemyIndex].makeSuperAttack(state.list[0]);
+        //ref.read(soundManagerProvider.notifier).attackEnemy();
       } else {
         state.list[state.enemyIndex].makeAttack(state.list[0]);
       }
@@ -225,6 +233,7 @@ class GameState extends Notifier<MyVars> {
             state.list[state.enemyIndex].showMana() >=
                 state.list[state.enemyIndex].showManaCost('clearMe')) {
           state.list[state.enemyIndex].clearMe();
+          ref.read(soundManagerProvider.notifier).playClearence();
           ref.read(effectsStateProvider.notifier).setAllEffects(ref.read(effectsStateProvider).isWeaknessPlayer, false, true, false);
         } else {
           int newOption = Random().nextInt(3);
@@ -240,7 +249,8 @@ class GameState extends Notifier<MyVars> {
         if (!state.list[0].isWeak() &&
             state.list[state.enemyIndex].showMana() >=
                 state.list[state.enemyIndex].showManaCost('weakness')) {
-          state.list[state.enemyIndex].weakness(state.list[0]);
+          ref.read(soundManagerProvider.notifier).playWeakness();        
+          state.list[state.enemyIndex].weakness(state.list[0]);          
           ref.read(effectsStateProvider.notifier).setClearenceForAll(false);
           ref.read(effectsStateProvider.notifier).setWeaknessPlayer(true);
         } else {

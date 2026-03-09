@@ -18,28 +18,33 @@ class ShowUpgradeInfo extends ConsumerWidget {
             child: !isMaxLevel
                 ? Column(
                     children: [
-                      Text(
-                          'Koszt ulepszenia: ${item.item.upgradePrice} waluty.'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.monetization_on, color: Colors.orange[700]),
+                          Text(' ${item.item.upgradePrice}'),
+                        ],
+                      ),
+                      if (item.item.attack != null)
                       Row(
                         spacing: 5,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (item.item.attack != null)
+                            Icon(Icons.sports_mma_rounded, color: Colors.red[700]),
                             Text(
-                                'Atak: ${item.item.attack != null ? item.item.attack! : itemR.attack}'),
-                          if (item.item.attack != null)
+                                '${item.item.attack != null ? item.item.attack! : itemR.attack}'),
                             Text('+ ${o.attackStatsBoost()}',
                                 style: const TextStyle(color: Colors.green)),
                         ],
                       ),
+                      if (item.item.armour != null)
                       Row(
                         spacing: 5,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (item.item.armour != null)
+                            Icon(Icons.shield, color: Colors.blueGrey[700]),
                             Text(
-                                'Pancerz: ${item.item.armour != null ? item.item.armour! : itemR.armour}'),
-                          if (item.item.armour != null)
+                                '${item.item.armour != null ? item.item.armour! : itemR.armour}'),
                             Text('+ ${o.armourStatsBoost()}',
                                 style: const TextStyle(color: Colors.green)),
                         ],

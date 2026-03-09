@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
+import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,6 +22,7 @@ class UpgradeButton extends ConsumerWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: item.item.upgradePrice > money ? Colors.grey : Colors.amber,),
               onPressed: () async {
+                ref.read(soundManagerProvider.notifier).playUpgradeItem();
                 await ref
                     .read(providerEQ.notifier)
                     .upgradeItem(id, money);
