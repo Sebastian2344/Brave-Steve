@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_menegment/game_state.dart';
-import '../menu_screen/main_menu.dart';
 
 class GameOver extends ConsumerWidget {
   const GameOver({super.key});
@@ -42,8 +41,7 @@ class GameOver extends ConsumerWidget {
                   ref.read(myStateProvider.notifier).closeGameDB();
                   ref.read(counterEnemyNotifierProvider.notifier).resetEnemyAndBoss();
                 Navigator.of(context).pop();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const MainMenu()));
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.brown[700],foregroundColor: Colors.amber,side: const BorderSide(color: Color(0xFFC0C0C0))),
                 child: const Text('Przejdź do menu'))

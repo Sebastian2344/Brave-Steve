@@ -1,3 +1,4 @@
+import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,7 +27,28 @@ class ActionButtonIgnoreNotifier extends Notifier<ActionButtonIgnoreModel> {
   
   @override
   build(){
-    return ActionButtonIgnoreModel(false, false, false, false);
+    return const ActionButtonIgnoreModel(false, false, false, false);
+  }
+
+  void setAfterplayerAndEneyLoad() {
+
+    final player = ref.read(myStateProvider).list[0];
+
+    if(player.showMana() <= player.showManaCost('SuperAttack')){    
+      changeSuperAtack(true);
+    } else {
+      changeSuperAtack(false);
+    }
+    if(player.showMana() <= player.showManaCost('clearMe')){
+      changeCleary(true);
+    } else {
+      changeCleary(false);
+    }
+    if(player.showMana() <= player.showManaCost('weakness')){
+      changeWeakOnEnemy(true);
+    } else {
+      changeWeakOnEnemy(false);
+    }
   }
 
   void reset() {

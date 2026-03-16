@@ -50,12 +50,6 @@ class GameState extends Notifier<MyVars> {
   void loadPlayerAndMobs(int index) {
     final players = repositoryGame.getPlayersfromDBasPlayerModelList(index);
     if (players.isNotEmpty) {
-      ref.read(effectsStateProvider.notifier).clearEffects();
-      ref
-          .read(effectsStateProvider.notifier)
-          .setWeaknessPlayer(players[0].isWeak());
-      ref.read(effectsStateProvider.notifier).setWeaknessEnemy(
-          players[(players[0] as Steve).getEnemyIndex()].isWeak());
       state = state.copyWith(
         list: players,
         enemyIndex: (players[0] as Steve).getEnemyIndex(),

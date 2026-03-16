@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state_menegment/game_state.dart';
-import '../menu_screen/main_menu.dart';
 
 class ExitToMenu extends ConsumerWidget {
   const ExitToMenu({super.key});
@@ -32,8 +31,7 @@ class ExitToMenu extends ConsumerWidget {
                   ref.read(counterEnemyNotifierProvider.notifier).resetEnemyAndBoss();
                   if (context.mounted) {
                     Navigator.pop(context); 
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MainMenu()), (route) => false);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   }
                 },
                 style: ElevatedButton.styleFrom(

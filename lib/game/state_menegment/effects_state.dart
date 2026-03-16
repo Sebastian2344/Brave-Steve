@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/data_layer/models/effects_state_model/effects_state_model.dart';
+import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EffectsState extends Notifier<EffectsStateModel> {
@@ -9,6 +10,15 @@ class EffectsState extends Notifier<EffectsStateModel> {
         isWeaknessPlayer: false,
         isClearenceEnemy: false,
         isWeaknessEnemy: false);
+  }
+
+  void setEffects() {
+    final isWeakPlayer = ref.read(myStateProvider).list[0].isWeak();
+    final isWeakEnemy = ref.read(myStateProvider).list[ref.read(myStateProvider).enemyIndex].isWeak();
+    state = state.copyWith(
+      isWeaknessPlayer: isWeakPlayer,
+      isWeaknessEnemy: isWeakEnemy,
+    );
   }
 
   void setClearencePlayer(bool value) {

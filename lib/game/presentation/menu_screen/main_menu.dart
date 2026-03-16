@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brave_steve/game/presentation/introduction_screen/introduction.dart';
+import 'package:brave_steve/game/state_menegment/music_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,10 @@ class MainMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final soundManager = ref.watch(soundManagerProvider);
+    ref.watch(audioManagerProvider);
+    ref.read(audioManagerProvider.notifier).playBGM(  
+      'sounds/gigachad_music.mp3',
+    );
     double fontSize = MediaQuery.of(context).textScaler.scale(18.0);
     return Scaffold(
         appBar: AppBar(
@@ -51,7 +56,7 @@ class MainMenu extends ConsumerWidget {
                                 .read(myStateProvider.notifier)
                                 .openGameDB();
                             if (context.mounted) {
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) {
                                 return IntroductionScreen(
                                   isNewGame: true,
@@ -69,7 +74,7 @@ class MainMenu extends ConsumerWidget {
                                 .read(myStateProvider.notifier)
                                 .openGameDB();
                             if (context.mounted) {
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) {
                                 return const ShowSaves();
                               }));
@@ -81,6 +86,7 @@ class MainMenu extends ConsumerWidget {
                         color: color,
                         function: () {
                           ref.read(soundManagerProvider.notifier).playButtonClick();
+                          ref.read(audioManagerProvider.notifier).stopBGM();
                           Navigator.pop(context);
                           exit(0);
                         },
@@ -106,7 +112,7 @@ class MainMenu extends ConsumerWidget {
               ),
             ),
             error: (error, stack) =>
-                Center(child: Text('Błąd ładowania dźwięków: $error')),
+                Center(child: Text('Błąd ładowania zasobów: $error')),
           ),
         ));
   }

@@ -23,7 +23,7 @@ class MoneyWidget extends ConsumerWidget {
           ),
           const SizedBox(width: 8.0),
           Text(
-            '${ref.watch(moneyProvider).value!.money.toStringAsFixed(2)} \$',
+            ref.watch(moneyProvider).value?.money.toStringAsFixed(2) ?? '0.00',
             style: const TextStyle(
               color: Color(0xFF654321),
               fontWeight: FontWeight.bold,

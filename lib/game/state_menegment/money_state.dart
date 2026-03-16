@@ -1,7 +1,8 @@
 import 'package:brave_steve/game/data_layer/repo/money_repo.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CashRegisterState {
+class CashRegisterState extends Equatable {
   final double money;
 
   const CashRegisterState({required this.money});
@@ -12,6 +13,9 @@ class CashRegisterState {
       money: money ?? this.money,
     );
   }
+
+  @override
+  List<Object?> get props => [money];
 }
 
 // Definicja CashRegisterNotifier - zarządza logiką kasy
@@ -21,7 +25,7 @@ class CashRegisterNotifier extends AsyncNotifier<CashRegisterState> {
   @override
   build() async {
     ref.watch(moneyRepoProvider);
-    state = const AsyncData(CashRegisterState(money: 0.0));
+    state = const AsyncLoading();
     final m = await repo.getMoneyFromDB();
     return CashRegisterState(money: m);
   }

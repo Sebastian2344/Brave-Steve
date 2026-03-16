@@ -41,8 +41,8 @@ class BattleView extends StatelessWidget {
           Consumer(
             builder: (context, ref, child) {
               final move1 = ref.watch(myStateProvider.select((counter) => counter.move1));
-              final heroEffect = ref.watch(effectsStateProvider.select((counter) => counter.isClearencePlayer));
-              final heroEffect2 = ref.watch(effectsStateProvider.select((counter) => counter.isWeaknessPlayer));
+              final heroEffect = ref.watch(effectsStateProvider.select((effect) => effect.isClearencePlayer));
+              final heroEffect2 = ref.watch(effectsStateProvider.select((effect) => effect.isWeaknessPlayer));
               return AnimatedPositioned(
                 duration: const Duration(milliseconds: 500),
                 left: move1 ? mediaQuerySize.width / 2 / 5 : 0,

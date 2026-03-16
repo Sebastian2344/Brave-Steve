@@ -1,5 +1,7 @@
 import 'package:brave_steve/game/presentation/menu_screen/main_menu.dart';
+import 'package:brave_steve/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
+import 'package:brave_steve/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/game/state_menegment/save_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
@@ -190,7 +192,9 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                             child: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
-                                ref.read(soundManagerProvider.notifier).playButtonClick();
+                                ref
+                                    .read(soundManagerProvider.notifier)
+                                    .playButtonClick();
                                 ref
                                     .read(saveStateProvider.notifier)
                                     .removeSave(index);
@@ -201,7 +205,9 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                             ),
                           ),
                           onTap: () {
-                            ref.read(soundManagerProvider.notifier).playButtonClick();
+                            ref
+                                .read(soundManagerProvider.notifier)
+                                .playButtonClick();
                             ref
                                 .read(myStateProvider.notifier)
                                 .loadPlayerAndMobs(index);
@@ -214,6 +220,12 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                             ref
                                 .read(myStateProvider.notifier)
                                 .loadExpMultiply(index);
+                            ref
+                                .read(effectsStateProvider.notifier)
+                                .setEffects();
+                            ref
+                                .read(actionButtonIgnoreProvider.notifier)
+                                .setAfterplayerAndEneyLoad();
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                   builder: (context) =>

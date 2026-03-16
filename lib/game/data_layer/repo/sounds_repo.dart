@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:soundpool/soundpool.dart';
 
 class SoundService {
-  Soundpool? _pool;
+  final Soundpool? _pool;
 
   // Twoje zmienne przetrzymujące ID dźwięków w pamięci
   int? _levelUpSoundId;
@@ -17,11 +17,7 @@ class SoundService {
   int? _upgradeItemSoundId;
   int? _buttonClickSoundId;
 
-  SoundService() {
-    _pool = Soundpool.fromOptions(
-      options: const SoundpoolOptions(streamType: StreamType.notification),
-    );
-  }
+  SoundService(this._pool);
 
   /// Główna metoda do załadowania wszystkich dźwięków (np. przy starcie aplikacji)
   Future<void> loadAllSounds() async {
@@ -74,7 +70,9 @@ class SoundService {
 }
 
 final soundServiceProvider = Provider<SoundService>((ref) {
-  final service = SoundService();
+  final service = SoundService(Soundpool.fromOptions(
+      options: const SoundpoolOptions(streamType: StreamType.notification),
+    ));
   ref.onDispose(() => service.dispose());
   return service;
 });
