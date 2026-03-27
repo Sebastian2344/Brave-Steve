@@ -63,6 +63,20 @@ class SoundService {
   Future<void> playUpgradeItem() => _playSound(_upgradeItemSoundId);
   Future<void> playButtonClick() => _playSound(_buttonClickSoundId);
 
+  void setVolume(double volume) {
+
+    _pool?.setVolume(soundId :_levelUpSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_damageSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_deathSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_weaknessSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_clearenceSoundId,volume: volume.clamp(0.0, 1.0));
+    //_pool?.setVolume(soundId :_mergeSoundId,volume: volume.clamp(0.0, 1.0));
+    //_pool?.setVolume(soundId :_wearItemSoundId,volume: volume.clamp(0.0, 1.0));
+    //_pool?.setVolume(soundId :_takeOffSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_upgradeItemSoundId,volume: volume.clamp(0.0, 1.0));
+    _pool?.setVolume(soundId :_buttonClickSoundId,volume: volume.clamp(0.0, 1.0));
+  }
+
   // Zwalnianie zasobów z pamięci RAM
   void dispose() {
     _pool?.release();

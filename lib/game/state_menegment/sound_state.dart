@@ -1,4 +1,5 @@
 import 'package:brave_steve/game/data_layer/repo/sounds_repo.dart';
+import 'package:brave_steve/game/state_menegment/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SoundController extends AsyncNotifier<void> {
@@ -7,14 +8,13 @@ class SoundController extends AsyncNotifier<void> {
     // Inicjalizujemy ładowanie dźwięków od razu przy stworzeniu Controllera
     // Będzie to działać asynchronicznie w tle.
     await ref.read(soundServiceProvider).loadAllSounds();
+    // Zwracamy początkowy stan
   }
 
   // Przykładowa logika: Jeśli chcesz mieć globalne wyciszenie dźwięków,
   // możesz to sprawdzić tutaj, zanim wywołasz metodę z serwisu.
   bool _canPlaySound() {
-    // Tu mógłbyś odczytywać np. stan z settingsProvider
-    // return !ref.read(settingsProvider).isMuted;
-    return true; 
+    return !ref.read(settingsProvider).isSoundEffectsMuted;
   }
 
   // Udostępniamy metody do UI:
@@ -56,6 +56,23 @@ class SoundController extends AsyncNotifier<void> {
 
   void playButtonClick() {
     if (_canPlaySound()) ref.read(soundServiceProvider).playButtonClick();
+  }
+
+  void setVolume(double volume) {
+    ref.read(settingsProvider.notifier).setSoundEffectsVolume(volume);
+    ref.read(soundServiceProvider).setVolume(volume);
+  }
+
+  void toggleMute() {
+    ref.read(settingsProvider.notifier).toggleSoundEffectsMute();
+    final newMutedState = ref.read(settingsProvider).isSoundEffectsMuted;
+    // Po przełączeniu stanu wyciszenia, aktualizujemy głośność w serwisie
+    if (newMutedState) {
+      ref.read(soundServiceProvider).setVolume(0.0);
+    } else {
+      // Przywracamy głośność do ostatnio ustawionej wartości (lub domyślnej)
+      ref.read(soundServiceProvider).setVolume(ref.read(settingsProvider).volumeSoundEffects);
+    }
   }
 }
 

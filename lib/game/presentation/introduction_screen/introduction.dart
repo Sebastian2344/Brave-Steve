@@ -36,6 +36,7 @@ class IntroductionScreen extends ConsumerWidget {
         centerTitle: true,
         foregroundColor: const Color.fromARGB(255, 57, 44, 30),
         backgroundColor: Colors.grey,
+        automaticallyImplyLeading: false, // Usunięcie domyślnej strzałki "wstecz"
       ),
       body: ColoredBox(
         color: Colors.brown,

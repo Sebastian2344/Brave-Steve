@@ -1,44 +1,20 @@
+import 'package:brave_steve/game/state_menegment/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-/// 1. Klasa trzymająca stan audio (reaktywna dla UI)
-class AudioState {
-  final bool isMuted;
-  final double bgmVolume;
-  final double sfxVolume;
-
-  const AudioState({
-    this.isMuted = false,
-    this.bgmVolume = 0.5,
-    this.sfxVolume = 1.0,
-  });
-
-  AudioState copyWith({
-    bool? isMuted,
-    double? bgmVolume,
-    double? sfxVolume,
-  }) {
-    return AudioState(
-      isMuted: isMuted ?? this.isMuted,
-      bgmVolume: bgmVolume ?? this.bgmVolume,
-      sfxVolume: sfxVolume ?? this.sfxVolume,
-    );
-  }
-}
-
-/// 2. Klasa zarządzająca logiką audio
-class AudioManager extends Notifier<AudioState> {
+/// Klasa zarządzająca logiką audio
+class AudioManager extends Notifier<void> {
   late final AudioPlayer _bgmPlayer;
-  AppLifecycleListener? _lifecycleListener; 
+  AppLifecycleListener? lifecycleListener; 
   
   @override
-  AudioState build() {
+  void build() {
     // Inicjalizacja odtwarzacza przy tworzeniu providera
     _bgmPlayer = AudioPlayer();
     _bgmPlayer.setReleaseMode(ReleaseMode.loop); // Muzyka w tle zapętlona
 
-     _lifecycleListener = AppLifecycleListener(
+     lifecycleListener = AppLifecycleListener(
       onStateChange: _handleAppLifecycle,
     );
 
@@ -48,15 +24,19 @@ class AudioManager extends Notifier<AudioState> {
       _bgmPlayer.dispose();
     });
 
+    playBGM(  
+      'sounds/gigachad_music.mp3',
+    );
+
     // Zwracamy początkowy stan
-    return const AudioState();
+    return; // Ten provider nie przechowuje stanu, ale można go rozbudować, by np. trzymał informacje o aktualnej ścieżce muzycznej czy głośności
   }
 
   /// Odtwarzanie muzyki w tle
   Future<void> playBGM(String fileName) async {
     await _bgmPlayer.play(
       AssetSource(fileName),
-      volume: state.isMuted ? 0.0 : state.bgmVolume,
+      volume: ref.read(settingsProvider).isMusicMuted ? 0.0 : ref.read(settingsProvider).volumeMusic,
     );
   }
 
@@ -75,48 +55,30 @@ class AudioManager extends Notifier<AudioState> {
   Future<void> pauseBGM() async => await _bgmPlayer.pause();
   Future<void> resumeBGM() async => await _bgmPlayer.resume();
 
-  /// Odtwarzanie efektów (SFX)
-  Future<void> playSFX(String fileName) async {
-    if (state.isMuted) return;
-
-    final sfxPlayer = AudioPlayer();
-    await sfxPlayer.play(AssetSource(fileName), volume: state.sfxVolume);
-
-    sfxPlayer.onPlayerComplete.listen((_) {
-      sfxPlayer.dispose(); // Zwalniamy zasoby po odegraniu dźwięku
-    });
-  }
-
   /// Przełączanie wyciszenia
   void toggleMute() {
-    final newMutedState = !state.isMuted;
+    ref.read(settingsProvider.notifier).toggleMusicMute();
+    final newMutedState = ref.read(settingsProvider).isMusicMuted; // Pobieramy aktualny stan wyciszenia z SettingsController
     
-    // Aktualizujemy stan, by UI mogło zareagować
-    state = state.copyWith(isMuted: newMutedState);
-
     // Wyciszamy lub przywracamy głośność w fizycznym odtwarzaczu
     if (newMutedState) {
       _bgmPlayer.setVolume(0.0);
     } else {
-      _bgmPlayer.setVolume(state.bgmVolume);
+      _bgmPlayer.setVolume(ref.read(settingsProvider).volumeMusic);
     }
   }
 
   void setBgmVolume(double volume) {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    state = state.copyWith(bgmVolume: clampedVolume);
     
-    if (!state.isMuted) {
+    if (!ref.read(settingsProvider).isMusicMuted) {
+      ref.read(settingsProvider.notifier).setMusicVolume(clampedVolume);
       _bgmPlayer.setVolume(clampedVolume);
     }
-  }
-
-  void setSfxVolume(double volume) {
-    state = state.copyWith(sfxVolume: volume.clamp(0.0, 1.0));
   }
 }
 
 /// 3. Globalny Provider, z którego będziesz korzystać w całej aplikacji
-final audioManagerProvider = NotifierProvider<AudioManager, AudioState>(() {
+final audioManagerProvider = NotifierProvider<AudioManager, void>(() {
   return AudioManager();
 });

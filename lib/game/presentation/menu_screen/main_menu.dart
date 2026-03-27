@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brave_steve/game/presentation/introduction_screen/introduction.dart';
+import 'package:brave_steve/game/presentation/settings_screen/settings.dart';
 import 'package:brave_steve/game/state_menegment/music_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,6 @@ class MainMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final soundManager = ref.watch(soundManagerProvider);
     ref.watch(audioManagerProvider);
-    ref.read(audioManagerProvider.notifier).playBGM(  
-      'sounds/gigachad_music.mp3',
-    );
     double fontSize = MediaQuery.of(context).textScaler.scale(18.0);
     return Scaffold(
         appBar: AppBar(
@@ -82,6 +80,19 @@ class MainMenu extends ConsumerWidget {
                           },
                           text: "Kontynuuj Grę",
                           fontSize: fontSize + 2),
+                      MainMenuButtons(
+                        color: color,
+                        function: () {
+                          ref.read(soundManagerProvider.notifier).playButtonClick();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const SettingsScreen();
+                            }),
+                          );
+                        },
+                        text: "Ustawienia",
+                        fontSize: fontSize + 2,
+                      ),
                       MainMenuButtons(
                         color: color,
                         function: () {
