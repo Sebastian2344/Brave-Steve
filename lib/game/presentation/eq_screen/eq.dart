@@ -4,6 +4,7 @@ import 'package:brave_steve/game/presentation/eq_screen/take_off_dialog.dart';
 import 'package:brave_steve/game/presentation/eq_screen/exchange_item_dialog.dart';
 import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +18,7 @@ class Equpment extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Ekwipunek'),
+        title:Text('equipment_screen.equipment'.tr()),
         centerTitle: true,
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,
@@ -105,7 +106,7 @@ class WindowEQ extends ConsumerWidget {
     ref.watch(providerEQ);
 
     // Zapisanie stanu do zmiennej, aby kod był czystszy i wydajniejszy
-    final isEmpty = ref.read(providerEQ).eqList[id].isEmpty;
+    final isEmpty = ref.read(providerEQ)[id].isEmpty;
 
     // DYNAMICZNE DOPASOWANIE DO EKRANU:
     final screenWidth = MediaQuery.of(context).size.width;
@@ -158,7 +159,7 @@ class WindowEQ extends ConsumerWidget {
         child: isEmpty
             ? null
             : Image.asset(
-                ref.read(providerEQ).eqList[id].item.image,
+                ref.read(providerEQ)[id].item.image,
                 fit: BoxFit.fill,
               ),
       ),

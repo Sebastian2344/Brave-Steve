@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,9 +16,9 @@ class ExitToMenu extends ConsumerWidget {
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
       backgroundColor: const Color.fromARGB(255, 23, 12, 6),
-      title: const Text('Wyjście do menu'),
+      title: Text('fight_screen.exit_dialog.exit_to_menu'.tr(context: context)),
       content:
-          const Text('Czy chcesz wyjść do menu? Gra nie zostanie zapisana.'),
+          Text('fight_screen.exit_dialog.exit_to_menu_confirmation'.tr(context: context)),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +39,7 @@ class ExitToMenu extends ConsumerWidget {
                     backgroundColor: Colors.brown[700],
                     foregroundColor: Colors.amber,
                     side: const BorderSide(color: Color(0xFFC0C0C0))),
-                child: const Text('Wychodze')),
+                child: Text('fight_screen.exit_dialog.exit'.tr(context: context))),
             ElevatedButton(
                 onPressed: () {
                   ref.read(soundManagerProvider.notifier).playButtonClick();
@@ -48,7 +49,7 @@ class ExitToMenu extends ConsumerWidget {
                     backgroundColor: Colors.brown[700],
                     foregroundColor: Colors.amber,
                     side: const BorderSide(color: Color(0xFFC0C0C0))),
-                child: const Text('Anuluj'))
+                child: Text('fight_screen.exit_dialog.stay'.tr(context: context))),
           ],
         ),
       ],

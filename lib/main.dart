@@ -7,9 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     // 1. Wymagane, aby używać kodu natywnego przed startem UI
@@ -37,7 +39,11 @@ void main() async {
     });
   }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) => 
-    runApp(const ProviderScope(child:MyApp(),),),);
+    runApp(ProviderScope(child:EasyLocalization(
+      supportedLocales: const [Locale('pl'), Locale('en')],
+      path: 'assets/translations', // <-- change the path of the translation files 
+      fallbackLocale: const Locale('pl'),
+      child: const MyApp(),),),));
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +51,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'Narazie bez nazwy',
       theme: ThemeData(

@@ -4,6 +4,7 @@ import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,11 +78,8 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
       mapMethods.incrementEnemy();
       gameMetods.setStatsPlayerAndEnemyAfterWin();
       await moneyMethods.addmoney(50.0);
-      if (eqMethods.isSpace()) {
-        eqMethods.randomItemDropToEQ(50);
-      }
-
-      if (!eqMethods.isSpace() && context.mounted) {
+      eqMethods.randomItemDropToEQ(100);
+      if (context.mounted && !eqMethods.isSpace()) {
         showDialog(
             context: context, builder: (context) => FullEqDialog(win: true));
       }
@@ -110,7 +108,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                     final atack = ref.watch(actionButtonIgnoreProvider.select((state) => state.atack));
                     return ButtonWidget(
                     globalKey: _keyAtak,
-                    description: 'Zadaje obrażenia takie jakie są w statystykach',
+                    description: 'fight_screen.action_buttons.attack_description'.tr(context: context),
                     fontSize: fontSize,
                     buttonIgnore: atack,
                     battle: () async {
@@ -124,8 +122,8 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                         await dialogWindow(a, context, ref);
                       }
                     },
-                    manaCost: '(+1 many)',
-                    textButton: 'Atak',
+                    manaCost: 'fight_screen.action_buttons.attack_cost'.tr(args: ['+1'], context: context),
+                    textButton: 'fight_screen.action_buttons.attack'.tr(context: context),
                     color: const Color.fromARGB(255, 18, 50, 228),
                     width: widthButton,
                     height: heightButton,
@@ -138,7 +136,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                     return ButtonWidget(
                       globalKey: _keySuperAtak,
                       description:
-                          'Zadaje obrażenia 2 razy większe od tych co są w statystykach',
+                          'fight_screen.action_buttons.super_attack_description'.tr(context: context),
                       fontSize: fontSize,
                       buttonIgnore: superAtack,
                       battle: () async {
@@ -152,8 +150,8 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                           await dialogWindow(a, context, ref);
                         }
                       },
-                      manaCost: '(4 many)',
-                      textButton: 'SuperAtak',
+                      manaCost: 'fight_screen.action_buttons.super_attack_cost'.tr(args: ['4'], context: context),
+                      textButton: 'fight_screen.action_buttons.super_attack'.tr(context: context),
                       color: const Color.fromARGB(255, 12, 205, 18),
                       width: widthButton,
                       height: heightButton,
@@ -170,7 +168,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                     final weakOnEnemy = ref.watch(actionButtonIgnoreProvider.select((state) => state.weakOnEnemy));
                     return ButtonWidget(
                       globalKey: _keyOslabienie,
-                      description: 'Obniża atak przeciwnika o 30 procent',
+                      description: 'fight_screen.action_buttons.weakness_description'.tr(context: context),
                       fontSize: fontSize,
                       buttonIgnore: weakOnEnemy,
                     battle: () async {
@@ -184,8 +182,8 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                         await dialogWindow(a, context, ref);
                       }
                     },
-                    manaCost: '(4 many)',
-                    textButton: 'Osłabienie',
+                    manaCost: 'fight_screen.action_buttons.weakness_cost'.tr(args: ['4'], context: context),
+                    textButton: 'fight_screen.action_buttons.weakness'.tr(context: context),
                     color: const Color.fromARGB(255, 105, 18, 228),
                     width: widthButton,
                     height: heightButton,
@@ -197,7 +195,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                     final cleary = ref.watch(actionButtonIgnoreProvider.select((state) => state.cleary));
                     return ButtonWidget(
                       globalKey: _keyOczyszczenie,
-                      description: 'Zdejmuje efekt osłabienia',
+                      description: 'fight_screen.action_buttons.clearance_description'.tr(context: context),
                       fontSize: fontSize - 1,
                       buttonIgnore: cleary,
                       battle: () async {
@@ -211,8 +209,8 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                           await dialogWindow(a, context, ref);
                         }
                       },
-                      manaCost: '(3 many)',
-                      textButton: 'Oczyszczenie',
+                      manaCost: 'fight_screen.action_buttons.clearance_cost'.tr(args: ['3'], context: context),
+                      textButton: 'fight_screen.action_buttons.clearance'.tr(context: context),
                       color: const Color.fromARGB(255, 12, 92, 205),
                       width: widthButton,
                       height: heightButton,

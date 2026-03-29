@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,14 +16,14 @@ class GameOver extends ConsumerWidget {
       titleTextStyle: const TextStyle(color:Colors.amber,fontSize: 24),
       contentTextStyle: const TextStyle(color:Colors.white,fontSize: 16),
       backgroundColor:const Color.fromARGB(255, 23, 12, 6),
-          title: const Text('Koniec gry'),
+          title: Text('fight_screen.game_over'.tr(context: context)),
           content: SizedBox(
             width: MediaQuery.of(context).size.width / 2,
             height: MediaQuery.of(context).size.height / 3.5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Brawo ukończyłeś gre. Udało ci się zdobyć 4 potrzebne przedmioty'),
+                Text('fight_screen.game_over_description'.tr(context: context)),
                 GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 8,mainAxisSpacing: 8),children: [
                   SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png')),
                   SizedBox(height:MediaQuery.of(context).size.height / 10,width:MediaQuery.of(context).size.width / 5,child: Image.asset('assets/images/złoto.png')),
@@ -44,7 +45,7 @@ class GameOver extends ConsumerWidget {
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.brown[700],foregroundColor: Colors.amber,side: const BorderSide(color: Color(0xFFC0C0C0))),
-                child: const Text('Przejdź do menu'))
+                child: Text('fight_screen.to_menu'.tr(context: context)))
           ],
         );
   }

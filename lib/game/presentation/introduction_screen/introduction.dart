@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/presentation/fight_screen/fight_screen.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,7 +29,7 @@ class IntroductionScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
-        title: Text('Wprowadzenie',
+        title: Text('introduction_screen.introduction'.tr(context: context),
             style: TextStyle(
                 fontSize: MediaQuery.of(context).textScaler.scale(40.0),
                 color: const Color.fromARGB(255, 57, 44, 30),

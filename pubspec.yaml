@@ -44,6 +44,7 @@ dependencies:
   window_manager: ^0.5.1
   soundpool: ^2.4.1
   audioplayers: ^6.6.0
+  easy_localization: ^3.0.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,6 +89,7 @@ flutter:
     - assets/images/enemies/
     - assets/images/player/
     - assets/sounds/
+    - assets/translations/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

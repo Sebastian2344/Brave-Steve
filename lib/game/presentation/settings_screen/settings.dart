@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/state_menegment/music_state.dart';
 import 'package:brave_steve/game/state_menegment/settings_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,21 +11,24 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade500,
       appBar: AppBar(
-        title: const Text(
-          'Ustawienia',
+        title: Text(
+          'settings_screen.settings'.tr(),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.brown.shade900,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:[
-            const Text(
-              'Dźwięk i wibracje',
+            Text(
+              'settings_screen.sound_and_vibration'.tr(),
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w900,
@@ -38,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
               builder: (context, ref, child) {
                 final audioState = ref.watch(settingsProvider); // Odsłuchujemy zmiany stanu SoundControllera
                 return _buildSoundControlCard(
-                  title: 'Muzyka w tle',
+                  title: 'settings_screen.background_music'.tr(),
                   icon: Icons.music_note_rounded,
                   volume: audioState.volumeMusic, // Tutaj podłączysz stan z AudioManagera
                   isMuted: audioState.isMusicMuted, // Tutaj podłączysz stan z AudioManagera
@@ -60,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
               builder: (context, ref, child) {
                 final soundState = ref.watch(settingsProvider); // Odsłuchujemy zmiany stanu SoundControllera
                 return _buildSoundControlCard(
-                  title: 'Efekty dźwiękowe',
+                  title: 'settings_screen.sound_effects'.tr(),
                   icon: Icons.gamepad_rounded,
                   volume: soundState.volumeSoundEffects, // Tutaj podłączysz stan z SoundControllera
                   isMuted: soundState.isSoundEffectsMuted, // Tutaj podłączysz stan z SoundControllera
@@ -74,6 +78,21 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
             ),
+
+            const SizedBox(height: 20),
+            Text(
+              'settings_screen.language'.tr(),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.5,
+              ),
+            ),
+            const SizedBox(height: 24),
+
+           _buildLanguageTile(context: context, title: 'PL', flagEmoji: '🇵🇱', locale: const Locale('pl'), currentLocale: context.locale),
+           const SizedBox(height: 12),
+           _buildLanguageTile(context: context, title: 'EN', flagEmoji: '🇬🇧', locale: const Locale('en'), currentLocale: context.locale)
           ],
         ),
       ),
@@ -90,22 +109,15 @@ class SettingsScreen extends StatelessWidget {
     required VoidCallback onMuteToggle,
     required BuildContext context,
   }) {
-    final colorScheme = Theme.of(context).colorScheme;
+    //final colorScheme = Theme.of(context).colorScheme;
     
     // Zmiana koloru w zależności od tego czy jest wyciszone
-    final activeColor = isMuted ? Colors.grey : colorScheme.primary;
+    final activeColor = isMuted ? Colors.grey.shade400 : Colors.white;
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: Colors.brown.shade900,
         borderRadius: BorderRadius.circular(24),
-        boxShadow:[
-          BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
       ),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -120,15 +132,15 @@ class SettingsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: isMuted 
-                          ? Colors.grey.withOpacity(0.2) 
-                          : colorScheme.primaryContainer,
+                          ? Colors.grey.withAlpha(51) 
+                          : Colors.brown.shade800, // Ciemniejszy odcień, gdy nie jest wyciszone
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Icon(
                       icon, 
                       color: isMuted 
-                          ? Colors.grey.shade700 
-                          : colorScheme.onPrimaryContainer,
+                          ? Colors.grey.shade400
+                          : Colors.white,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -137,6 +149,7 @@ class SettingsScreen extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -154,11 +167,11 @@ class SettingsScreen extends StatelessWidget {
                   child: Icon(
                     isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
                     key: ValueKey(isMuted),
-                    color: isMuted ? colorScheme.error : colorScheme.primary,
+                    color: isMuted ? Colors.red.shade300 : Colors.green.shade200,
                     size: 30,
                   ),
                 ),
-                tooltip: isMuted ? 'Wyłącz wyciszenie' : 'Wycisz',
+                tooltip: isMuted ? 'settings_screen.unmute'.tr() : 'settings_screen.mute'.tr(),
               ),
             ],
           ),
@@ -177,9 +190,9 @@ class SettingsScreen extends StatelessWidget {
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: activeColor,
-                    inactiveTrackColor: activeColor.withOpacity(0.2),
+                    inactiveTrackColor: activeColor.withAlpha(51),
                     thumbColor: activeColor,
-                    overlayColor: activeColor.withOpacity(0.15),
+                    overlayColor: activeColor.withAlpha(38),
                     trackHeight: 6.0,
                     thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
                     overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
@@ -191,13 +204,13 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 50,
+                width: 75,
                 child: Text(
-                  isMuted ? 'Mute' : '${(volume * 100).toInt()}%',
+                  isMuted ? 'settings_screen.muted'.tr() : '${(volume * 100).toInt()}%',
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: isMuted ? colorScheme.error : colorScheme.onSurface,
+                    color: isMuted ? Colors.grey.shade400 : Colors.white,
                   ),
                 ),
               ),
@@ -205,6 +218,50 @@ class SettingsScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLanguageTile({
+    required BuildContext context,
+    required String title,
+    required String flagEmoji,
+    required Locale locale,
+    required Locale currentLocale,
+  }) {
+    // Sprawdzamy, czy ten kafel to aktualnie wybrany język
+    final isSelected = currentLocale == locale;
+
+    return ListTile(
+      // Zaokrąglenie w środku kafelka dla ładnego efektu fali przy kliknięciu (InkWell)
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      tileColor: Colors.brown.shade900,
+      
+      // Flaga po lewej stronie
+      leading: Text(
+        flagEmoji,
+        style: const TextStyle(fontSize: 26),
+      ),
+      
+      // Nazwa języka - pogrubiona, jeśli jest wybrana
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          color: isSelected ? Colors.white : Colors.grey.shade300,
+        ),
+      ),
+      
+      // Ptaszek (checkmark) po prawej stronie, jeśli język jest wybrany
+      trailing: isSelected
+          ? Icon(Icons.check_circle, color: Colors.green.shade200, size: 26)
+          : null, // Puste miejsce, jeśli nie jest wybrany
+          
+      onTap: () {
+        // Zmiana języka
+        context.setLocale(locale);
+      },
     );
   }
 }

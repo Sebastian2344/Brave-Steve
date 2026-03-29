@@ -9,8 +9,8 @@ class ShowUpgradeInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref.watch(providerEQ).eqList[id];
-    final itemR = ref.read(providerEQ).eqList[id].item;
+    final item = ref.watch(providerEQ)[id];
+    final itemR = ref.read(providerEQ)[id].item;
     final o = ref.read(providerEQ.notifier);
     final isMaxLevel = ref.read(providerEQ.notifier).isMaxLevel(id);
     return !item.isEmpty

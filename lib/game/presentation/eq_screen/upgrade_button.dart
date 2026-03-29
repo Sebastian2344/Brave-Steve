@@ -12,7 +12,7 @@ class UpgradeButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref.watch(providerEQ).eqList[id];
+    final item = ref.watch(providerEQ)[id];
     bool isNotVisible = ref.read(providerEQ.notifier).isMaxLevel(id);
     double money = ref.watch(moneyProvider).value!.money;
     return !item.isEmpty && !isNotVisible

@@ -1,6 +1,7 @@
 //----------------------------------------------StatsView------------------------------------------------
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,7 +56,7 @@ class StatsView extends StatelessWidget {
                   : gameState.list[gameState.enemyIndex].getlvl(),
             ));
             return Text(
-              "Poziom $level",
+              "fight_screen.stats_view.level".tr(context: context, args: [level.toStringAsFixed(0)]),
               style: TextStyle(color: Colors.green, fontSize: fontSize),
             );
           },
@@ -68,12 +69,12 @@ class StatsView extends StatelessWidget {
                   ? gameState.list[0].showAttack()
                   : gameState.list[gameState.enemyIndex].showAttack(),
             ));
-            return Text("Atak  ${attack.toStringAsFixed(1)}",
+            return Text("fight_screen.stats_view.attack_value".tr(context: context, args: [attack.toStringAsFixed(1)]),
                 style: TextStyle(color: Colors.blueGrey, fontSize: fontSize));
           },
         ),
         Text(
-          "Mana",
+          "fight_screen.stats_view.mana".tr(context: context),
           style: TextStyle(
               color: const Color.fromARGB(255, 5, 46, 168), fontSize: fontSize),
         ),
@@ -82,7 +83,7 @@ class StatsView extends StatelessWidget {
             mediaQuerySize: mediaQuerySize,
             side: side == 'left' ? true : false),
         Text(
-          "Życie",
+          "fight_screen.stats_view.health".tr(context: context),
           style: TextStyle(
               color: const Color.fromARGB(255, 168, 5, 5), fontSize: fontSize),
         ),
@@ -91,7 +92,7 @@ class StatsView extends StatelessWidget {
             mediaQuerySize: mediaQuerySize,
             side: side == 'left' ? true : false),
         Text(
-          "Pancerz",
+          "fight_screen.stats_view.armor".tr(context: context),
           style: TextStyle(
               color: const Color.fromARGB(255, 136, 137, 136),
               fontSize: fontSize),
@@ -101,7 +102,7 @@ class StatsView extends StatelessWidget {
             mediaQuerySize: mediaQuerySize,
             side: side == 'left' ? true : false),
         Text(
-          "Doświadczene",
+          "fight_screen.stats_view.experience".tr(context: context),
           style: TextStyle(
               color: const Color.fromARGB(255, 5, 168, 21), fontSize: fontSize),
         ),

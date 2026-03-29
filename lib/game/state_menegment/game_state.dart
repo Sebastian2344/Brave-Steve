@@ -3,8 +3,8 @@ import 'package:brave_steve/game/data_layer/models/my_vars_model/my_vars_model.d
 import 'package:brave_steve/game/data_layer/repo/repository.dart';
 import 'package:brave_steve/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/game/state_menegment/effects_state.dart';
-import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
+import 'package:brave_steve/game/state_menegment/eq_stats_to_add_player_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/player_model/player_model.dart';
@@ -111,7 +111,7 @@ class GameState extends Notifier<MyVars> {
   }
 
   void setStats() {
-    final record = ref.read(providerEQ).stats;
+    final record = ref.read(eqStatsToAddPlayerStateProvider);
     state.list[0].setArmour = record.armour + state.list[0].getArmour();
     state.list[0].setMaxArmour = record.armour + state.list[0].getMaxArmour();
     state.list[0].setAttack = record.attack + state.list[0].getMaxAttack();

@@ -18,7 +18,7 @@ class SaveStateNotifier extends Notifier<List<SaveModel>> {
     await saveRepositoryGame.addSaveGame(
         ref.read(myStateProvider).list,
         name,
-        ref.read(providerEQ).eqList,
+        ref.read(providerEQ),
         ref.read(counterEnemyNotifierProvider),
         ref.read(myStateProvider).expMultiply);
     state = saveRepositoryGame.returnListSaves();

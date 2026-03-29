@@ -1,5 +1,6 @@
 import 'package:brave_steve/game/state_menegment/save_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../saves_screen/show_saves.dart';
@@ -13,7 +14,7 @@ class SaveGame extends ConsumerWidget {
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
       backgroundColor: const Color.fromARGB(255, 23, 12, 6),
-      title: const Text('Podaj nazwę zapisu gry'),
+      title: Text('fight_screen.save_dialog.save_game_name'.tr(context: context)),
       content: TextField(
         controller: textEditingController,
         style: const TextStyle(
@@ -48,8 +49,8 @@ class SaveGame extends ConsumerWidget {
                   }
                 : {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Zapis musi mieć nazwę'),
+                      SnackBar(
+                        content: Text('fight_screen.save_dialog.save_requires_name'.tr(context: context)),
                       ),
                     ),
                     Future.delayed(const Duration(seconds: 2))
@@ -60,7 +61,7 @@ class SaveGame extends ConsumerWidget {
               backgroundColor: Colors.brown[700],
               foregroundColor: Colors.white,
               side: const BorderSide(color: Colors.amber)),
-          child: const Text('Zapisz'),
+          child: Text('fight_screen.save_dialog.save'.tr(context: context)),
         )
       ],
     );

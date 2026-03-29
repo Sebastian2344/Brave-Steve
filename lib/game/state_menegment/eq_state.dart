@@ -1,20 +1,21 @@
 import 'package:brave_steve/game/data_layer/repo/eq_repo.dart';
+import 'package:brave_steve/game/state_menegment/eq_stats_to_add_player_state.dart';
 import 'package:brave_steve/game/state_menegment/merge_item_state.dart';
 import 'package:brave_steve/game/state_menegment/money_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data_layer/models/eq_model/eq_model.dart';
 
-final providerEQ = NotifierProvider<EqStateMenagment, EqModel>(() {
+final providerEQ = NotifierProvider<EqStateMenagment, List<ItemPlaceModel>>(() {
   return EqStateMenagment();
 });
 
-class EqStateMenagment extends Notifier<EqModel> {
+class EqStateMenagment extends Notifier<List<ItemPlaceModel>> {
   EqRepo get eqRepo => ref.read(eqRepoProvider);
 
   @override
   build() {
     ref.watch(eqRepoProvider);
-    return const EqModel(eqList: [
+    return [
       ItemPlaceModel(
           id: 0,
           isEmpty: true,
@@ -120,130 +121,136 @@ class EqStateMenagment extends Notifier<EqModel> {
           isEmpty: true,
           classField: FieldTypeModel.backpack,
           item: ItemModel()),
-    ], stats: StatsModelToAddStatsPlayer(attack: 0, armour: 0));
+    ];
   }
 
   void loadItemPlaceModels(int index) {
     List<ItemPlaceModel> o = eqRepo.getListFieldTypeModelFromDB(index);
-    state = state
-        .copywith(eqList: [for (final itemPlaceModel in o) itemPlaceModel]);
+    state = [for (final itemPlaceModel in o) itemPlaceModel];
   }
 
-  void addItemToEQ(){
+  void addItemToEQ() {
     final itemM = ref.read(providerMergeItem)[2];
-    ItemModel item = ItemModel(name: itemM.name, description: itemM.description, image: itemM.image, attack: itemM.attack, armour: itemM.armour, classItem: itemM.classItem, price: itemM.price, itemLevel: itemM.itemLevel, upgradePrice: itemM.upgradePrice, itemRarity: itemM.itemRarity);
-     final firstFreeItemPlaceModel = state.eqList.firstWhere((element) =>
+    ItemModel item = ItemModel(
+        name: itemM.name,
+        description: itemM.description,
+        image: itemM.image,
+        attack: itemM.attack,
+        armour: itemM.armour,
+        classItem: itemM.classItem,
+        price: itemM.price,
+        itemLevel: itemM.itemLevel,
+        upgradePrice: itemM.upgradePrice,
+        itemRarity: itemM.itemRarity);
+    final firstFreeItemPlaceModel = state.firstWhere((element) =>
         element.isEmpty == true &&
         element.classField == FieldTypeModel.backpack);
-    state = state.copywith(eqList: [
-      for (final itemplaceModel in state.eqList)
+    state = [
+      for (final itemplaceModel in state)
         if (itemplaceModel.classField == FieldTypeModel.backpack &&
             itemplaceModel.isEmpty == true &&
             firstFreeItemPlaceModel.id == itemplaceModel.id)
           itemplaceModel.copywith(isEmpty: false, item: item)
         else
           itemplaceModel
-    ]);
+    ];
   }
 
   Future<void> upgradeItem(int id, double money) async {
-    if (money < state.eqList[id].item.upgradePrice) {
+    if (money < state[id].item.upgradePrice) {
       return;
     }
-    double bill = state.eqList[id].item.upgradePrice.toDouble();
+    double bill = state[id].item.upgradePrice.toDouble();
     if (eqRepo.isItemMaxLevel(
-        state.eqList[id].item.itemLevel, state.eqList[id].item.itemRarity)) {
+        state[id].item.itemLevel, state[id].item.itemRarity)) {
       return;
     }
-    state = state.copywith(eqList: [
-      for (final itemPlaceModel in state.eqList)
+    state = [
+      for (final itemPlaceModel in state)
         if (itemPlaceModel.id == id)
           itemPlaceModel.copywith(
-              item: state.eqList[id].item.copywith(
-                  itemLevel: state.eqList[id].item.itemLevel + 1,
-                  upgradePrice: state.eqList[id].item.upgradePrice + 20,
-                  armour: state.eqList[id].item.armour != null
-                      ? state.eqList[id].item.armour! + armourStatsBoost()
-                      : state.eqList[id].item.armour,
-                  attack: state.eqList[id].item.attack != null
-                      ? state.eqList[id].item.attack! + attackStatsBoost()
-                      : state.eqList[id].item.attack))
+              item: state[id].item.copywith(
+                  itemLevel: state[id].item.itemLevel + 1,
+                  upgradePrice: state[id].item.upgradePrice + 20,
+                  armour: state[id].item.armour != null
+                      ? state[id].item.armour! + armourStatsBoost()
+                      : state[id].item.armour,
+                  attack: state[id].item.attack != null
+                      ? state[id].item.attack! + attackStatsBoost()
+                      : state[id].item.attack))
         else
           itemPlaceModel
-    ]);
-    if (state.eqList[id].classField != FieldTypeModel.backpack) {
-      state = state.copywith(
-          stats: state.stats.copywith(
-              attack: state.eqList[id].item.attack == null
-                  ? 0
-                  : attackStatsBoost().toDouble(),
-              armour: state.eqList[id].item.armour == null
-                  ? 0
-                  : armourStatsBoost().toDouble()));
+    ];
+    if (state[id].classField != FieldTypeModel.backpack) {
+      ref.read(eqStatsToAddPlayerStateProvider.notifier).upgradeWearItem(
+          state[id].item.attack,
+          state[id].item.armour,
+          attackStatsBoost().toDouble(),
+          armourStatsBoost().toDouble());
     } else {
-      state = state.copywith(stats: state.stats.copywith(attack: 0, armour: 0));
+      ref.read(eqStatsToAddPlayerStateProvider.notifier).reset();
     }
     await ref.read(moneyProvider.notifier).subtractmoney(bill);
   }
 
   void ubracsie(int id) {
-    if (state.eqList[id].isEmpty == false &&
-        state.eqList[id].classField == FieldTypeModel.backpack) {
-      ItemModel itemBeforeWear = state.eqList[id].item;
-      state = state.copywith(
-          eqList: [
-            for (final itemPlaceModel in state.eqList)
-              if (itemPlaceModel.classField == FieldTypeModel.helmet &&
-                  state.eqList[id].item.classItem == ItemTypeModel.helmet &&
-                  state.eqList[0].item.classItem == ItemTypeModel.none)
-                itemPlaceModel.copywith(
-                    isEmpty: false, item: state.eqList[id].item)
-              else if (itemPlaceModel.classField == FieldTypeModel.chestplate &&
-                  state.eqList[id].item.classItem == ItemTypeModel.chestplate &&
-                  state.eqList[2].item.classItem == ItemTypeModel.none)
-                itemPlaceModel.copywith(
-                    isEmpty: false, item: state.eqList[id].item)
-              else if (itemPlaceModel.classField == FieldTypeModel.sword &&
-                  state.eqList[id].item.classItem == ItemTypeModel.sword &&
-                  state.eqList[1].item.classItem == ItemTypeModel.none)
-                itemPlaceModel.copywith(
-                    isEmpty: false, item: state.eqList[id].item)
-              else if (itemPlaceModel.classField == FieldTypeModel.pants &&
-                  state.eqList[id].item.classItem == ItemTypeModel.pants &&
-                  state.eqList[3].item.classItem == ItemTypeModel.none)
-                itemPlaceModel.copywith(
-                    isEmpty: false, item: state.eqList[id].item)
-              else if (itemPlaceModel.classField == FieldTypeModel.boots &&
-                  state.eqList[id].item.classItem == ItemTypeModel.boots &&
-                  state.eqList[4].item.classItem == ItemTypeModel.none)
-                itemPlaceModel.copywith(
-                    isEmpty: false, item: state.eqList[id].item)
-              else
-                itemPlaceModel
-          ],
-          stats: state.stats.copywith(
-              attack: (itemBeforeWear.attack ?? 0).toDouble(),
-              armour: (itemBeforeWear.armour ?? 0).toDouble()));
+    if (state[id].isEmpty == false &&
+        state[id].classField == FieldTypeModel.backpack) {
+      ItemModel itemBeforeWear = state[id].item;
+      state = [
+          for (final itemPlaceModel in state)
+            if (itemPlaceModel.classField == FieldTypeModel.helmet &&
+                state[id].item.classItem == ItemTypeModel.helmet &&
+                state[0].item.classItem == ItemTypeModel.none)
+              itemPlaceModel.copywith(
+                  isEmpty: false, item: state[id].item)
+            else if (itemPlaceModel.classField == FieldTypeModel.chestplate &&
+                state[id].item.classItem == ItemTypeModel.chestplate &&
+                state[2].item.classItem == ItemTypeModel.none)
+              itemPlaceModel.copywith(
+                  isEmpty: false, item: state[id].item)
+            else if (itemPlaceModel.classField == FieldTypeModel.sword &&
+                state[id].item.classItem == ItemTypeModel.sword &&
+                state[1].item.classItem == ItemTypeModel.none)
+              itemPlaceModel.copywith(
+                  isEmpty: false, item: state[id].item)
+            else if (itemPlaceModel.classField == FieldTypeModel.pants &&
+                state[id].item.classItem == ItemTypeModel.pants &&
+                state[3].item.classItem == ItemTypeModel.none)
+              itemPlaceModel.copywith(
+                  isEmpty: false, item: state[id].item)
+            else if (itemPlaceModel.classField == FieldTypeModel.boots &&
+                state[id].item.classItem == ItemTypeModel.boots &&
+                state[4].item.classItem == ItemTypeModel.none)
+              itemPlaceModel.copywith(
+                  isEmpty: false, item: state[id].item)
+            else
+              itemPlaceModel
+        ];
 
-      state = state.copywith(eqList: [
-        for (final itemPlaceModel in state.eqList)
+      ref
+          .read(eqStatsToAddPlayerStateProvider.notifier)
+          .wearItem(itemBeforeWear.attack, itemBeforeWear.armour);
+
+      state = [
+        for (final itemPlaceModel in state)
           if (itemPlaceModel.item != const ItemModel() &&
               itemPlaceModel.id == id)
             itemPlaceModel.copywith(isEmpty: true, item: const ItemModel())
           else
             itemPlaceModel,
-      ]);
+      ];
     }
   }
 
   void podmiankaItemow(int id) {
-    if (state.eqList[id].isEmpty == false &&
-        state.eqList[id].classField == FieldTypeModel.backpack) {
-      ItemModel itemBeforePutOn = state.eqList[id].item;
-      int idItemBeforeTakeOff = state.eqList
+    if (state[id].isEmpty == false &&
+        state[id].classField == FieldTypeModel.backpack) {
+      ItemModel itemBeforePutOn = state[id].item;
+      int idItemBeforeTakeOff = state
           .firstWhere(
               (e) =>
-                  e.item.classItem == state.eqList[id].item.classItem &&
+                  e.item.classItem == state[id].item.classItem &&
                   e.isEmpty == false &&
                   e.classField != FieldTypeModel.backpack,
               orElse: () => ItemPlaceModel(
@@ -255,49 +262,46 @@ class EqStateMenagment extends Notifier<EqModel> {
       if (idItemBeforeTakeOff == -1) {
         return;
       }
-      ItemModel itemBeforeTakeOff = state.eqList[idItemBeforeTakeOff].item;
+      ItemModel itemBeforeTakeOff = state[idItemBeforeTakeOff].item;
 
-      state = state.copywith(eqList: [
-        for (final itemPlaceModel in state.eqList)
+      state = [
+        for (final itemPlaceModel in state)
           if (itemPlaceModel.id == idItemBeforeTakeOff)
             itemPlaceModel.copywith(isEmpty: false, item: itemBeforePutOn)
           else if (itemPlaceModel.id == id)
             itemPlaceModel.copywith(isEmpty: false, item: itemBeforeTakeOff)
           else
             itemPlaceModel
-      ]);
+      ];
 
-      state = state.copywith(
-          stats: state.stats.copywith(
-              attack: ((itemBeforeTakeOff.attack ?? 0).toDouble() * -1) +
-                  (itemBeforePutOn.attack ?? 0).toDouble(),
-              armour: ((itemBeforeTakeOff.armour ?? 0).toDouble() * -1) +
-                  (itemBeforePutOn.armour ?? 0).toDouble()));
+      ref.read(eqStatsToAddPlayerStateProvider.notifier).podmianka(
+          ((itemBeforeTakeOff.attack ?? 0) * -1) +
+              (itemBeforePutOn.attack ?? 0),
+          ((itemBeforeTakeOff.armour ?? 0) * -1) +
+              (itemBeforePutOn.armour ?? 0));
+
     }
   }
 
   void rozebracsie(int id) {
-    double armour = 0;
-    double attack = 0;
+    if (state[id].isEmpty == false &&
+        state[id].classField != FieldTypeModel.backpack) {
+      ref.read(eqStatsToAddPlayerStateProvider.notifier).takeOffItem(
+          state[id].item.attack, state[id].item.armour);
 
-    if (state.eqList[id].isEmpty == false &&
-        state.eqList[id].classField != FieldTypeModel.backpack) {
-      armour -= (state.eqList[id].item.armour ?? 0).toDouble();
-      attack -= (state.eqList[id].item.attack ?? 0).toDouble();
-
-      ItemPlaceModel first = state.eqList.firstWhere(
+      ItemPlaceModel first = state.firstWhere(
           (e) => e.isEmpty && e.classField == FieldTypeModel.backpack);
-      state = state.copywith(eqList: [
-        for (final itemPlaceModel in state.eqList)
+      state = [
+        for (final itemPlaceModel in state)
           if (itemPlaceModel.classField == FieldTypeModel.backpack &&
               itemPlaceModel.isEmpty == true &&
               itemPlaceModel.id == first.id)
-            itemPlaceModel.copywith(isEmpty: false, item: state.eqList[id].item)
+            itemPlaceModel.copywith(isEmpty: false, item: state[id].item)
           else
             itemPlaceModel
-      ]);
-      state = state.copywith(eqList: [
-        for (final itemPlaceModel in state.eqList)
+      ];
+      state = [
+        for (final itemPlaceModel in state)
           if (itemPlaceModel.classField == FieldTypeModel.helmet &&
               itemPlaceModel.id == id)
             itemPlaceModel.copywith(isEmpty: true, item: const ItemModel())
@@ -315,96 +319,94 @@ class EqStateMenagment extends Notifier<EqModel> {
             itemPlaceModel.copywith(isEmpty: true, item: const ItemModel())
           else
             itemPlaceModel
-      ], stats: state.stats.copywith(attack: (attack), armour: (armour)));
+      ];
     }
   }
 
   void randomItemDropToEQ(int dropRate) {
     final item = eqRepo.getDrawnItem(dropRate);
-    if (item == null) {
+    if (item == null || isSpace() == false) {
       return;
     }
-    final firstFreeItemPlaceModel = state.eqList.firstWhere((element) =>
+    final firstFreeItemPlaceModel = state.firstWhere((element) =>
         element.isEmpty == true &&
         element.classField == FieldTypeModel.backpack);
-    state = state.copywith(eqList: [
-      for (final itemplaceModel in state.eqList)
+    state = [
+      for (final itemplaceModel in state)
         if (itemplaceModel.classField == FieldTypeModel.backpack &&
             itemplaceModel.isEmpty == true &&
             firstFreeItemPlaceModel.id == itemplaceModel.id)
           itemplaceModel.copywith(isEmpty: false, item: item)
         else
           itemplaceModel
-    ]);
+    ];
   }
 
-  void delete2Items(){
+  void delete2Items() {
     final item1 = ref.read(providerMergeItem)[0];
     final item2 = ref.read(providerMergeItem)[1];
 
-    state = state.copywith(eqList: [
-      for (final itemPlaceModel in state.eqList)
-        if (itemPlaceModel.id == item1.fromEQId || itemPlaceModel.id == item2.fromEQId)
+    state = [
+      for (final itemPlaceModel in state)
+        if (itemPlaceModel.id == item1.fromEQId ||
+            itemPlaceModel.id == item2.fromEQId)
           itemPlaceModel.copywith(isEmpty: true, item: const ItemModel())
         else
           itemPlaceModel
-    ]);
+    ];
   }
 
   void deleteItem(int id) {
-    double armour = 0;
-    double attack = 0;
-
-    if (state.eqList[id].isEmpty == false &&
-        state.eqList[id].classField != FieldTypeModel.backpack) {
-      armour -= (state.eqList[id].item.armour ?? 0).toDouble();
-      attack -= (state.eqList[id].item.attack ?? 0).toDouble();
+    if (state[id].isEmpty == false &&
+        state[id].classField != FieldTypeModel.backpack) {
+      ref.read(eqStatsToAddPlayerStateProvider.notifier).deleteWearItem(
+          state[id].item.attack, state[id].item.armour);
     }
 
-    state = state.copywith(eqList: [
-      for (final itemplaceModel in state.eqList)
+    state = [
+      for (final itemplaceModel in state)
         if (itemplaceModel.isEmpty == false && itemplaceModel.id == id)
           itemplaceModel.copywith(isEmpty: true, item: const ItemModel())
         else
           itemplaceModel
-    ], stats: state.stats.copywith(attack: attack, armour: armour));
+    ];
   }
 
   void deleteItems() {
-    state = state.copywith(eqList: [
-      for (final itemplaceModel in state.eqList)
+    state = [
+      for (final itemplaceModel in state)
         if (itemplaceModel.isEmpty == false)
           itemplaceModel.copywith(isEmpty: true, item: const ItemModel())
         else
           itemplaceModel
-    ]);
+    ];
   }
 
   int getIdItemBeforeTakeOff(int id) {
-    return state.eqList
+    return state
         .firstWhere((e) =>
-            e.item.classItem == state.eqList[id].item.classItem &&
+            e.item.classItem == state[id].item.classItem &&
             e.isEmpty == false &&
             e.classField != FieldTypeModel.backpack)
         .id;
   }
 
   bool czyPustePole(int id) {
-    return state.eqList[id].item.classItem == ItemTypeModel.helmet
-        ? state.eqList[0].isEmpty
-        : state.eqList[id].item.classItem == ItemTypeModel.chestplate
-            ? state.eqList[2].isEmpty
-            : state.eqList[id].item.classItem == ItemTypeModel.sword
-                ? state.eqList[1].isEmpty
-                : state.eqList[id].item.classItem == ItemTypeModel.pants
-                    ? state.eqList[3].isEmpty
-                    : state.eqList[4].isEmpty;
+    return state[id].item.classItem == ItemTypeModel.helmet
+        ? state[0].isEmpty
+        : state[id].item.classItem == ItemTypeModel.chestplate
+            ? state[2].isEmpty
+            : state[id].item.classItem == ItemTypeModel.sword
+                ? state[1].isEmpty
+                : state[id].item.classItem == ItemTypeModel.pants
+                    ? state[3].isEmpty
+                    : state[4].isEmpty;
   }
 
   bool isSpace() {
     int fullPlace = 0;
     int allPlace = 0;
-    for (final itemplaceModel in state.eqList) {
+    for (final itemplaceModel in state) {
       if (itemplaceModel.classField == FieldTypeModel.backpack &&
           itemplaceModel.isEmpty == false) {
         fullPlace++;
@@ -419,7 +421,7 @@ class EqStateMenagment extends Notifier<EqModel> {
 
   bool isMaxLevel(int id) {
     return eqRepo.isItemMaxLevel(
-        state.eqList[id].item.itemLevel, state.eqList[id].item.itemRarity);
+        state[id].item.itemLevel, state[id].item.itemRarity);
   }
 
   String getMaxLevel(String rarity) {

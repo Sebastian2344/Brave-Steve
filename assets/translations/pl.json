@@ -1,0 +1,112 @@
+{
+    "equipment_screen": {
+        "equipment": "Ekwipunek",
+        "replace_item": "Czy chcesz podmienić przedmioty?",
+        "replace": "Podmieniam",
+        "dont_replace": "Nie podmieniam",
+        "equip_item": "Czy chcesz załozyć przedmiot?",
+        "equip": "Zakładam",
+        "dont_equip": "Nie zakładam",
+        "sell_item": "Czy chcesz sprzedać przedmiot?",
+        "sell": "Sprzedaję",
+        "dont_sell": "Nie sprzedaję",
+        "unequip_item": "Czy chcesz zdjąć przedmiot?",
+        "unequip": "Zdejmuję",
+        "dont_unequip": "Nie zdejmuję",
+        "upgrade_item": "Ulepszam",
+        "max_level": "Przedmiot osiągnął maksymalny poziom ulepszenia.",
+        "inventory_full": "Twój ekwipunek jest zapełniony!! Musisz zrobić miejsce w ekwipunku aby móc otrzymać przedmiot z dropu. Pamiętaj że możesz sprzedać przedmioty które masz w ekwipunku.",
+        "make_space": "Robie miejsce w ekwipunku",
+        "not_now":"Nie teraz"
+    },
+    "fight_screen": {
+        "action_buttons": {
+            "attack":"Atak",
+            "attack_description":"Zadaje obrażenia takie jakie są w statystykach i regeneruje mane o 1 punkt",
+            "super_attack":"Super Atak",
+            "super_attack_description":"Zadaje obrażenia 2 razy większe niż atak",
+            "weakness":"Osłabienie",
+            "weakness_description":"Obniża atak przeciwnika o 30 procent",
+            "clearance":"Oczyszczenie",
+            "clearance_description":"Usuwa wszystkie negatywne efekty z postaci",
+            "attack_cost":"{} Many",
+            "super_attack_cost":"{} Many",
+            "weakness_cost":"{} Many",
+            "clearance_cost":"{} Many"
+        },
+        "exit_dialog":{
+            "exit_to_menu":"Wyjście do menu",
+            "exit_to_menu_confirmation":"Czy chcesz wyjść do menu? Gra nie zostanie zapisana.",
+            "exit":"Wychodzę",
+            "stay":"Pozostaję"
+        },
+        "appbar":{
+            "eq":"Ekwipunek",
+            "eq_description":"Tutaj możesz zarządzać swoim ekwipunkiem.",
+            "merge":"Łączenie przedmiotów",
+            "merge_description":"Tutaj możesz łączyć przedmioty, aby stworzyć nowe.",
+            "save_game":"Zapisz grę",
+            "save_progress":"Tutaj możesz zapisać postęp gry."
+        },
+        "save_dialog":{
+            "save_game_name":"Podaj nazwę zapisu gry",
+            "save_requires_name":"Zapis musi mieć nazwę",
+            "save":"Zapisz"
+        },
+        "game_over_dialog":{
+            "game_over":"Koniec gry",
+            "game_over_description":"Brawo ukończyłeś gre. Udało ci się zdobyć 4 potrzebne przedmioty.",
+            "go_to_menu":"Przejdź do menu"
+        },
+        "lose_dialog":{
+            "lose":"Porażka",
+            "lose_description":"Przeciwnik Cię pokonał!",
+            "try_again":"Spróbuj ponownie",
+            "ad_not_available":"Reklama niedostępna.",
+            "ad":"Reklama"
+        },
+        "stats_view":{
+            "level":"Poziom {}",
+            "attack_value":"Atak: {}",
+            "mana":"Mana",
+            "health":"Życie",
+            "armor":"Pancerz",
+            "experience":"Doświadczenie"
+        }
+    },
+    "main_menu": {
+        "game_title": "Odważny rycerz",
+        "play": "Nowa Gra",
+        "load": "Wczytaj Grę",
+        "settings": "Ustawienia",
+        "exit": "Wyjście",
+        "loading": "Ładowanie zasobów..."
+    },
+    "merge_item_screen": {
+        "merge": "Scalanie przedmiotów",
+        "close": "Zamknij"
+    },
+    "saves_screen": {
+        "saves": "Zapisy",
+        "no_saves": "Brak zapisów",
+        "health": "Życie:",
+        "mana": "Mana:",
+        "attack": "Atak:",
+        "level": "Poziom:",
+        "experience": "Doświadczenie:",
+        "delete": "Usuń"
+    },
+    "settings_screen": {
+        "settings": "Ustawienia",
+        "sound_and_vibration": "Dźwięk i wibracje",
+        "background_music": "Muzyka w tle",
+        "sound_effects": "Efekty dźwiękowe",
+        "unmute": "Wyłącz wyciszenie",
+        "mute": "Wycisz",
+        "muted": "Wyciszono",
+        "language": "Język"
+    },
+    "introduction_screen": {
+        "introduction": "Wprowadzenie"
+    }
+}

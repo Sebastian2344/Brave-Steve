@@ -4,6 +4,7 @@ import 'package:brave_steve/game/state_menegment/counter_enemy_state.dart';
 import 'package:brave_steve/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/game/state_menegment/save_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data_layer/models/player_model/steve.dart';
@@ -42,8 +43,8 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
             },
             icon: const Icon(Icons.arrow_back),
           ),
-          title: const Text(
-            'Zapisy',
+          title: Text(
+            'saves_screen.saves'.tr(context: context),
             style: TextStyle(color: Colors.white),
           ),
           titleTextStyle: const TextStyle(fontSize: 26),
@@ -55,9 +56,9 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
           builder: (context, ref, child) {
             List<SaveModel> listSaves = ref.watch(saveStateProvider);
             return listSaves.isEmpty
-                ? const Center(
+                ? Center(
                     child: Text(
-                      'Brak zapisów',
+                      'saves_screen.no_saves'.tr(context: context),
                       style: TextStyle(fontSize: 20),
                     ),
                   )
@@ -93,35 +94,35 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                                         1: FractionColumnWidth(4 / 5),
                                       }, children: [
                                         TableRow(children: [
-                                          const TableCell(
-                                              child: Text('Życie:')),
+                                          TableCell(
+                                              child: Text('saves_screen.health'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[0].showHp()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(child: Text('Mana:')),
+                                          TableCell(child: Text('saves_screen.mana'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[0].showMana()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(child: Text('Atak:')),
+                                          TableCell(child: Text('saves_screen.attack'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[0].showAttack()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(
-                                              child: Text('Poziom:')),
+                                          TableCell(
+                                              child: Text('saves_screen.level'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[0].getlvl()}'))
                                         ]),
                                         TableRow(
                                           children: [
-                                            const TableCell(
-                                                child: Text('Doświadczenie:')),
+                                            TableCell(
+                                                child: Text('saves_screen.experience'.tr(context: context))),
                                             TableCell(
                                                 child: Text(
                                                     '${listSaves[index].list[0].showExp()}'))
@@ -149,35 +150,35 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                                         1: FractionColumnWidth(4 / 5),
                                       }, children: [
                                         TableRow(children: [
-                                          const TableCell(
-                                              child: Text('Życie:')),
+                                          TableCell(
+                                              child: Text('saves_screen.health'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showHp()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(child: Text('Mana:')),
+                                          TableCell(child: Text('saves_screen.mana'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showMana()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(child: Text('Atak:')),
+                                          TableCell(child: Text('saves_screen.attack'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showAttack()}'))
                                         ]),
                                         TableRow(children: [
-                                          const TableCell(
-                                              child: Text('Poziom:')),
+                                          TableCell(
+                                              child: Text('saves_screen.level'.tr(context: context))),
                                           TableCell(
                                               child: Text(
                                                   '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].getlvl()}'))
                                         ]),
                                         TableRow(
                                           children: [
-                                            const TableCell(
-                                                child: Text('Doświadczenie:')),
+                                            TableCell(
+                                                child: Text('saves_screen.experience'.tr(context: context))),
                                             TableCell(
                                                 child: Text(
                                                     '${listSaves[index].list[(listSaves[index].list[0] as Steve).getEnemyIndex()].showExp()}'))
@@ -207,31 +208,32 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
                           onTap: () {
                             ref
                                 .read(soundManagerProvider.notifier)
-                                .playButtonClick();
+                                .playButtonClick();//sound
                             ref
                                 .read(myStateProvider.notifier)
-                                .loadPlayerAndMobs(index);
+                                .loadPlayerAndMobs(index);//player and enemies
                             ref
                                 .read(providerEQ.notifier)
-                                .loadItemPlaceModels(index);
+                                .loadItemPlaceModels(index);//eq
                             ref
                                 .read(counterEnemyNotifierProvider.notifier)
-                                .fromSave(index);
+                                .fromSave(index);//enemy counter and set biom
                             ref
                                 .read(myStateProvider.notifier)
-                                .loadExpMultiply(index);
+                                .loadExpMultiply(index);//exp multiply
                             ref
                                 .read(effectsStateProvider.notifier)
-                                .setEffects();
+                                .setEffects();// efects(weakness,clearance)
                             ref
                                 .read(actionButtonIgnoreProvider.notifier)
-                                .setAfterplayerAndEneyLoad();
+                                .setAfterplayerAndEneyLoad();//action buttons state
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const FightScreen(false),
                                 ),
-                                (route) => false);
+                                (route) => route.isFirst,
+                                );
                           },
                         ),
                       );

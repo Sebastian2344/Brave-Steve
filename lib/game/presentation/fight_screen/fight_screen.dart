@@ -7,6 +7,7 @@ import 'package:brave_steve/game/presentation/merge_item_screen/merge_item_scree
 import 'package:brave_steve/game/presentation/money_widget.dart';
 import 'package:brave_steve/game/state_menegment/game_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -55,8 +56,8 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                 // === DYSKIETKA ZAPISU ===
                 Showcase(
                   key: _keySave,
-                  title: 'Zapisz grę',
-                  description: 'Tutaj możesz zapisać postęp gry.',
+                  title: 'fight_screen.appbar.save_game'.tr(context: context),
+                  description: 'fight_screen.appbar.save_progress'.tr(context: context),
                   overlayColor: Colors.black.withValues(alpha: 0.7),
                   targetBorderRadius: BorderRadius.circular(50),
                   tooltipBackgroundColor: Colors.white,
@@ -74,15 +75,15 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                 ),
               ],
             ),
-            title: const Text('Nazwa Gry'),
+            title: Text('main_menu.game_title'.tr()),
             centerTitle: true,
             backgroundColor: const Color(0xFF301b0a),
             actions: [
               // === EKWIPUNEK / LUDZIK ===
               Showcase(
                   key: _keyEq,
-                  title: 'Ekwipunek',
-                  description: 'Sprawdź statystyki i ulepsz postać.',
+                  title: 'fight_screen.appbar.eq'.tr(context: context),
+                  description: 'fight_screen.appbar.eq_description'.tr(context: context),
                   overlayColor: Colors.black.withValues(alpha: 0.7),
                   targetBorderRadius: BorderRadius.circular(50),
                   tooltipBackgroundColor: Colors.white,
@@ -110,8 +111,8 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                   )),
               Showcase(
                 key: _keyMerge,
-                title: 'Łączenie przedmiotów',
-                description: 'Tutaj możesz łączyć przedmioty, aby stworzyć nowe.',
+                title: 'fight_screen.appbar.merge'.tr(context: context),
+                description: 'fight_screen.appbar.merge_description'.tr(context: context),
                 overlayColor: Colors.black.withValues(alpha: 0.7),
                 targetBorderRadius: BorderRadius.circular(50),
                 tooltipBackgroundColor: Colors.white,

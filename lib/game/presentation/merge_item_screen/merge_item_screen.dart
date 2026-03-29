@@ -1,6 +1,7 @@
 import 'package:brave_steve/game/state_menegment/eq_state.dart';
 import 'package:brave_steve/game/state_menegment/merge_item_state.dart';
 import 'package:brave_steve/game/state_menegment/sound_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +13,7 @@ class MergeItemScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Scalanie przedmiotów'),
+        title: Text('merge_item_screen.merge'.tr(context: context)),
         centerTitle: true,
         backgroundColor: Colors.brown[900],
         foregroundColor: Colors.white,
@@ -96,8 +97,8 @@ class WindowEQToMerge extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final double boxSize = screenWidth * 0.18;
     final double marginSize = screenWidth * 0.02;
-    final isEmpty = ref.read(providerEQ).eqList[id].isEmpty;
-    ref.watch(providerEQ).eqList[id];
+    final isEmpty = ref.read(providerEQ)[id].isEmpty;
+    ref.watch(providerEQ)[id];
     return InkWell(
       onTap: () {
         if (isEmpty) return;
@@ -118,10 +119,10 @@ class WindowEQToMerge extends ConsumerWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Zamknij'),
+                child: Text('merge_item_screen.close'.tr(context: context)),
               ),
             ],
-            title: Text(ref.read(providerEQ).eqList[id].item.name),
+            title: Text(ref.read(providerEQ)[id].item.name),
             titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
             contentTextStyle:
                 const TextStyle(color: Colors.white, fontSize: 16),
@@ -129,14 +130,14 @@ class WindowEQToMerge extends ConsumerWidget {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(ref.read(providerEQ).eqList[id].item.name),
+                Text(ref.read(providerEQ)[id].item.name),
                 SizedBox(height:10),
-                Image.asset(ref.read(providerEQ).eqList[id].item.image),
+                Image.asset(ref.read(providerEQ)[id].item.image),
                 SizedBox(height:10),
-                Text(ref.read(providerEQ).eqList[id].item.description),
-                if(ref.read(providerEQ).eqList[id].item.attack != null) Text('Atak: ${ref.read(providerEQ).eqList[id].item.attack}'),
-                if(ref.read(providerEQ).eqList[id].item.armour != null)  Text('Pancerz: ${ref.read(providerEQ).eqList[id].item.armour}'),
-                Text('Cena: ${ref.read(providerEQ).eqList[id].item.price}'),
+                Text(ref.read(providerEQ)[id].item.description),
+                if(ref.read(providerEQ)[id].item.attack != null) Text('Atak: ${ref.read(providerEQ)[id].item.attack}'),
+                if(ref.read(providerEQ)[id].item.armour != null)  Text('Pancerz: ${ref.read(providerEQ)[id].item.armour}'),
+                Text('Cena: ${ref.read(providerEQ)[id].item.price}'),
               ],
             ),
           ),
@@ -157,7 +158,7 @@ class WindowEQToMerge extends ConsumerWidget {
         child: isEmpty
             ? null
             : Image.asset(
-                ref.read(providerEQ).eqList[id].item.image,
+                ref.read(providerEQ)[id].item.image,
                 fit: BoxFit.fill,
               ),
       ),
@@ -205,7 +206,9 @@ class WindowMerge extends ConsumerWidget {
                         ref.read(soundManagerProvider.notifier).playButtonClick();
                         Navigator.pop(context);
                       },
-                      child: const Text('Zamknij'),
+                      child: Text(
+                        'merge_item_screen.close'.tr(context: context),
+                      ),
                     ),
                   ],
                   titleTextStyle:

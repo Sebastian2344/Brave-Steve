@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 /// Klasa zarządzająca logiką audio
-class AudioManager extends Notifier<void> {
+class AudioManager extends AsyncNotifier<void> {
   late final AudioPlayer _bgmPlayer;
   AppLifecycleListener? lifecycleListener; 
   
   @override
-  void build() {
+  Future<void> build() async {
     // Inicjalizacja odtwarzacza przy tworzeniu providera
     _bgmPlayer = AudioPlayer();
     _bgmPlayer.setReleaseMode(ReleaseMode.loop); // Muzyka w tle zapętlona
@@ -24,10 +24,9 @@ class AudioManager extends Notifier<void> {
       _bgmPlayer.dispose();
     });
 
-    playBGM(  
+    await playBGM(  
       'sounds/gigachad_music.mp3',
     );
-
     // Zwracamy początkowy stan
     return; // Ten provider nie przechowuje stanu, ale można go rozbudować, by np. trzymał informacje o aktualnej ścieżce muzycznej czy głośności
   }
@@ -79,6 +78,6 @@ class AudioManager extends Notifier<void> {
 }
 
 /// 3. Globalny Provider, z którego będziesz korzystać w całej aplikacji
-final audioManagerProvider = NotifierProvider<AudioManager, void>(() {
-  return AudioManager();
-});
+final audioManagerProvider = AsyncNotifierProvider<AudioManager, void>(
+  AudioManager.new,
+);

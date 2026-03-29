@@ -1,0 +1,113 @@
+{
+    "equipment_screen": {
+        "equipment": "Inventory",
+        "replace_item": "Do you want to replace this item?",
+        "replace": "Replace",
+        "dont_replace": "Don't replace",
+        "equip_item": "Do you want to equip this item?",
+        "equip": "Equip",
+        "dont_equip": "Don't equip",
+        "sell_item": "Do you want to sell this item?",
+        "sell": "Sell",
+        "dont_sell": "Don't sell",
+        "unequip_item": "Do you want to unequip this item?",
+        "unequip": "Unequip",
+        "dont_unequip": "Don't unequip",
+        "upgrade_item": "Upgrade",
+        "max_level": "The item has reached its maximum upgrade level.",
+        "inventory_full": "Your inventory is full! You need to make space in your inventory to receive the dropped item. Remember that you can sell items you already have.",
+        "make_space": "Make space",
+        "not_now": "Not now"
+    },
+    "fight_screen": {
+        "action_buttons": {
+            "attack": "Attack",
+            "attack_description": "Deals damage equal to your stats and regenerates 1 mana point.",
+            "super_attack": "Super Attack",
+            "super_attack_description": "Deals twice as much damage as a normal attack.",
+            "weakness": "Weakness",
+            "weakness_description": "Reduces the enemy's attack by 30 percent.",
+            "clearance": "Cleanse",
+            "clearance_description": "Removes all negative effects from the character.",
+            "attack_cost": "{} Mana",
+            "super_attack_cost": "{} Mana",
+            "weakness_cost": "{} Mana",
+            "clearance_cost": "{} Mana"
+
+        },
+        "exit_dialog": {
+            "exit_to_menu": "Exit to menu",
+            "exit_to_menu_confirmation": "Do you want to exit to the menu? The game will not be saved.",
+            "exit": "Exit",
+            "stay": "Stay"
+        },
+        "appbar": {
+            "eq": "Inventory",
+            "eq_description": "Here you can manage your inventory.",
+            "merge": "Merge items",
+            "merge_description": "Here you can merge items to create new ones.",
+            "save_game": "Save game",
+            "save_progress": "Here you can save your game progress."
+        },
+        "save_dialog": {
+            "save_game_name": "Enter save game name",
+            "save_requires_name": "Save must have a name",
+            "save": "Save"
+        },
+        "game_over_dialog": {
+            "game_over": "Game Over",
+            "game_over_description": "Congratulations, you finished the game. You managed to collect the 4 required items.",
+            "go_to_menu": "Go to menu"
+        },
+        "lose_dialog": {
+            "lose": "Defeat",
+            "lose_description": "The enemy has defeated you!",
+            "try_again": "Try again",
+            "ad_not_available": "Ad not available.",
+            "ad": "Ad"
+        },
+        "stats_view": {
+            "level": "Level {}",
+            "attack_value": "Attack: {}",
+            "mana": "Mana",
+            "health": "Health",
+            "armor": "Armor",
+            "experience": "Experience"
+        }
+    },
+    "main_menu": {
+        "game_title": "Brave Knight",
+        "play": "New Game",
+        "load": "Load Game",
+        "settings": "Settings",
+        "exit": "Exit",
+        "loading": "Loading resources..."
+    },
+    "merge_item_screen": {
+        "merge": "Item merging",
+        "close": "Close"
+    },
+    "saves_screen": {
+        "saves": "Saves",
+        "no_saves": "No saves",
+        "health": "Health:",
+        "mana": "Mana:",
+        "attack": "Attack:",
+        "level": "Level:",
+        "experience": "Experience:",
+        "delete": "Delete"
+    },
+    "settings_screen": {
+        "settings": "Settings",
+        "sound_and_vibration": "Sound and vibration",
+        "background_music": "Background music",
+        "sound_effects": "Sound effects",
+        "unmute": "Unmute",
+        "mute": "Mute",
+        "muted": "Muted",
+        "language": "Language"
+    },
+    "introduction_screen": {
+        "introduction": "Introduction"
+    }
+}

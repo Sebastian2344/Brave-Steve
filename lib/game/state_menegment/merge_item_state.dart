@@ -85,7 +85,7 @@ class MergeItemState extends Notifier<List<MergeItemModel>> {
 
   void addMergeItem(int id) {
     if(state.length == 2) return;
-    final eqList = ref.read(providerEQ).eqList;
+    final eqList = ref.read(providerEQ);
     final item = eqList[id].item;
     if(item.itemRarity == 'mithic') return;
     MergeItemModel mergeItem = MergeItemModel(

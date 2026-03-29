@@ -27,7 +27,7 @@ class SellItemDialog extends ConsumerWidget {
               ref.read(soundManagerProvider.notifier).playButtonClick();
               ref
                   .read(moneyProvider.notifier)
-                  .addmoney(ref.read(providerEQ).eqList[id].item.price.toDouble());
+                  .addmoney(ref.read(providerEQ)[id].item.price.toDouble());
               ref.read(providerEQ.notifier).deleteItem(id);
               ref.read(myStateProvider.notifier).setStats();
               Navigator.of(context).pop();

@@ -9,7 +9,7 @@ class ShowItemInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemPlace = ref.watch(providerEQ).eqList[id];
+    final itemPlace = ref.watch(providerEQ)[id];
 
     return !itemPlace.isEmpty
         ? Column(
