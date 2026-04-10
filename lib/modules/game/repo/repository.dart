@@ -5,11 +5,6 @@ import '../db_model/player.dart';
 class RepositoryGame{
   final DataBox dataSource;
   const RepositoryGame({required this.dataSource});
-  Future<List<PlayerModel>> listPlayerToListPlayerModel() async {
-    final List<Player> players = await dataSource.putPlayers();
-    List<PlayerModel> playersInModel = players.map((e) => e.toPlayerModel()).toList();
-    return playersInModel;
-  }
 
   List<PlayerModel> getPlayersfromDBasPlayerModelList(int index){
    final List<Player> players = dataSource.getPlayersfromDB(index);

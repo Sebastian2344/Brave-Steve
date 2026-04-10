@@ -231,4 +231,9 @@ class Steve extends PlayerModel {
   set setArmour(double armour) {
     _armour = armour;
   }
+  
+  @override
+  set setMaxHp(double hp) {
+    _maxHp = hp;
+  }
 }

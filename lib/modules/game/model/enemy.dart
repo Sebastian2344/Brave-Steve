@@ -206,4 +206,9 @@ class Enemy extends PlayerModel {
   double getMaxArmour() {
     return _maxArmour;
   }
+  
+  @override
+  set setMaxHp(double hp) {
+   _maxHp = hp;
+  }
 }

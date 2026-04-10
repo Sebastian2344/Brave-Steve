@@ -31,11 +31,6 @@ class DataBox {
     return listPlayersToReturn;
   }
 
-  Future<List<Player>> putPlayers() async {
-    List<Player> toSetState = playersStartStats;
-    return toSetState;
-  }
-
   Future<void> addSaveGame(
       List<Player> listPlayers, String name, List<ItemPlace> itemPlace,CounterEnemy enemy,double expMulti) async {
     await Hive.box<Save>('saveBox')

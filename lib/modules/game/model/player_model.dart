@@ -24,6 +24,7 @@ abstract class PlayerModel{
   set setWeak(bool weak);
   set setAttack(double attack);
   set setHp(double hp);
+  set setMaxHp(double hp);
   set setMaxArmour(double maxArmour);
   set setArmour(double armour);
   set setMaxAttack(double maxAttack);

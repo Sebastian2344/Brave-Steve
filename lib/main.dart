@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:brave_steve/modules/counter_enemy_and_bioms/db_model/counter_enemy.dart';
 import 'package:brave_steve/modules/eq/db_model/eq.dart';
 import 'package:brave_steve/modules/game/db_model/player.dart';
+import 'package:brave_steve/modules/prestige/prestige.dart';
 import 'package:brave_steve/modules/save_game/db_model/save.dart';
 import 'package:brave_steve/modules/sounds/menu_screen/main_menu.dart';
 import 'package:flutter/foundation.dart';
@@ -24,8 +25,10 @@ Future<void> main() async {
   Hive.registerAdapter(FieldTypeAdapter());
   Hive.registerAdapter(ItemTypeAdapter());
   Hive.registerAdapter(CounterEnemyAdapter());
+  Hive.registerAdapter(PrestigeAdapter());
 
   await Hive.openBox<Save>('saveBox');
+  await Hive.openBox<Prestige>('prestige');
 
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     // 1. Wymagane, aby używać kodu natywnego przed startem UI
@@ -71,11 +74,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            // Globalne ograniczenie skalowania tekstu od 1.0 do 1.5
+            textScaler: MediaQuery.of(
+              context,
+            ).textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.0),
+          ),
+          child: child!,
+        );
+      },
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'Narazie bez nazwy',
+      title: 'Odważny rycerz',
       theme: ThemeData(
         useMaterial3: true,
       ),

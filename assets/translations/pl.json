@@ -46,7 +46,9 @@
             "merge":"Łączenie przedmiotów",
             "merge_description":"Tutaj możesz łączyć przedmioty, aby stworzyć nowe.",
             "save_game":"Zapisz grę",
-            "save_progress":"Tutaj możesz zapisać postęp gry."
+            "save_progress":"Tutaj możesz zapisać postęp gry.",
+            "legacy": "Prestiż",
+            "legacy_description": "Reset poziomu wzamian za statystyki"
         },
         "save_dialog":{
             "save_game_name":"Podaj nazwę zapisu gry",

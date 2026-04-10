@@ -70,7 +70,7 @@ class ItemAdapter extends TypeAdapter<Item> {
       itemLevel: fields[7] == null ? 0 : fields[7] as int,
       upgradePrice: fields[8] == null ? 0 : fields[8] as int,
       rarity: fields[9] == null ? 'none' : fields[9] as String,
-      numerZestawu: fields[10] == null ? 4 : fields[10] as int?,
+      numerZestawu: fields[10] as int?,
     );
   }
 

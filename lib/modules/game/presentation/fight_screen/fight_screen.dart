@@ -6,6 +6,7 @@ import 'package:brave_steve/modules/game/presentation/fight_screen/stats_view_wi
 import 'package:brave_steve/modules/merge_items/merge_item_screen/merge_item_screen.dart';
 import 'package:brave_steve/modules/money/view/money_widget.dart';
 import 'package:brave_steve/modules/game/state_menegment/game_state.dart';
+import 'package:brave_steve/modules/prestige/prestige_screen.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
   final GlobalKey _keySave = GlobalKey();
   final GlobalKey _keyEq = GlobalKey();
   final GlobalKey _keyMerge = GlobalKey();
+  final GlobalKey _keyLegacy = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +128,25 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                           builder: (context) => MergeItemScreen()));
                     },
                     icon: Icon(Icons.merge_type)),
+              ),
+              Showcase(
+                key: _keyLegacy,
+                title: 'fight_screen.appbar.legacy'.tr(context: context),
+                description: 'fight_screen.appbar.legacy_description'.tr(context: context),
+                overlayColor: Colors.black.withValues(alpha: 0.7),
+                targetBorderRadius: BorderRadius.circular(50),
+                tooltipBackgroundColor: Colors.white,
+                textColor: Colors.black,
+                titleTextStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
+                child: IconButton(
+                    onPressed: () {
+                      ref.read(soundManagerProvider.notifier).playButtonClick();
+                      final int level = ref.read(myStateProvider).list[0].getlvl();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PrestigeScreen(level: level)));
+                    },
+                    icon: Icon(Icons.accessibility_outlined)),
               )
             ],
           ),

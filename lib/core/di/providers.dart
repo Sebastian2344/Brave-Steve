@@ -6,6 +6,8 @@ import 'package:brave_steve/modules/game/repo/repository.dart';
 import 'package:brave_steve/modules/merge_items/repo/merge_repo.dart';
 import 'package:brave_steve/modules/money/money_data/money_data.dart';
 import 'package:brave_steve/modules/money/repo/money_repo.dart';
+import 'package:brave_steve/modules/prestige/prestige_data.dart';
+import 'package:brave_steve/modules/prestige/prestige_repo.dart';
 import 'package:brave_steve/modules/save_game/repo/save_repository.dart';
 import 'package:brave_steve/modules/sounds/repo/sounds_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,4 +38,8 @@ final soundServiceProvider = Provider<SoundService>((ref) {
 
 final mergeRepoProvider = Provider<MergeRepo>((ref) {
   return MergeRepo(items: ref.watch(itemsProvider));
+});
+
+final prestigeRepoProvider = Provider<PrestigeRepo>((ref) {
+  return PrestigeRepo(PrestigeData());
 });

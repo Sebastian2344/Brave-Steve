@@ -47,7 +47,9 @@
             "merge": "Merge items",
             "merge_description": "Here you can merge items to create new ones.",
             "save_game": "Save game",
-            "save_progress": "Here you can save your game progress."
+            "save_progress": "Here you can save your game progress.",
+            "legacy": "Prestige",
+            "legacy_description": "Reset poziomu wzamian za statystyki"
         },
         "save_dialog": {
             "save_game_name": "Enter save game name",
