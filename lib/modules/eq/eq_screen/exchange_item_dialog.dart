@@ -14,11 +14,11 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int idToWear = ref.read(providerEQ.notifier).getIdItemBeforeTakeOff(id);
+    int idToTakeOff = ref.read(providerEQ.notifier).getIdItemBeforeTakeOff(id);
     return AlertDialog(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height / 1.25,
-          maxWidth: MediaQuery.of(context).size.width / 1.5,
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
         ),
         title: const Text('Czy chcesz podmienić itemy?'),
         titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
@@ -28,8 +28,14 @@ class ExchangeItemInEqDialog extends ConsumerWidget {
           child: Column(
             spacing: 8,
             children: [
-              ShowItemInfo(id: idToWear),
-              ShowItemInfo(id: id),
+              Consumer(builder: (context, ref, child) {
+              final item = ref.read(providerEQ)[idToTakeOff];
+              return ShowItemInfo(itemPlace: item,);
+            },),
+              Consumer(builder: (context, ref, child) {
+              final item = ref.watch(providerEQ)[id];
+              return ShowItemInfo(itemPlace: item,);
+            },),
               ShowUpgradeInfo(id: id),
               UpgradeButton(id: id)
             ],

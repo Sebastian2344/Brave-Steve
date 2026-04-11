@@ -1,4 +1,3 @@
-import 'package:brave_steve/modules/sounds/menu_screen/main_menu.dart';
 import 'package:brave_steve/modules/save_game/menagment/save_state.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -27,11 +26,7 @@ class _ShowSavesState extends ConsumerState<ShowSaves> {
               ref.read(soundManagerProvider.notifier).playButtonClick();
               if (ref.read(myStateProvider).gameState ==
                   Stan.graNieRozpoczeta) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MainMenu(),
-                  ),
-                );
+                Navigator.of(context).pop();
               } else {
                 Navigator.of(context).pop();
               }

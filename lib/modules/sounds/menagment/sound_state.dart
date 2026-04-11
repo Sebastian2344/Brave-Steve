@@ -1,66 +1,107 @@
-import 'package:brave_steve/core/di/providers.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:brave_steve/modules/settings/menagment/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SoundController extends AsyncNotifier<void> {
+class SoundController extends Notifier<void> {
+    late final AudioPlayer _sfxPlayer;
+    final Map<String, Source> _audioCache = {};
+
   @override
-  Future<void> build() async {
-    // Inicjalizujemy ładowanie dźwięków od razu przy stworzeniu Controllera
-    // Będzie to działać asynchronicznie w tle.
-    await ref.read(soundServiceProvider).loadAllSounds();
-    // Zwracamy początkowy stan
+  void build() {
+    _sfxPlayer = AudioPlayer();
+    _sfxPlayer.setPlayerMode(PlayerMode.lowLatency);
+
+    final soundFiles = [
+      'sounds/level_up.mp3',
+      'sounds/button_click.mp3',
+      'sounds/sword_hit.mp3',
+      'sounds/death.mp3',
+      'sounds/clearence.mp3',
+      'sounds/weakness.mp3',
+      'sounds/upgrade_item.mp3',
+      'sounds/take_off.mp3',
+      'sounds/wear_item.mp3',
+      'sounds/merge.mp3'
+    ];
+
+    // PRELOADING: Tworzymy obiekty Source raz i trzymamy w pamięci
+    for (var fileName in soundFiles) {
+      _audioCache[fileName] = AssetSource(fileName);
+    }
+
+    ref.onDispose(() {
+      _sfxPlayer.stop();
+      _sfxPlayer.dispose();
+    });
   }
 
-  // Przykładowa logika: Jeśli chcesz mieć globalne wyciszenie dźwięków,
-  // możesz to sprawdzić tutaj, zanim wywołasz metodę z serwisu.
   bool _canPlaySound() {
     return !ref.read(settingsProvider).isSoundEffectsMuted;
   }
 
+  Future<void> _playSFX(String fileName) async {
+    final settings = ref.read(settingsProvider);
+    if (settings.isSoundEffectsMuted) return;
+    final source = _audioCache[fileName];
+    if (source == null) return;
+    if (_sfxPlayer.state == PlayerState.playing) {
+      await _sfxPlayer.stop(); 
+    }
+    await _sfxPlayer.play(
+      source,
+      volume: ref.read(settingsProvider).isSoundEffectsMuted ? 0.0 : ref.read(settingsProvider).volumeSoundEffects,
+    );
+    
+  }
+
   // Udostępniamy metody do UI:
   void playLevelUp() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playLevelUp();
+    if (_canPlaySound()) _playSFX('sounds/level_up.mp3');
   }
 
   void playDamage() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playDamage();
+    if (_canPlaySound()) _playSFX('sounds/sword_hit.mp3');
   }
 
   void playDeath() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playDeath();
+    if (_canPlaySound())  _playSFX('sounds/death.mp3');
   }
 
   void playWeakness() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playWeakness();
+    if (_canPlaySound()) _playSFX('sounds/weakness.mp3');
   }
 
   void playClearence() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playClearence();
+    if (_canPlaySound()) _playSFX('sounds/clearence.mp3');
   }
 
   void playMerge() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playMerge();
+    if (_canPlaySound()) _playSFX('sounds/merge.mp3');
   }
 
   void playWearItem() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playWearItem();
+    if (_canPlaySound()) _playSFX('sounds/wear_item.mp3');
   }
 
   void playTakeOff() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playTakeOff();
+    if (_canPlaySound()) _playSFX('sounds/take_off.mp3');
   }
 
   void playUpgradeItem() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playUpgradeItem();
+    if (_canPlaySound()) _playSFX('sounds/upgrade_item.mp3');
   }
 
   void playButtonClick() {
-    if (_canPlaySound()) ref.read(soundServiceProvider).playButtonClick();
+    if (_canPlaySound()) _playSFX('sounds/button_click.mp3');
   }
 
   void setVolume(double volume) {
-    ref.read(settingsProvider.notifier).setSoundEffectsVolume(volume);
-    ref.read(soundServiceProvider).setVolume(volume);
+    final clampedVolume = volume.clamp(0.0, 1.0);
+    
+    if (!ref.read(settingsProvider).isMusicMuted) {
+      ref.read(settingsProvider.notifier).setSoundEffectsVolume(clampedVolume);
+      _sfxPlayer.setVolume(clampedVolume);
+    }
   }
 
   void toggleMute() {
@@ -68,15 +109,14 @@ class SoundController extends AsyncNotifier<void> {
     final newMutedState = ref.read(settingsProvider).isSoundEffectsMuted;
     // Po przełączeniu stanu wyciszenia, aktualizujemy głośność w serwisie
     if (newMutedState) {
-      ref.read(soundServiceProvider).setVolume(0.0);
+      _sfxPlayer.setVolume(0.0);
     } else {
-      // Przywracamy głośność do ostatnio ustawionej wartości (lub domyślnej)
-      ref.read(soundServiceProvider).setVolume(ref.read(settingsProvider).volumeSoundEffects);
+      _sfxPlayer.setVolume(ref.read(settingsProvider).volumeSoundEffects);
     }
   }
 }
 
 // 3. Provider Controllera do użycia w widgetach
-final soundManagerProvider = AsyncNotifierProvider<SoundController, void>(
+final soundManagerProvider = NotifierProvider<SoundController, void>(
   SoundController.new,
 );

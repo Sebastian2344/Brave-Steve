@@ -16,8 +16,8 @@ class PutOnDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height / 1.5,
-          maxWidth: MediaQuery.of(context).size.width / 1.5,
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
         ),
         titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
         contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
@@ -26,7 +26,10 @@ class PutOnDialog extends ConsumerWidget {
         content: Column(
           spacing: 8,
           children: [
-            ShowItemInfo(id: id),
+            Consumer(builder: (context, ref, child) {
+              final item = ref.watch(providerEQ)[id];
+              return ShowItemInfo(itemPlace: item,);
+            },),
             ShowUpgradeInfo(id: id),
             UpgradeButton(id: id)
           ],

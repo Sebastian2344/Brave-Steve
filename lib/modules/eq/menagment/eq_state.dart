@@ -144,7 +144,8 @@ class EqStateMenagment extends Notifier<List<ItemPlaceModel>> {
         price: itemM.price,
         itemLevel: itemM.itemLevel,
         upgradePrice: itemM.upgradePrice,
-        itemRarity: itemM.itemRarity);
+        itemRarity: itemM.itemRarity,
+        numerZestawu: itemM.numerZestawu);
     final firstFreeItemPlaceModel = state.firstWhere((element) =>
         element.isEmpty == true &&
         element.classField == FieldTypeModel.backpack);

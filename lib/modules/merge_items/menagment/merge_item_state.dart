@@ -113,11 +113,10 @@ class MergeItemState extends Notifier<List<MergeItemModel>> {
     if (state.length < 2) {
       return;
     }
-    
     if(state[0].itemRarity != state[1].itemRarity ||
     state[0].numerZestawu != state[1].numerZestawu ||
     state[0].itemRarity == 'mithic' && state[1].itemRarity == 'mithic'
-    || state[0].fromEQId == state[1].fromEQId) {
+    || state[0].fromEQId == state[1].fromEQId || state[0].classItem != state[1].classItem) {
       return;
     }
     final item1 = state[0];

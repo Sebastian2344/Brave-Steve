@@ -19,7 +19,7 @@ class MergeRepo {
       rarity = 'uncommon';
     }
     Rarity rarityEnum = Rarity.values.firstWhere((r) => r.toString().split('.').last == rarity);
-    ItemSet itemSet = ItemSet.values[numerZestawu == null? 4 : numerZestawu - 1];
+    ItemSet itemSet = ItemSet.values[numerZestawu == null? 3 : numerZestawu - 1];
     final i = items.getItem(itemSet, classItem, rarityEnum);
     MergeItemModel mergeItem = MergeItemModel(
       fromEQId: 0,

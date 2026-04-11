@@ -969,44 +969,6 @@ class Items {
             numerZestawu: 3),
       }
     },
-    ItemSet.free : {
-      ItemTypeModel.sword: {
-        Rarity.common: ItemModel(
-            name: 'Drewniany Miecz',
-            description: 'Dodaje 4 do ataku',
-            image: 'assets/images/złoto.png',
-            classItem: ItemTypeModel.sword,
-            price: 10,
-            attack: 4,
-            itemRarity: 'common',
-            upgradePrice: 20,
-            numerZestawu: 4),
-      },
-      ItemTypeModel.helmet: {
-        Rarity.common: ItemModel(
-            name: 'Skórzany Chełm',
-            description: 'Dodaje 3 pancerza',
-            image: 'assets/images/złoto.png',
-            classItem: ItemTypeModel.helmet,
-            price: 10,
-            armour: 3,
-            itemRarity: 'common',
-            upgradePrice: 20,
-            numerZestawu: 4),
-      },
-      ItemTypeModel.chestplate: {
-        Rarity.common: ItemModel(
-            name: 'Skórzany Napierśnik',
-            description: 'Dodaje 8 pancerza',
-            image: 'assets/images/złoto.png',
-            classItem: ItemTypeModel.chestplate,
-            price: 10,
-            armour: 8,
-            itemRarity: 'common',
-            upgradePrice: 20,
-            numerZestawu: 4),
-      },
-  }
 };
 
   ItemModel getItem(ItemSet itemSet, ItemTypeModel itemType, Rarity rarity) {

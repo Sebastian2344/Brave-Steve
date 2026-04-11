@@ -12,22 +12,23 @@ class SellItemDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height / 1.5,
-          maxWidth: MediaQuery.of(context).size.width / 1.5,
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
         ),
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
       backgroundColor: const Color.fromARGB(255, 23, 12, 6),
       title: const Text("Czy chcesz sprzedać przedmiot?"),
-      content: ShowItemInfo(id: id),
+      content: Consumer(builder: (context, ref, child) {
+              final item = ref.read(providerEQ)[id];
+              return ShowItemInfo(itemPlace: item,);
+            },),
       actions: [
         ElevatedButton(
             onPressed: () async {
+              Navigator.of(context).pop();  
               await ref.read(providerEQ.notifier).sellItem(id);
               ref.read(myStateProvider.notifier).setStats();
-              if (context.mounted){
-                Navigator.of(context).pop();  
-              }
             },
             child: const Text('Tak')),
         ElevatedButton(

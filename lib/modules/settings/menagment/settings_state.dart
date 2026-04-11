@@ -30,7 +30,7 @@ class SettingsState extends Equatable {
 class SettingsController extends Notifier<SettingsState> {
   @override
   SettingsState build() {
-      return const SettingsState(false, false, 0.5, 0.5); // Domyślne ustawienia
+      return const SettingsState(false, false, 0.25, 0.5); // Domyślne ustawienia
   }
   
   void toggleMusicMute() {

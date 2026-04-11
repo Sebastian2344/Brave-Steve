@@ -4,15 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 /// Klasa zarządzająca logiką audio
-class AudioManager extends AsyncNotifier<void> {
+class AudioManager extends Notifier<void> {
   late final AudioPlayer _bgmPlayer;
   AppLifecycleListener? lifecycleListener; 
   
   @override
-  Future<void> build() async {
+  void build() {
     // Inicjalizacja odtwarzacza przy tworzeniu providera
     _bgmPlayer = AudioPlayer();
     _bgmPlayer.setReleaseMode(ReleaseMode.loop); // Muzyka w tle zapętlona
+    _bgmPlayer.setPlayerMode(PlayerMode.mediaPlayer);
 
      lifecycleListener = AppLifecycleListener(
       onStateChange: _handleAppLifecycle,
@@ -23,12 +24,6 @@ class AudioManager extends AsyncNotifier<void> {
       _bgmPlayer.stop();
       _bgmPlayer.dispose();
     });
-
-    await playBGM(  
-      'sounds/gigachad_music.mp3',
-    );
-    // Zwracamy początkowy stan
-    return; // Ten provider nie przechowuje stanu, ale można go rozbudować, by np. trzymał informacje o aktualnej ścieżce muzycznej czy głośności
   }
 
   /// Odtwarzanie muzyki w tle
@@ -53,6 +48,7 @@ class AudioManager extends AsyncNotifier<void> {
   Future<void> stopBGM() async => await _bgmPlayer.stop();
   Future<void> pauseBGM() async => await _bgmPlayer.pause();
   Future<void> resumeBGM() async => await _bgmPlayer.resume();
+  Future<void> startBMG() async => await playBGM('sounds/gigachad_music.mp3');
 
   /// Przełączanie wyciszenia
   void toggleMute() {
@@ -78,6 +74,6 @@ class AudioManager extends AsyncNotifier<void> {
 }
 
 /// 3. Globalny Provider, z którego będziesz korzystać w całej aplikacji
-final audioManagerProvider = AsyncNotifierProvider<AudioManager, void>(
+final audioManagerProvider = NotifierProvider<AudioManager, void>(
   AudioManager.new,
 );

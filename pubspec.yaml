@@ -42,7 +42,6 @@ dependencies:
   equatable: ^2.0.8
   flutter_secure_storage: ^10.0.0
   window_manager: ^0.5.1
-  soundpool: ^2.4.1
   audioplayers: ^6.6.0
   easy_localization: ^3.0.8
 dev_dependencies:

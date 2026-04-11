@@ -9,9 +9,7 @@ import 'package:brave_steve/modules/money/repo/money_repo.dart';
 import 'package:brave_steve/modules/prestige/prestige_data.dart';
 import 'package:brave_steve/modules/prestige/prestige_repo.dart';
 import 'package:brave_steve/modules/save_game/repo/save_repository.dart';
-import 'package:brave_steve/modules/sounds/repo/sounds_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:soundpool/soundpool.dart';
 
 final dataBoxProvider = Provider((ref) => DataBox());
 
@@ -27,14 +25,6 @@ final repoProvider = Provider((ref) => RepositoryGame(dataSource: ref.watch(data
 final saveRepositoryProvider = Provider((ref) => SaveRepository(dataSource: ref.watch(dataBoxProvider)));
 
 final moneyRepoProvider = Provider((ref) => MoneyRepo(moneyData: MoneyData()));
-
-final soundServiceProvider = Provider<SoundService>((ref) {
-  final service = SoundService(Soundpool.fromOptions(
-      options: const SoundpoolOptions(streamType: StreamType.notification),
-    ));
-  ref.onDispose(() => service.dispose());
-  return service;
-});
 
 final mergeRepoProvider = Provider<MergeRepo>((ref) {
   return MergeRepo(items: ref.watch(itemsProvider));
