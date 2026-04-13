@@ -20,13 +20,15 @@ class ActionInGame extends ConsumerStatefulWidget {
     required this.isNewGame,
     required this.keySave,
     required this.keyEq,
-    required this.keyMerge
+    required this.keyMerge,
+    required this.keyLegacy
   });
 
   final bool isNewGame;
   final GlobalKey keySave;
   final GlobalKey keyEq;
   final GlobalKey keyMerge;
+  final GlobalKey keyLegacy;
 
   @override
   ConsumerState<ActionInGame> createState() => _ActionInGameState();
@@ -49,10 +51,11 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
           widget.keySave, // 1. Dyskietka
           widget.keyEq, // 2. Ludzik
           widget.keyMerge, // 3. Łączenie
-          _keyAtak, // 4. Atak
-          _keySuperAtak, // 5. SuperAtak
-          _keyOslabienie, // 6. Osłabienie
-          _keyOczyszczenie, // 7. Oczyszczenie
+          widget.keyLegacy,// 4. prestiż
+          _keyAtak, // 5. Atak
+          _keySuperAtak, // 6. SuperAtak
+          _keyOslabienie, // 7. Osłabienie
+          _keyOczyszczenie, // 8. Oczyszczenie
         ]);
       });
     }

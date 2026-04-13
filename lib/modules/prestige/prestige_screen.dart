@@ -81,7 +81,7 @@ class PrestigeScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                 ),
-                                onPressed: !p.isGivePoints || calculatedPoints > 0
+                                onPressed: !p.isGivePoints
                                     ? () {
                                         ref.read(prestigeNotifierProvider.notifier).givePoints(level);
                                       }

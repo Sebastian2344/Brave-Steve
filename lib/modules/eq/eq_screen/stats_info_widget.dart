@@ -28,7 +28,7 @@ class ShowItemInfo extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.monetization_on, color: Colors.orange[700]),
-              Text('${itemPlace.item.price}'),
+              Text('Cena: ${itemPlace.item.price}'),
             ],
           ),
           Column(
@@ -38,7 +38,7 @@ class ShowItemInfo extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.sports_mma_rounded, color: Colors.red[700]),
-                    Text('${itemPlace.item.attack}'),
+                    Text('Atak: ${itemPlace.item.attack}'),
                   ],
                 ),
               if (itemPlace.item.armour != null)
@@ -46,7 +46,7 @@ class ShowItemInfo extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.shield, color: Colors.blueGrey[700]),
-                    Text('${itemPlace.item.armour}'),
+                    Text('Pancerz: ${itemPlace.item.armour}'),
                   ],
                 ),
             ],

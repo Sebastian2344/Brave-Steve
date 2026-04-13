@@ -8,8 +8,12 @@ class SoundController extends Notifier<void> {
 
   @override
   void build() {
-    _sfxPlayer = AudioPlayer();
+    _sfxPlayer = AudioPlayer(playerId: 'SFX');
     _sfxPlayer.setPlayerMode(PlayerMode.lowLatency);
+    _sfxPlayer.setAudioContext(AudioContext(
+        android: AudioContextAndroid(
+            contentType: AndroidContentType.sonification,
+            audioFocus: AndroidAudioFocus.none)));
 
     final soundFiles = [
       'sounds/level_up.mp3',
@@ -51,7 +55,6 @@ class SoundController extends Notifier<void> {
       source,
       volume: ref.read(settingsProvider).isSoundEffectsMuted ? 0.0 : ref.read(settingsProvider).volumeSoundEffects,
     );
-    
   }
 
   // Udostępniamy metody do UI:

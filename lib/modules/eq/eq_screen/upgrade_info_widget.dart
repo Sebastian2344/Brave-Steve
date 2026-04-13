@@ -22,7 +22,7 @@ class ShowUpgradeInfo extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.monetization_on, color: Colors.orange[700]),
-                          Text(' ${item.item.upgradePrice}'),
+                          Text('Cena: ${item.item.upgradePrice}'),
                         ],
                       ),
                       if (item.item.attack != null)
@@ -32,7 +32,7 @@ class ShowUpgradeInfo extends ConsumerWidget {
                         children: [
                             Icon(Icons.sports_mma_rounded, color: Colors.red[700]),
                             Text(
-                                '${item.item.attack != null ? item.item.attack! : itemR.attack}'),
+                                'Atak: ${item.item.attack != null ? item.item.attack! : itemR.attack}'),
                             Text('+ ${o.attackStatsBoost()}',
                                 style: const TextStyle(color: Colors.green)),
                         ],
@@ -44,7 +44,7 @@ class ShowUpgradeInfo extends ConsumerWidget {
                         children: [
                             Icon(Icons.shield, color: Colors.blueGrey[700]),
                             Text(
-                                '${item.item.armour != null ? item.item.armour! : itemR.armour}'),
+                                'Pancerz: ${item.item.armour != null ? item.item.armour! : itemR.armour}'),
                             Text('+ ${o.armourStatsBoost()}',
                                 style: const TextStyle(color: Colors.green)),
                         ],

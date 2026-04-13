@@ -114,12 +114,16 @@ class WindowEQToMerge extends ConsumerWidget {
           context: context,
           builder: (context) => AlertDialog(
             constraints: BoxConstraints(
-              maxWidth: screenWidth * 0.5,
+              maxWidth: screenWidth * 0.9,
             ),
             actions: [
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown[700],
+                    foregroundColor: Colors.amber,
+                    side: const BorderSide(color: Color(0xFFC0C0C0))),
                 onPressed: () => Navigator.pop(context),
-                child: Text('merge_item_screen.close'.tr(context: context)),
+                child: Text('merge_item_screen.close'.tr(context: context),style: TextStyle(color: Colors.white),),
               ),
             ],
             title: Text(ref.read(providerEQ)[id].item.name),
@@ -198,17 +202,20 @@ class WindowMerge extends ConsumerWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   constraints: BoxConstraints(
-                    maxWidth: screenWidth * 0.5,
+                    maxWidth: screenWidth * 0.9,
                   ),
                   actions: [
-                    TextButton(
+                    ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown[700],
+                    foregroundColor: Colors.amber,
+                    side: const BorderSide(color: Color(0xFFC0C0C0))),
                       onPressed: () {
                         ref.read(soundManagerProvider.notifier).playButtonClick();
                         Navigator.pop(context);
                       },
                       child: Text(
-                        'merge_item_screen.close'.tr(context: context),
-                      ),
+                        'merge_item_screen.close'.tr(context: context)),
                     ),
                   ],
                   titleTextStyle:

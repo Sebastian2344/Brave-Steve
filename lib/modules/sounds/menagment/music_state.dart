@@ -6,16 +6,20 @@ import 'package:audioplayers/audioplayers.dart';
 /// Klasa zarządzająca logiką audio
 class AudioManager extends Notifier<void> {
   late final AudioPlayer _bgmPlayer;
-  AppLifecycleListener? lifecycleListener; 
-  
+  AppLifecycleListener? lifecycleListener;
+
   @override
   void build() {
     // Inicjalizacja odtwarzacza przy tworzeniu providera
-    _bgmPlayer = AudioPlayer();
+    _bgmPlayer = AudioPlayer(playerId: 'BGM');
     _bgmPlayer.setReleaseMode(ReleaseMode.loop); // Muzyka w tle zapętlona
     _bgmPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    _bgmPlayer.setAudioContext(AudioContext(
+        android: AudioContextAndroid(
+            contentType: AndroidContentType.music,
+            audioFocus: AndroidAudioFocus.gain)));
 
-     lifecycleListener = AppLifecycleListener(
+    lifecycleListener = AppLifecycleListener(
       onStateChange: _handleAppLifecycle,
     );
 
@@ -23,6 +27,7 @@ class AudioManager extends Notifier<void> {
     ref.onDispose(() {
       _bgmPlayer.stop();
       _bgmPlayer.dispose();
+      lifecycleListener?.dispose();
     });
   }
 
@@ -30,12 +35,15 @@ class AudioManager extends Notifier<void> {
   Future<void> playBGM(String fileName) async {
     await _bgmPlayer.play(
       AssetSource(fileName),
-      volume: ref.read(settingsProvider).isMusicMuted ? 0.0 : ref.read(settingsProvider).volumeMusic,
+      volume: ref.read(settingsProvider).isMusicMuted
+          ? 0.0
+          : ref.read(settingsProvider).volumeMusic,
     );
   }
 
-    void _handleAppLifecycle(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden) {
+  void _handleAppLifecycle(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden) {
       // Aplikacja schowana w tle -> pauzujemy muzykę
       _bgmPlayer.pause();
     } else if (state == AppLifecycleState.resumed) {
@@ -53,8 +61,10 @@ class AudioManager extends Notifier<void> {
   /// Przełączanie wyciszenia
   void toggleMute() {
     ref.read(settingsProvider.notifier).toggleMusicMute();
-    final newMutedState = ref.read(settingsProvider).isMusicMuted; // Pobieramy aktualny stan wyciszenia z SettingsController
-    
+    final newMutedState = ref
+        .read(settingsProvider)
+        .isMusicMuted; // Pobieramy aktualny stan wyciszenia z SettingsController
+
     // Wyciszamy lub przywracamy głośność w fizycznym odtwarzaczu
     if (newMutedState) {
       _bgmPlayer.setVolume(0.0);
@@ -65,7 +75,7 @@ class AudioManager extends Notifier<void> {
 
   void setBgmVolume(double volume) {
     final clampedVolume = volume.clamp(0.0, 1.0);
-    
+
     if (!ref.read(settingsProvider).isMusicMuted) {
       ref.read(settingsProvider.notifier).setMusicVolume(clampedVolume);
       _bgmPlayer.setVolume(clampedVolume);

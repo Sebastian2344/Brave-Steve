@@ -73,6 +73,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                           context: context, builder: (context) => SaveGame());
                     },
                     icon: const Icon(Icons.save),
+                    tooltip: 'fight_screen.appbar.save_game'.tr(context: context),
                   ),
                 ),
               ],
@@ -96,6 +97,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                     builder: (context, ref, child) {
                       ref.watch(myStateProvider);
                       return IconButton(
+                        tooltip: 'fight_screen.appbar.eq'.tr(context: context),
                           onPressed: () {
                             if (ref.read(myStateProvider.notifier).isEq()) {
                               ref.read(soundManagerProvider.notifier).playButtonClick();
@@ -122,6 +124,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                 titleTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black),
                 child: IconButton(
+                  tooltip: 'fight_screen.appbar.merge'.tr(context: context),
                     onPressed: () {
                       ref.read(soundManagerProvider.notifier).playButtonClick();
                       Navigator.of(context).push(MaterialPageRoute(
@@ -140,6 +143,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                 titleTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black),
                 child: IconButton(
+                  tooltip: 'fight_screen.appbar.legacy'.tr(context: context),
                     onPressed: () {
                       ref.read(soundManagerProvider.notifier).playButtonClick();
                       final int level = ref.read(myStateProvider).list[0].getlvl();
@@ -181,6 +185,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                 keySave: _keySave,
                 keyEq: _keyEq,
                 keyMerge: _keyMerge,
+                keyLegacy: _keyLegacy,
               )
             ],
           ),
