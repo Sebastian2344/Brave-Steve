@@ -216,9 +216,10 @@ class GameState extends Notifier<MyVars> {
       if (state.list[state.enemyIndex].showMana() >=
           state.list[state.enemyIndex].showManaCost('SuperAttack')) {
         state.list[state.enemyIndex].makeSuperAttack(state.list[0]);
-        //ref.read(soundManagerProvider.notifier).attackEnemy();
+        ref.read(soundManagerProvider.notifier).playEnemyAttack();
       } else {
         state.list[state.enemyIndex].makeAttack(state.list[0]);
+        ref.read(soundManagerProvider.notifier).playEnemyAttack();
       }
     } else if (option == 1) {
       {
@@ -238,6 +239,7 @@ class GameState extends Notifier<MyVars> {
             _enemyTurn(newOption);
           } else {
             state.list[state.enemyIndex].makeAttack(state.list[0]);
+            ref.read(soundManagerProvider.notifier).playEnemyAttack();
           }
         }
       }
@@ -256,6 +258,7 @@ class GameState extends Notifier<MyVars> {
             _enemyTurn(newOption);
           } else {
             state.list[state.enemyIndex].makeAttack(state.list[0]);
+            ref.read(soundManagerProvider.notifier).playEnemyAttack();
           }
         }
       }

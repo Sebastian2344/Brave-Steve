@@ -1,6 +1,7 @@
 import 'package:brave_steve/core/di/providers.dart';
 import 'package:brave_steve/core/modules/models/enums.dart';
 import 'package:brave_steve/modules/eq/menagment/eq_state.dart';
+import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -122,6 +123,7 @@ class MergeItemState extends Notifier<List<MergeItemModel>> {
     final item1 = state[0];
     final mergedItem = ref.read(mergeRepoProvider).takeBetterItem(item1.itemRarity,item1.classItem,item1.numerZestawu);
     state = [...state, mergedItem];
+    ref.read(soundManagerProvider.notifier).playMerge();
   }
 
   void clear() {

@@ -25,7 +25,8 @@ class SoundController extends Notifier<void> {
       'sounds/upgrade_item.mp3',
       'sounds/take_off.mp3',
       'sounds/wear_item.mp3',
-      'sounds/merge.mp3'
+      'sounds/merge.mp3',
+      'sounds/enemy_attack.mp3'
     ];
 
     // PRELOADING: Tworzymy obiekty Source raz i trzymamy w pamięci
@@ -66,6 +67,10 @@ class SoundController extends Notifier<void> {
     if (_canPlaySound()) _playSFX('sounds/sword_hit.mp3');
   }
 
+  void playEnemyAttack() {
+    if (_canPlaySound()) _playSFX('sounds/enemy_attack.mp3');
+  }
+
   void playDeath() {
     if (_canPlaySound())  _playSFX('sounds/death.mp3');
   }
@@ -101,7 +106,7 @@ class SoundController extends Notifier<void> {
   void setVolume(double volume) {
     final clampedVolume = volume.clamp(0.0, 1.0);
     
-    if (!ref.read(settingsProvider).isMusicMuted) {
+    if (!ref.read(settingsProvider).isSoundEffectsMuted) {
       ref.read(settingsProvider.notifier).setSoundEffectsVolume(clampedVolume);
       _sfxPlayer.setVolume(clampedVolume);
     }

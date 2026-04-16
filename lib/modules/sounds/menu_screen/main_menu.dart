@@ -26,7 +26,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
        ref
           .read(audioManagerProvider.notifier)
-          .playBGM('sounds/gigachad_music.mp3');
+          .playBGM('sounds/Iron_Wards.mp3');
     });
   }
 
@@ -52,7 +52,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
           alignment: Alignment.center,
           children: [
             Image.asset(
-              'assets/images/Breave_Steave.png',
+              'assets/images/menu_gry.png',
               fit: BoxFit.fill,
             ),
             Column(

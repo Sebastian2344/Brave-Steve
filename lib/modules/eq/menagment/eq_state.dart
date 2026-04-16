@@ -236,6 +236,8 @@ class EqStateMenagment extends Notifier<List<ItemPlaceModel>> {
           .read(eqStatsToAddPlayerStateProvider.notifier)
           .wearItem(itemBeforeWear.attack, itemBeforeWear.armour);
 
+      ref.read(soundManagerProvider.notifier).playWearItem();
+
       state = [
         for (final itemPlaceModel in state)
           if (itemPlaceModel.item != const ItemModel() &&
@@ -284,6 +286,8 @@ class EqStateMenagment extends Notifier<List<ItemPlaceModel>> {
           ((itemBeforeTakeOff.armour ?? 0) * -1) +
               (itemBeforePutOn.armour ?? 0));
 
+      ref.read(soundManagerProvider.notifier).playWearItem();
+
     }
   }
 
@@ -324,6 +328,7 @@ class EqStateMenagment extends Notifier<List<ItemPlaceModel>> {
           else
             itemPlaceModel
       ];
+      ref.read(soundManagerProvider.notifier).playTakeOff();
     }
   }
 
