@@ -42,11 +42,11 @@ class PrestigeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Color(0xFF301b0a).withOpacity(0.9), // Lekko przezroczyste tło panelu
+                color: Color(0xFF301b0a).withValues(alpha:0.9), // Lekko przezroczyste tło panelu
                 borderRadius: BorderRadius.circular(15.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha:0.5),
                     spreadRadius: 5,
                     blurRadius: 10,
                     offset: Offset(0, 5),
@@ -65,7 +65,7 @@ class PrestigeScreen extends StatelessWidget {
                         Text(
                           'Zgarnij $calculatedPoints punktów prestiżu w zamian za twój poziom $level',
                           textAlign: TextAlign.center,
-                          style: textTheme.bodyLarge?.copyWith(color: textColor.withOpacity(0.8)),
+                          style: textTheme.bodyLarge?.copyWith(color: textColor.withValues(alpha:0.8)),
                         ),
                         const SizedBox(height: 15),
                         Row(
@@ -206,7 +206,7 @@ class PrestigeScreen extends StatelessWidget {
         border: Border.all(color: borderColor, width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha:0.3),
             spreadRadius: 2,
             blurRadius: 5,
             offset: Offset(0, 3),
@@ -249,7 +249,7 @@ class PrestigeScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: textTheme.titleMedium?.copyWith(color: textColor.withOpacity(0.9)),
+          style: textTheme.titleMedium?.copyWith(color: textColor.withValues(alpha:0.9)),
         ),
         Text(
           '$value',
@@ -262,7 +262,7 @@ class PrestigeScreen extends StatelessWidget {
         ),
         Text(
           bonus,
-          style: textTheme.titleMedium?.copyWith(color: textColor.withOpacity(0.7)),
+          style: textTheme.titleMedium?.copyWith(color: textColor.withValues(alpha:0.7)),
         ),
       ],
     );

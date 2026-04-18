@@ -67,8 +67,15 @@ class Steve extends PlayerModel {
   void makeSuperAttack(PlayerModel e) {
     int cost = showManaCost('SuperAttack');
     if (_mana >= cost) {
-      if (_attack * 2 > e.showHp()) {
-        e.setHp = 0;
+      if (_attack * 2 >= e.showHp()) {
+        double a = _attack * 2 - e.getArmour();
+        if(_attack * 2 >= e.showHp() + e.getArmour()){
+          e.setHp = 0;
+          e.setArmour = 0;
+          return;
+        }
+        e.setArmour = 0;
+        e.setHp = a; 
       } else {
         if (e.getArmour() > 0 && _attack * 2 < e.getArmour()) {
           e.setArmour = e.getArmour() - _attack * 2;
