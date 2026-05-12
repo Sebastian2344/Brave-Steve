@@ -12,18 +12,21 @@ class Prestige {
   final double attack;
   @HiveField(2,defaultValue: 0.0)
   final double health;
+  @HiveField(3,defaultValue: 0.0)
+  final double lucky;
 
-  const Prestige({required this.attack,required this.health,required this.points});
+  const Prestige({required this.attack,required this.health,required this.points, required this.lucky});
 
   PrestigeModel toPrestigeModel() {
-    return PrestigeModel(points: points,attack: attack,health: health,isGivePoints: false);
+    return PrestigeModel(points: points,attack: attack,health: health,isGivePoints: false, lucky: lucky,calculatedPoints: 0);
   }
 
   static Prestige toPrestige(PrestigeModel model) {
     return Prestige(
       points: model.points,
       attack: model.attack,
-      health: model.health,
+      health: model.health, 
+      lucky: model.lucky,
     );
   }
 }

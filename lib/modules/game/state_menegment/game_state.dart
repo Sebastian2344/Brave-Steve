@@ -35,6 +35,7 @@ class GameState extends Notifier<MyVars> {
     l[0].setHp = myPrestige.health + l[0].showHp();
     l[0].setMaxHp = l[0].showHp();
     l[0].setMaxAttack = myPrestige.attack + l[0].getMaxAttack();
+    l[0].setLucky = myPrestige.lucky + l[0].showLucky();
     l = [l[0], ...l.sublist(1)];
     return l;
   }

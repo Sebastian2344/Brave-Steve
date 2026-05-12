@@ -12,6 +12,7 @@ class Enemy extends PlayerModel {
   int _lvl;
   double _armour;
   double _maxArmour;
+  double _lucky;
 
   Enemy(
     this._name,
@@ -23,7 +24,8 @@ class Enemy extends PlayerModel {
     this._exp,
     this._armour,this._maxArmour,
     this._lvl,
-    this._weak) : super();
+    this._weak,
+    this._lucky) : super();
 
   @override
   void makeAttack(PlayerModel e) {
@@ -210,5 +212,15 @@ class Enemy extends PlayerModel {
   @override
   set setMaxHp(double hp) {
    _maxHp = hp;
+  }
+  
+  @override
+  double showLucky() {
+    return _lucky;
+  }
+
+  @override
+  set setLucky(double lucky) {
+    _lucky = lucky;
   }
 }

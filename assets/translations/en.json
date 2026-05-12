@@ -71,6 +71,7 @@
         "stats_view": {
             "level": "Level {}",
             "attack_value": "Attack: {}",
+            "lucky_value":"Lucky: {} %",
             "mana": "Mana",
             "health": "Health",
             "armor": "Armor",

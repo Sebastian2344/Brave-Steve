@@ -30,8 +30,10 @@ class Player {
   final int? enemyIndex;
   @HiveField(11)
   final double maxAttack;
+  @HiveField(12,defaultValue: 0.0)
+  final double lucky;
   const Player({required this.name, required this.hp, required this.maxHp, required this.attack, required this.maxAttack,
-      required this.mana, required this.exp, required this.armour,required this.maxArmour,required this.lvl, required this.weak,this.enemyIndex});
+      required this.mana, required this.exp, required this.armour,required this.maxArmour,required this.lvl, required this.weak,this.enemyIndex,required this.lucky});
 
   static List<Player> toPlayer(List<PlayerModel> model) {
     List<Player> playersList = [];
@@ -48,6 +50,7 @@ class Player {
           maxArmour: model[i].getArmour(),
           lvl: model[i].getlvl(), 
           weak: model[i].isWeak(),
+          lucky: model[i].showLucky(),
           enemyIndex: model[i] == model.first? (model[i] as Steve).getEnemyIndex():null)
         );
     }
@@ -56,9 +59,9 @@ class Player {
 
   PlayerModel toPlayerModel() {
     if(enemyIndex != null){
-      return Steve(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak, enemyIndex);
+      return Steve(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak, lucky,enemyIndex);
     }else{
-      return Enemy(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak);
+      return Enemy(name, hp, maxHp, attack, maxAttack, mana, exp, armour, maxArmour, lvl, weak, lucky);
     }    
   }
 }

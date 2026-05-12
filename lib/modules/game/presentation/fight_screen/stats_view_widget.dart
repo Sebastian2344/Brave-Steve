@@ -73,6 +73,18 @@ class StatsView extends StatelessWidget {
                 style: TextStyle(color: Colors.blueGrey, fontSize: fontSize));
           },
         ),
+        Consumer(
+          builder: (context, ref, child) {
+            ref.watch(providerEQ);
+            final luck = ref.watch(myStateProvider.select(
+              (gameState) => side == 'left'
+                  ? gameState.list[0].showLucky()
+                  : gameState.list[gameState.enemyIndex].showLucky(),
+            ));
+            return Text("fight_screen.stats_view.lucky_value".tr(context: context, args: [luck.toString()]),
+                style: TextStyle(color: Colors.green, fontSize: fontSize));
+          },
+        ),
         Text(
           "fight_screen.stats_view.mana".tr(context: context),
           style: TextStyle(
@@ -136,7 +148,7 @@ class HealthBar extends ConsumerWidget {
       children: [
         Container(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           color: const Color.fromARGB(35, 255, 0, 0),
         ),
         Container(
@@ -144,7 +156,7 @@ class HealthBar extends ConsumerWidget {
               2 *
               0.9 *
               (player.showHp() / player.maxHpInfo()),
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -156,7 +168,7 @@ class HealthBar extends ConsumerWidget {
         ),
         SizedBox(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           child: Center(
             child: Text(
               '${player.showHp().toStringAsFixed(1)} / ${player.maxHpInfo().toStringAsFixed(1)}',
@@ -190,14 +202,14 @@ class ManaBar extends ConsumerWidget {
       children: [
         Container(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           color: const Color.fromARGB(55, 0, 0, 255),
         ),
         Container(
           width: player.showMana() > 10
               ? mediaQuerySize.width / 2 * 0.9
               : mediaQuerySize.width / 2 * 0.9 * (player.showMana() / 10),
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -209,7 +221,7 @@ class ManaBar extends ConsumerWidget {
         ),
         SizedBox(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           child: Center(
             child: Text(
               '${player.showMana().toStringAsFixed(1)} / 10.0',
@@ -244,12 +256,12 @@ class ArmourBar extends ConsumerWidget {
       children: [
         Container(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           color: const Color.fromARGB(34, 170, 173, 170),
         ),
         Container(
           width: player.getMaxArmour() > 0 ? mediaQuerySize.width / 2 * 0.9 * (player.getArmour() / player.getMaxArmour()) : 0,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -261,7 +273,7 @@ class ArmourBar extends ConsumerWidget {
         ),
         SizedBox(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           child: Center(
             child: Text(
               '${player.getArmour().toStringAsFixed(1)} / ${player.getMaxArmour().toStringAsFixed(1)}',
@@ -295,12 +307,12 @@ class ExpBar extends ConsumerWidget {
       children: [
         Container(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           color: const Color.fromARGB(35, 0, 255, 0),
         ),
         Container(
           width: mediaQuerySize.width / 2 * 0.9 * (player.showExp() / 100),
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -312,7 +324,7 @@ class ExpBar extends ConsumerWidget {
         ),
         SizedBox(
           width: mediaQuerySize.width / 2 * 0.9,
-          height: mediaQuerySize.height / 3 / 10,
+          height: mediaQuerySize.height / 3 / 12,
           child: Center(
             child: Text(
               '${player.showExp().toStringAsFixed(1)} / 100.0',

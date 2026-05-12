@@ -8,7 +8,7 @@ class PrestigeData {
 
   Prestige getData() {
     return Hive.box<Prestige>('prestige').isEmpty
-        ? Prestige(attack: 0, health: 0, points: 0)
-        : Hive.box<Prestige>('prestige').getAt(0) ?? Prestige(attack: 0, health: 0, points: 0);
+        ? Prestige(attack: 0, health: 0, points: 0, lucky: 0)
+        : Hive.box<Prestige>('prestige').getAt(0) ?? Prestige(attack: 0, health: 0, points: 0, lucky: 0);
   }
 }

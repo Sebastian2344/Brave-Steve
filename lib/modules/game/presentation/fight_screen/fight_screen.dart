@@ -34,7 +34,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
   Widget build(BuildContext context) {
     final Size mediaQuerySize = MediaQuery.of(context).size;
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double fontSize = mediaQueryData.textScaler.scale(14.0);
+    double fontSize = mediaQueryData.textScaler.scale(12.0);
 
     // POPRAWKA: 'builder' przyjmuje funkcję (context), a nie widget Builder.
     return ShowCaseWidget(
@@ -70,7 +70,7 @@ class _FightScreenState extends ConsumerState<FightScreen> {
                     onPressed: () async {
                       ref.read(soundManagerProvider.notifier).playButtonClick();
                       showDialog(
-                          context: context, builder: (context) => SaveGame());
+                          context: context, builder: (context) => SaveGameDialog());
                     },
                     icon: const Icon(Icons.save),
                     tooltip: 'fight_screen.appbar.save_game'.tr(context: context),

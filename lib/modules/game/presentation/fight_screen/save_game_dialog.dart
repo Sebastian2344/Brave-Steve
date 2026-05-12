@@ -5,11 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../save_game/saves_screen/show_saves.dart';
 
-class SaveGame extends ConsumerWidget {
-  SaveGame({super.key});
-  final TextEditingController textEditingController = TextEditingController();
+class SaveGameDialog extends ConsumerStatefulWidget {
+  const SaveGameDialog({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SaveGameDialog> createState() => _SaveGameDialogState();
+}
+
+class _SaveGameDialogState extends ConsumerState<SaveGameDialog> {
+
+  late final TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       titleTextStyle: const TextStyle(color: Colors.amber, fontSize: 24),
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 16),

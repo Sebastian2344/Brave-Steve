@@ -39,8 +39,8 @@ Future<void> main() async {
 
     // 3. Ustawienie opcji okna
     WindowOptions windowOptions = const WindowOptions(
-      maximumSize: Size(500, 1000), // Ustawienie wielkości startowej
-      minimumSize: Size(500, 1000), // Minimalna wielkość
+      maximumSize: Size(400, 800), // Ustawienie wielkości startowej
+      minimumSize: Size(400, 800), // Minimalna wielkość
       center: true, // Wyśrodkowanie okna na ekranie
       backgroundColor: Colors.transparent,
       skipTaskbar: false,

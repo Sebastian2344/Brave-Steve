@@ -70,6 +70,7 @@
         "stats_view":{
             "level":"Poziom {}",
             "attack_value":"Atak: {}",
+            "lucky_value":"Szczęście: {} %",
             "mana":"Mana",
             "health":"Życie",
             "armor":"Pancerz",

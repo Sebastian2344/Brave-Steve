@@ -39,7 +39,7 @@ class BattleView extends StatelessWidget {
                           heroEffect ? Colors.lightBlue : Colors.red,
                           BlendMode.modulate),
                       child: Image.asset(
-                        PlayerBody.playerBody[0][0],
+                        PlayerBody.playerBody[0]!,
                         width: mediaQuerySize.width /
                             2, //postac z efektem szerokość
                         height: mediaQuerySize.height /
@@ -47,7 +47,7 @@ class BattleView extends StatelessWidget {
                       ),
                     )
                   : Image.asset(
-                      PlayerBody.playerBody[0][0],
+                      PlayerBody.playerBody[0]!,
                       width: mediaQuerySize.width / 2, //postac szerokrść
                       height: mediaQuerySize.height / 3, //postac wysokość
                     ),
@@ -74,7 +74,7 @@ class BattleView extends StatelessWidget {
                           heroEffect ? Colors.lightBlue : Colors.red,
                           BlendMode.modulate),
                       child: Image.asset(
-                        PlayerBody.playerBody[enemyIndex][0],
+                        PlayerBody.enemyBody[0]!,
                         width: mediaQuerySize.width /
                             2, //postac z efektem szerokość
                         height: mediaQuerySize.height /
@@ -82,7 +82,7 @@ class BattleView extends StatelessWidget {
                       ),
                     )
                   : Image.asset(
-                      PlayerBody.playerBody[enemyIndex][0],
+                      PlayerBody.enemyBody[enemyIndex]!,
                       width: mediaQuerySize.width / 2, //postac szerokrść
                       height: mediaQuerySize.height / 3, //postac wysokość
                     ),

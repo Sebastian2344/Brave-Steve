@@ -10,7 +10,8 @@ class PrestigeNotifier extends Notifier<PrestigeModel> {
   @override
   build(){
     ref.watch(prestigeRepoProvider);
-    return const PrestigeModel(points: 0, attack: 0, health: 0,isGivePoints: false);
+    
+    return const PrestigeModel(points: 0, attack: 0, health: 0,isGivePoints: false, lucky: 0,calculatedPoints: 0);
   }
 
   void fromSave(int index){
@@ -25,15 +26,29 @@ class PrestigeNotifier extends Notifier<PrestigeModel> {
     state = state.copywith(points: state.points - 1,health: state.health + 10);
   }
 
+  void incrementLucky(){
+    state = state.copywith(points: state.points - 1, lucky: state.lucky + 0.25);
+  }
+
   Future<void> savePrestige() async {
     await prestigeRepo.saveToDb(state);
     ref.read(myStateProvider.notifier).newGame();
   }
 
+  void calculatedPoints(int level){
+    int calPonts = prestigeRepo.calculatePoints(level);
+    state = state.copywith(calculatedPoints: calPonts);
+  }
+
+  void stepBack(){
+    final xd = prestigeRepo.fromDb();
+    state = state.copywith(points: 0,isGivePoints: false,attack: xd.attack,health: xd.health, lucky: xd.lucky);
+  }
+
   void resetPoints(int level){
     int points = prestigeRepo.calculatePoints(level);
     final xd = prestigeRepo.fromDb();
-    state = state.copywith(points: points,isGivePoints: true,attack: xd.attack,health: xd.health);
+    state = state.copywith(points: points,isGivePoints: true,attack: xd.attack,health: xd.health, lucky: xd.lucky);
   }
 
   void givePoints(int level){

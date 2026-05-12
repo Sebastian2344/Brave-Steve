@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'player_model.dart';
+import 'dart:math';
 
 class Steve extends PlayerModel {
   bool _weak;
@@ -14,6 +15,8 @@ class Steve extends PlayerModel {
   int? _enemyIndex;
   double _armour;
   double _maxArmour;
+  double _lucky;
+  final _random = Random();
 
   Steve(
       this._name,
@@ -27,25 +30,27 @@ class Steve extends PlayerModel {
       this._maxArmour,
       this._lvl,
       this._weak,
+      this._lucky,
       [this._enemyIndex])
       : super();
 
   @override
   void makeAttack(PlayerModel e) {
-    if (_attack > e.showHp()) {
+    double attack = _criticalHit();
+    if (attack > e.showHp()) {
       e.setHp = 0;
     } else {
-      if (e.getArmour() > 0 && _attack < e.getArmour()) {
-        e.setArmour = e.getArmour() - _attack;
-      } else if (e.getArmour() > 0 && _attack > e.getArmour()) {
-        double myHpAtack = _attack;
-        double myArmourAtack = _attack;
-        myHpAtack = _attack - e.getArmour();
-        myArmourAtack = _attack - myHpAtack;
+      if (e.getArmour() > 0 && attack < e.getArmour()) {
+        e.setArmour = e.getArmour() - attack;
+      } else if (e.getArmour() > 0 && attack > e.getArmour()) {
+        double myHpAtack = attack;
+        double myArmourAtack = attack;
+        myHpAtack = attack - e.getArmour();
+        myArmourAtack = attack - myHpAtack;
         e.setArmour = e.getArmour() - myArmourAtack;
         e.setHp = e.showHp() - myHpAtack;
       } else {
-        e.setHp = e.showHp() - _attack;
+        e.setHp = e.showHp() - attack;
       }
     }
     if (_mana < 10) {
@@ -53,12 +58,30 @@ class Steve extends PlayerModel {
     }
   }
 
-  
+  @override
+  double showLucky() {
+    return _lucky;
+  }
+
+  double _criticalHit() {
+    // Generuje liczbę od 0.0 do 100.0
+    double num = _random.nextDouble() * 100;
+
+    // Sprawdzenie szansy
+    if (num < _lucky.clamp(0, 50)) {
+      return _attack * 1.5;
+    } 
+    // może tak rozdać nadmiarowe punkty
+    //else if(num < _lucky.clamp(0, 50) && _lucky > 50){
+    //  return _attack * 1.5 + _lucky;
+    //}
+    return _attack;
+  }
+
   void setEnemyIndex(int i) {
     _enemyIndex = i;
   }
 
- 
   int getEnemyIndex() {
     return _enemyIndex ?? 1;
   }
@@ -66,28 +89,29 @@ class Steve extends PlayerModel {
   @override
   void makeSuperAttack(PlayerModel e) {
     int cost = showManaCost('SuperAttack');
+    double attack = _criticalHit();
     if (_mana >= cost) {
-      if (_attack * 2 >= e.showHp()) {
-        double a = _attack * 2 - e.getArmour();
-        if(_attack * 2 >= e.showHp() + e.getArmour()){
+      if (attack * 2 >= e.showHp()) {
+        double a = attack * 2 - e.getArmour();
+        if (attack * 2 >= e.showHp() + e.getArmour()) {
           e.setHp = 0;
           e.setArmour = 0;
           return;
         }
         e.setArmour = 0;
-        e.setHp = a; 
+        e.setHp = a;
       } else {
-        if (e.getArmour() > 0 && _attack * 2 < e.getArmour()) {
-          e.setArmour = e.getArmour() - _attack * 2;
-        } else if (e.getArmour() > 0 && _attack * 2 > e.getArmour()) {
-          double myHpAtack = _attack * 2;
-          double myArmourAtack = _attack * 2;
-          myHpAtack = _attack * 2 - e.getArmour();
-          myArmourAtack = _attack * 2 - myHpAtack;
+        if (e.getArmour() > 0 && attack * 2 < e.getArmour()) {
+          e.setArmour = e.getArmour() - attack * 2;
+        } else if (e.getArmour() > 0 && attack * 2 > e.getArmour()) {
+          double myHpAtack = attack * 2;
+          double myArmourAtack = attack * 2;
+          myHpAtack = attack * 2 - e.getArmour();
+          myArmourAtack = attack * 2 - myHpAtack;
           e.setArmour = e.getArmour() - myArmourAtack;
           e.setHp = e.showHp() - myHpAtack;
         } else {
-          e.setHp = e.showHp() - _attack * 2;
+          e.setHp = e.showHp() - attack * 2;
         }
       }
       _mana -= cost;
@@ -173,13 +197,13 @@ class Steve extends PlayerModel {
   bool isWeak() => _weak;
 
   @override
-  void addExpirience(double multiply,double exp) {
-    if(_exp + exp * multiply >= 100){
+  void addExpirience(double multiply, double exp) {
+    if (_exp + exp * multiply >= 100) {
       _exp = 100;
     } else {
       _exp += exp * multiply;
     }
-  } 
+  }
 
   @override
   int showExp() => _exp.toInt();
@@ -218,7 +242,7 @@ class Steve extends PlayerModel {
   double getArmour() {
     return _armour;
   }
-  
+
   @override
   double getMaxArmour() {
     return _maxArmour;
@@ -228,19 +252,24 @@ class Steve extends PlayerModel {
   set setMaxArmour(double maxArmour) {
     _maxArmour = maxArmour;
   }
-  
+
   @override
   set setMaxAttack(double maxAttack) {
     _maxAttack = maxAttack;
   }
-  
+
   @override
   set setArmour(double armour) {
     _armour = armour;
   }
-  
+
   @override
   set setMaxHp(double hp) {
     _maxHp = hp;
+  }
+  
+  @override
+  set setLucky(double lucky) {
+    _lucky = lucky;
   }
 }

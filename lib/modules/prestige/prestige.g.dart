@@ -20,19 +20,22 @@ class PrestigeAdapter extends TypeAdapter<Prestige> {
       attack: fields[1] == null ? 0.0 : fields[1] as double,
       health: fields[2] == null ? 0.0 : fields[2] as double,
       points: fields[0] == null ? 0 : fields[0] as int,
+      lucky: fields[3] == null ? 0.0 : fields[3] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Prestige obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.points)
       ..writeByte(1)
       ..write(obj.attack)
       ..writeByte(2)
-      ..write(obj.health);
+      ..write(obj.health)
+      ..writeByte(3)
+      ..write(obj.lucky);
   }
 
   @override

@@ -19,6 +19,7 @@ abstract class PlayerModel{
   double getMaxAttack();
   double maxHpInfo();
   double showAttack();
+  double showLucky();
   bool isLive(); 
   bool isWeak();
   set setWeak(bool weak);
@@ -28,4 +29,5 @@ abstract class PlayerModel{
   set setMaxArmour(double maxArmour);
   set setArmour(double armour);
   set setMaxAttack(double maxAttack);
+  set setLucky(double lucky);
 }

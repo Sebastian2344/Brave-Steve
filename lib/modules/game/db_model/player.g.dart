@@ -29,13 +29,14 @@ class PlayerAdapter extends TypeAdapter<Player> {
       lvl: fields[8] as int,
       weak: fields[9] as bool,
       enemyIndex: fields[10] as int?,
+      lucky: fields[12] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Player obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -59,7 +60,9 @@ class PlayerAdapter extends TypeAdapter<Player> {
       ..writeByte(10)
       ..write(obj.enemyIndex)
       ..writeByte(11)
-      ..write(obj.maxAttack);
+      ..write(obj.maxAttack)
+      ..writeByte(12)
+      ..write(obj.lucky);
   }
 
   @override
