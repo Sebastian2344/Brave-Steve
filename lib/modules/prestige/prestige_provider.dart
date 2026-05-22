@@ -8,25 +8,30 @@ class PrestigeNotifier extends Notifier<PrestigeModel> {
   PrestigeRepo get prestigeRepo => ref.read(prestigeRepoProvider);
 
   @override
-  build(){
+  build() {
     ref.watch(prestigeRepoProvider);
-    
-    return const PrestigeModel(points: 0, attack: 0, health: 0,isGivePoints: false, lucky: 0,calculatedPoints: 0);
+    return const PrestigeModel(
+        points: 0,
+        attack: 0,
+        health: 0,
+        isGivePoints: false,
+        lucky: 0,
+        calculatedPoints: 0);
   }
 
-  void fromSave(int index){
+  void fromSave(int index) {
     state = prestigeRepo.fromDb();
   }
-  
+
   void incrementAttack() {
-    state = state.copywith(points: state.points - 1,attack: state.attack + 1);
+    state = state.copywith(points: state.points - 1, attack: state.attack + 1);
   }
 
   void incrementHealth() {
-    state = state.copywith(points: state.points - 1,health: state.health + 10);
+    state = state.copywith(points: state.points - 1, health: state.health + 10);
   }
 
-  void incrementLucky(){
+  void incrementLucky() {
     state = state.copywith(points: state.points - 1, lucky: state.lucky + 0.25);
   }
 
@@ -35,25 +40,35 @@ class PrestigeNotifier extends Notifier<PrestigeModel> {
     ref.read(myStateProvider.notifier).newGame();
   }
 
-  void calculatedPoints(int level){
+  void calculatedPoints(int level) {
     int calPonts = prestigeRepo.calculatePoints(level);
     state = state.copywith(calculatedPoints: calPonts);
   }
 
-  void stepBack(){
+  void stepBack() {
     final xd = prestigeRepo.fromDb();
-    state = state.copywith(points: 0,isGivePoints: false,attack: xd.attack,health: xd.health, lucky: xd.lucky);
+    state = state.copywith(
+        points: 0,
+        isGivePoints: false,
+        attack: xd.attack,
+        health: xd.health,
+        lucky: xd.lucky);
   }
 
-  void resetPoints(int level){
+  void resetPoints(int level) {
     int points = prestigeRepo.calculatePoints(level);
     final xd = prestigeRepo.fromDb();
-    state = state.copywith(points: points,isGivePoints: true,attack: xd.attack,health: xd.health, lucky: xd.lucky);
+    state = state.copywith(
+        points: points,
+        isGivePoints: true,
+        attack: xd.attack,
+        health: xd.health,
+        lucky: xd.lucky);
   }
 
-  void givePoints(int level){
+  void givePoints(int level) {
     int points = prestigeRepo.calculatePoints(level);
-    state = state.copywith(points: points,isGivePoints: true);
+    state = state.copywith(points: points, isGivePoints: true);
   }
 }
 

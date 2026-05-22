@@ -13,13 +13,11 @@ class PrestigeScreen extends ConsumerStatefulWidget {
 class _PrestigeScreenState extends ConsumerState<PrestigeScreen> {
   @override
   void initState() {
-    Future(
-      () {
-        ref
+    WidgetsBinding.instance.addPostFrameCallback((_){
+       ref
             .read(prestigeNotifierProvider.notifier)
             .calculatedPoints(widget.level);
-      },
-    );
+    });
     super.initState();
   }
 

@@ -6,7 +6,6 @@ import 'package:brave_steve/modules/game/state_menegment/action_button_state.dar
 import 'package:brave_steve/modules/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/modules/counter_enemy_and_bioms/menagment/counter_enemy_state.dart';
 import 'package:brave_steve/modules/eq/menagment/eq_stats_to_add_player_state.dart';
-import 'package:brave_steve/modules/prestige/prestige_provider.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/player_model.dart';
@@ -28,24 +27,12 @@ class GameState extends Notifier<MyVars> {
         gameState: Stan.graNieRozpoczeta);
   }
 
-  List<PlayerModel> _prestige(List<PlayerModel> l) {
-    ref.read(prestigeNotifierProvider.notifier).fromSave(0);
-    final myPrestige = ref.read(prestigeNotifierProvider);
-    l[0].setAttack = myPrestige.attack + l[0].getMaxAttack();
-    l[0].setHp = myPrestige.health + l[0].showHp();
-    l[0].setMaxHp = l[0].showHp();
-    l[0].setMaxAttack = myPrestige.attack + l[0].getMaxAttack();
-    l[0].setLucky = myPrestige.lucky + l[0].showLucky();
-    l = [l[0], ...l.sublist(1)];
-    return l;
-  }
-
   void newGame() {
     ref.read(actionButtonIgnoreProvider.notifier).reset();
     List<PlayerModel> l = repositoryGame.playersStartStatsasPlayerModelList();
     ref.read(effectsStateProvider.notifier).clearEffects();
     state = state.copyWith(
-        list: _prestige(l),
+        list: l,
         enemyIndex: 1,
         expMultiply: 1,
         gameState: Stan.graTrwa);
@@ -57,7 +44,7 @@ class GameState extends Notifier<MyVars> {
     state = state.copyWith(
         move1: false,
         move2: false,
-        list: _prestige(repositoryGame.playersStartStatsasPlayerModelList()),
+        list: repositoryGame.playersStartStatsasPlayerModelList(),
         enemyIndex: 1,
         expMultiply: 1,
         gameState: Stan.graNieRozpoczeta);

@@ -13,6 +13,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final dataBoxProvider = Provider((ref) => DataBox());
 
+final prestigeDataProvider = Provider<PrestigeData>((ref) {
+  return PrestigeData();
+});
+
 final counterEnemyRepoProvider = Provider((ref)=> CounterEnemyRepo( ref.watch(dataBoxProvider)));
 
 final itemsProvider = Provider((ref) => Items());
@@ -20,7 +24,7 @@ final itemsProvider = Provider((ref) => Items());
 final eqRepoProvider = Provider(
     (ref) => EqRepo(items: ref.watch(itemsProvider), dataSource: ref.watch(dataBoxProvider)));
 
-final repoProvider = Provider((ref) => RepositoryGame(dataSource: ref.watch(dataBoxProvider)));
+final repoProvider = Provider((ref) => RepositoryGame(dataSource: ref.watch(dataBoxProvider),prestigeData: ref.watch(prestigeDataProvider)));
 
 final saveRepositoryProvider = Provider((ref) => SaveRepository(dataSource: ref.watch(dataBoxProvider)));
 
@@ -31,5 +35,6 @@ final mergeRepoProvider = Provider<MergeRepo>((ref) {
 });
 
 final prestigeRepoProvider = Provider<PrestigeRepo>((ref) {
-  return PrestigeRepo(PrestigeData());
+  return PrestigeRepo(ref.watch(prestigeDataProvider));
 });
+
