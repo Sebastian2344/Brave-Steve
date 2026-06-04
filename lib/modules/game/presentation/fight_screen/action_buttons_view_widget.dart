@@ -1,8 +1,6 @@
 import 'package:brave_steve/modules/eq/eq_screen/full_eq_dialog.dart';
 import 'package:brave_steve/modules/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/modules/eq/menagment/eq_state.dart';
-import 'package:brave_steve/modules/counter_enemy_and_bioms/menagment/counter_enemy_state.dart';
-import 'package:brave_steve/modules/money/menagment/money_state.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -61,11 +59,9 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
     }
   }
 
-  Future<void> dialogWindow(Enum a, BuildContext context, WidgetRef ref) async {
+  void dialogWindow(Enum a, BuildContext context, WidgetRef ref) async {
     final gameMetods = ref.read(myStateProvider.notifier);
     final eqMethods = ref.read(providerEQ.notifier);
-    final moneyMethods = ref.read(moneyProvider.notifier);
-    final mapMethods = ref.read(counterEnemyNotifierProvider.notifier);
     if (Stan.koniecGry == a) {
       showDialog(
           barrierDismissible: false,
@@ -78,11 +74,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
           context: context,
           builder: (context) => const Lose());
     } else if (Stan.wygrana == a) {
-      mapMethods.incrementEnemy();
-      gameMetods.setStatsPlayerAndEnemyAfterWin();
-      await moneyMethods.addmoney(50.0);
-      eqMethods.randomItemDropToEQ(100);
-      if (context.mounted && !eqMethods.isSpace()) {
+      if (!eqMethods.isSpace()) {
         showDialog(
             context: context, builder: (context) => FullEqDialog(win: true));
       }
@@ -122,7 +114,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                         weakOnEnemy: false,
                       );
                       if (context.mounted) {
-                        await dialogWindow(a, context, ref);
+                        dialogWindow(a, context, ref);
                       }
                     },
                     manaCost: 'fight_screen.action_buttons.attack_cost'.tr(args: ['+1'], context: context),
@@ -150,7 +142,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                           weakOnEnemy: false,
                         );
                         if (context.mounted) {
-                          await dialogWindow(a, context, ref);
+                          dialogWindow(a, context, ref);
                         }
                       },
                       manaCost: 'fight_screen.action_buttons.super_attack_cost'.tr(args: ['4'], context: context),
@@ -182,7 +174,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                         weakOnEnemy: true,
                       );
                       if (context.mounted) {
-                        await dialogWindow(a, context, ref);
+                        dialogWindow(a, context, ref);
                       }
                     },
                     manaCost: 'fight_screen.action_buttons.weakness_cost'.tr(args: ['4'], context: context),
@@ -209,7 +201,7 @@ class _ActionInGameState extends ConsumerState<ActionInGame> {
                           weakOnEnemy: false,
                         );
                         if (context.mounted) {
-                          await dialogWindow(a, context, ref);
+                          dialogWindow(a, context, ref);
                         }
                       },
                       manaCost: 'fight_screen.action_buttons.clearance_cost'.tr(args: ['3'], context: context),

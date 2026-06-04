@@ -8,7 +8,7 @@ class BackgroundBattle extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaQuerySize = MediaQuery.of(context).size;
-    ref.watch(counterEnemyNotifierProvider.select((counter) => counter.boss));
+    ref.watch(counterEnemyNotifierProvider.select((counter) => counter.enemyCounter));
     return Container(
       height: mediaQuerySize.height / 3,
       width: mediaQuerySize.width,

@@ -8,4 +8,9 @@ class CounterEnemyRepo {
   CounterEnemyModel getCounterEnemyModel(int index){
     return dataSource.getCounerEnemy(index).toCounterEnemyModel();
   }
+
+  String chooseVariantMap(List<String> list,int enemyCounter){
+    int randomIndex = enemyCounter % list.length;
+    return list[randomIndex];
+  }
 }

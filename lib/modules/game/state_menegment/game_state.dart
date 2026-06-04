@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:brave_steve/core/di/providers.dart';
+import 'package:brave_steve/modules/eq/menagment/eq_state.dart';
 import 'package:brave_steve/modules/game/model/my_vars_model.dart';
 import 'package:brave_steve/modules/game/repo/repository.dart';
 import 'package:brave_steve/modules/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/modules/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/modules/counter_enemy_and_bioms/menagment/counter_enemy_state.dart';
 import 'package:brave_steve/modules/eq/menagment/eq_stats_to_add_player_state.dart';
+import 'package:brave_steve/modules/money/menagment/money_state.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/player_model.dart';
@@ -89,6 +91,10 @@ class GameState extends Notifier<MyVars> {
       } else {
         if (state.list[0].isLive()) {
           ref.read(soundManagerProvider.notifier).playDeath();
+          ref.read(counterEnemyNotifierProvider.notifier).incrementEnemy();
+          setStatsPlayerAndEnemyAfterWin();
+          await ref.read(moneyProvider.notifier).addmoney(50.0);
+          ref.read(providerEQ.notifier).randomItemDropToEQ(100);
           return Stan.wygrana;
         }
         ref.read(soundManagerProvider.notifier).playDeath();
@@ -118,6 +124,7 @@ class GameState extends Notifier<MyVars> {
 
   void setStatsPlayerAndEnemyAfterWin() {
     int bossIndex = ref.read(counterEnemyNotifierProvider).boss;
+    bool isBoss = ref.read(counterEnemyNotifierProvider.notifier).isBoss();
     ref.read(effectsStateProvider.notifier).clearEffects();
     state.list[0].addExpirience(state.expMultiply, 50);
     if (state.list[0].showExp() == 100) {
@@ -129,7 +136,7 @@ class GameState extends Notifier<MyVars> {
     state = state.copyWith(list: [
       state.list[0].setPlayerAgain(),
       ...state.list.sublist(1).map((element) => element.levelUp())
-    ], move2: false, enemyIndex: _setEnemyIndex(state.enemyIndex, bossIndex));
+    ], move2: false, enemyIndex: _setEnemyIndex(state.enemyIndex, bossIndex,isBoss));
     (state.list[0] as Steve).setEnemyIndex(state.enemyIndex);
   }
 
@@ -146,13 +153,14 @@ class GameState extends Notifier<MyVars> {
   // Private Methods
 //===================================================================================//
 
-  int _setEnemyIndex(int index, int bossIndex) {
-    if (index > 0 + 3 * bossIndex &&
-        index < 3 + 3 * bossIndex &&
-        index < state.list.length - 1) {
+  int _setEnemyIndex(int index, int bossIndex, bool isBoss) {
+    if(isBoss) {
+      index = 4 * bossIndex;
+    }
+    else if (index < state.list.length - 1 && index < bossIndex * 4 + 3) {
       index += 1;
     } else {
-      index = 1;
+      index = 1 + bossIndex * 4;
     }
 
     return index;

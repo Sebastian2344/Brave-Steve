@@ -1,0 +1,11 @@
+core/modules/data_source/box.dart -> gracz i przeciwnicy staty początkowe 
+
+core/modules/items/items.dart -> statystyki itemów
+
+modules/game/model/steve.dart -> (atak,superatak,osłabienie,oczyszczenie) moc i koszt umek gracza poza tym szczęście i dodanie xp oraz lvl up
+
+modules/game/model/enemy.dart -> (atak,superatak,osłabienie,oczyszczenie) moc i koszt umek przeciwnika poza tym lvl up
+
+modules/game/state_menagment/game_state.dart -> w metodzie battle wywołanie metod: dropu kasy za moba i do szansy dropu itema
+
+modules/prestige -> w repo i provider można ustawić ile punkt prestiżu daje do stat i za ile poziomów on jest

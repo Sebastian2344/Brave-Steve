@@ -18,7 +18,7 @@ class CounterEnemyNotifier extends Notifier<CounterEnemyModel> {
   
   void incrementEnemy() {
     state = state.copywith(enemyCounter: state.enemyCounter + 1);
-    if (state.enemyCounter == 100 || state.enemyCounter == 200 || state.enemyCounter == 300 || state.enemyCounter == 400) {
+    if (isBoss()) {
       state = state.copywith(boss: state.boss + 1);
     }
   }
@@ -27,19 +27,37 @@ class CounterEnemyNotifier extends Notifier<CounterEnemyModel> {
     state = state.copywith(enemyCounter: 0, boss: 0);
   }
 
+  bool isBoss() {
+    return state.enemyCounter == 100 || state.enemyCounter == 200 || state.enemyCounter == 300 || state.enemyCounter == 400;
+  }
+
   String getMap() {
-    if (state.boss == 0) {
-      return 'assets/images/LandScape.jpg';
-    } else if (state.boss == 1) {
-      return 'assets/images/złoto.png';
-    } else if (state.boss == 2) {
-      return 'assets/images/map3.png';
-    } else if (state.boss == 3) {
-      return 'assets/images/map4.png';
-    } else if (state.boss == 4) {
-      return 'assets/images/map5.png';
+    if (state.enemyCounter <= 100) {
+      return counterEnemyRepo.chooseVariantMap([
+        'assets/images/bioms/biom1a.png',
+        'assets/images/bioms/biom1b.png',
+        'assets/images/bioms/biom1c.png',
+      ],state.enemyCounter);
+    } else if (state.enemyCounter <= 200) {
+      return counterEnemyRepo.chooseVariantMap([
+        'assets/images/bioms/biom2a.png',
+        'assets/images/bioms/biom2b.png',
+        'assets/images/bioms/biom2c.png',
+      ],state.enemyCounter);
+    } else if (state.enemyCounter <= 300) {
+      return counterEnemyRepo.chooseVariantMap([
+        'assets/images/bioms/biom3a.png',
+        'assets/images/bioms/biom3b.png',
+        'assets/images/bioms/biom3c.png',
+      ],state.enemyCounter);
+    } else if (state.enemyCounter <= 400) {
+      return counterEnemyRepo.chooseVariantMap([
+        'assets/images/bioms/biom4a.png',
+        'assets/images/bioms/biom4b.png',
+        'assets/images/bioms/biom4c.png',
+      ],state.enemyCounter);
     } else {
-      return 'assets/images/map1.png'; // Domyślny obraz, jeśli boss jest poza zakresem
+      return 'assets/images/bioms/biom1a.png'; // Domyślny obraz, jeśli boss jest poza zakresem
     }
   }
 }

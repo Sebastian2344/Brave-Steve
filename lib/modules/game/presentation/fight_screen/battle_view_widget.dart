@@ -74,7 +74,7 @@ class BattleView extends StatelessWidget {
                           heroEffect ? Colors.lightBlue : Colors.red,
                           BlendMode.modulate),
                       child: Image.asset(
-                        PlayerBody.enemyBody[0]!,
+                        PlayerBody.enemyBody[enemyIndex]!,
                         width: mediaQuerySize.width /
                             2, //postac z efektem szerokość
                         height: mediaQuerySize.height /

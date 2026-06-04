@@ -88,6 +88,8 @@ flutter:
     - assets/images/512px_items/hełmy/set_3/
     - assets/images/enemies/
     - assets/images/player/
+    - assets/images/bioms/
+    - assets/images/bosses/
     - assets/sounds/
     - assets/translations/
   #   - images/a_dot_ham.jpeg
