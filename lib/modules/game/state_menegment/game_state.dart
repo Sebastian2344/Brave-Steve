@@ -11,7 +11,6 @@ import 'package:brave_steve/modules/money/menagment/money_state.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/player_model.dart';
-import '../model/steve.dart';
 
 enum Stan { koniecGry, wygrana, przegrana, graTrwa, graNieRozpoczeta }
 
@@ -31,9 +30,25 @@ class GameState extends Notifier<MyVars> {
 
   void newGame() {
     ref.read(actionButtonIgnoreProvider.notifier).reset();
-    List<PlayerModel> l = repositoryGame.playersStartStatsasPlayerModelList();
     ref.read(effectsStateProvider.notifier).clearEffects();
     state = state.copyWith(
+        move1: false,
+        move2: false,
+        list: repositoryGame.playersStartStatsasPlayerModelList(),
+        enemyIndex: 1,
+        expMultiply: 1,
+        gameState: Stan.graTrwa);
+  }
+
+  void prestigeGame() {
+    ref.read(actionButtonIgnoreProvider.notifier).reset();
+    double a = state.list.first.getArmour();
+    List<PlayerModel> l = repositoryGame.playersStartStatsasPlayerModelList();
+    ref.read(effectsStateProvider.notifier).clearEffects();
+    l.first.setArmour = a;
+    state = state.copyWith(
+        move1: false,
+        move2: false,
         list: l,
         enemyIndex: 1,
         expMultiply: 1,
@@ -52,12 +67,15 @@ class GameState extends Notifier<MyVars> {
         gameState: Stan.graNieRozpoczeta);
   }
 
-  void loadPlayerAndMobs(int index) {
+  void loadPlayerAndEnemies(int index) {
     final players = repositoryGame.getPlayersfromDBasPlayerModelList(index);
+    ref.read(effectsStateProvider.notifier).setEffects(players.first.isWeak(), players[players.first.getEnemyIndex()].isWeak());
+    ref.read(actionButtonIgnoreProvider.notifier).setAfterplayerAndEneyLoad(players.first);
+
     if (players.isNotEmpty) {
       state = state.copyWith(
         list: players,
-        enemyIndex: (players[0] as Steve).getEnemyIndex(),
+        enemyIndex: players.first.getEnemyIndex(),
       );
     }
   }
@@ -72,29 +90,29 @@ class GameState extends Notifier<MyVars> {
     required bool cleary,
     required bool weakOnEnemy,
   }) async {
-    if (state.list[0].isLive() && state.list[state.enemyIndex].isLive()) {
+    if (state.list.first.isLive() && state.list[state.enemyIndex].isLive()) {
       _firstPlayerCome(cleary);
       await Future.delayed(const Duration(milliseconds: 500));
       _hit(superAtack, cleary, weakOnEnemy);
       await Future.delayed(const Duration(milliseconds: 500));
     }
-    if (state.list[state.enemyIndex].isLive() && state.list[0].isLive()) {
+    if (state.list[state.enemyIndex].isLive() && state.list.first.isLive()) {
       int option = _enemyCome();
       await Future.delayed(const Duration(milliseconds: 500));
       _enemyTurn(option);
       await Future.delayed(const Duration(milliseconds: 500));
     }
-    if (!state.list[0].isLive() || !state.list[state.enemyIndex].isLive()) {
+    if (!state.list.first.isLive() || !state.list[state.enemyIndex].isLive()) {
       ref.read(actionButtonIgnoreProvider.notifier).reset();
       if (ref.read(counterEnemyNotifierProvider).enemyCounter == 400) {
         return Stan.koniecGry;
       } else {
-        if (state.list[0].isLive()) {
+        if (state.list.first.isLive()) {
           ref.read(soundManagerProvider.notifier).playDeath();
           ref.read(counterEnemyNotifierProvider.notifier).incrementEnemy();
           setStatsPlayerAndEnemyAfterWin();
           await ref.read(moneyProvider.notifier).addmoney(50.0);
-          ref.read(providerEQ.notifier).randomItemDropToEQ(100);
+          ref.read(providerEQ.notifier).randomItemDropToEQ(50);
           return Stan.wygrana;
         }
         ref.read(soundManagerProvider.notifier).playDeath();
@@ -113,12 +131,12 @@ class GameState extends Notifier<MyVars> {
 
   void setStats() {
     final record = ref.read(eqStatsToAddPlayerStateProvider);
-    state.list[0].setArmour = record.armour + state.list[0].getArmour();
-    state.list[0].setMaxArmour = record.armour + state.list[0].getMaxArmour();
-    state.list[0].setAttack = record.attack + state.list[0].getMaxAttack();
-    state.list[0].setMaxAttack = record.attack + state.list[0].getMaxAttack();
+    state.list.first.setArmour = record.armour + state.list.first.getArmour();
+    state.list.first.setMaxArmour = record.armour + state.list.first.getMaxArmour();
+    state.list.first.setAttack = record.attack + state.list.first.getMaxAttack();
+    state.list.first.setMaxAttack = record.attack + state.list.first.getMaxAttack();
     state = state.copyWith(
-      list: [state.list[0], ...state.list.sublist(1)],
+      list: [state.list.first, ...state.list.sublist(1)],
     );
   }
 
@@ -126,27 +144,27 @@ class GameState extends Notifier<MyVars> {
     int bossIndex = ref.read(counterEnemyNotifierProvider).boss;
     bool isBoss = ref.read(counterEnemyNotifierProvider.notifier).isBoss();
     ref.read(effectsStateProvider.notifier).clearEffects();
-    state.list[0].addExpirience(state.expMultiply, 50);
-    if (state.list[0].showExp() == 100) {
+    state.list.first.addExpirience(state.expMultiply, 50);
+    if (state.list.first.showExp() == 100) {
       state = state.copyWith(list: [
-        state.list[0].setPlayerAgain().levelUp(),
+        state.list.first.setPlayerAgain().levelUp(),
         ...state.list.sublist(1)
       ]);
     }
     state = state.copyWith(list: [
-      state.list[0].setPlayerAgain(),
+      state.list.first.setPlayerAgain(),
       ...state.list.sublist(1).map((element) => element.levelUp())
     ], move2: false, enemyIndex: _setEnemyIndex(state.enemyIndex, bossIndex,isBoss));
-    (state.list[0] as Steve).setEnemyIndex(state.enemyIndex);
+    state.list.first.setEnemyIndex(state.enemyIndex);
   }
 
   void setStatsAfterLose() {
     ref.read(effectsStateProvider.notifier).clearEffects();
     final listPlayer = repositoryGame.playersStartStatsasPlayerModelList();
-    listPlayer[0] = state.list[0].setPlayerAgain();
+    listPlayer[0] = state.list.first.setPlayerAgain();
     state = state.copyWith(
         list: listPlayer, enemyIndex: 1, move2: false, expMultiply: 1);
-    (state.list[0] as Steve).setEnemyIndex(state.enemyIndex);
+    state.list.first.setEnemyIndex(state.enemyIndex);
   }
 
 //===================================================================================//
@@ -175,20 +193,20 @@ class GameState extends Notifier<MyVars> {
   void _hit(bool superAtack, bool cleary, bool weakOnEnemy) {
     if (superAtack) {
       ref.read(soundManagerProvider.notifier).playDamage();
-      state.list[0].makeSuperAttack(state.list[state.enemyIndex]);
+      state.list.first.makeSuperAttack(state.list[state.enemyIndex]);
     } else if (cleary) {
       ref.read(soundManagerProvider.notifier).playClearence();
-      state.list[0].clearMe();
+      state.list.first.clearMe();
       ref.read(effectsStateProvider.notifier).setAllEffects(
           false, true, false, ref.read(effectsStateProvider).isWeaknessEnemy);
     } else if (weakOnEnemy && !state.list[state.enemyIndex].isWeak()) {
       ref.read(soundManagerProvider.notifier).playWeakness();
-      state.list[0].weakness(state.list[state.enemyIndex]);
+      state.list.first.weakness(state.list[state.enemyIndex]);
       ref.read(effectsStateProvider.notifier).setAllEffects(
           ref.read(effectsStateProvider).isWeaknessPlayer, false, false, true);
     } else {
       ref.read(soundManagerProvider.notifier).playDamage();
-      state.list[0].makeAttack(state.list[state.enemyIndex]);
+      state.list.first.makeAttack(state.list[state.enemyIndex]);
     }
     state = state.copyWith(move1: false);
   }
@@ -211,10 +229,10 @@ class GameState extends Notifier<MyVars> {
     if (option == 0) {
       if (state.list[state.enemyIndex].showMana() >=
           state.list[state.enemyIndex].showManaCost('SuperAttack')) {
-        state.list[state.enemyIndex].makeSuperAttack(state.list[0]);
+        state.list[state.enemyIndex].makeSuperAttack(state.list.first);
         ref.read(soundManagerProvider.notifier).playEnemyAttack();
       } else {
-        state.list[state.enemyIndex].makeAttack(state.list[0]);
+        state.list[state.enemyIndex].makeAttack(state.list.first);
         ref.read(soundManagerProvider.notifier).playEnemyAttack();
       }
     } else if (option == 1) {
@@ -234,18 +252,18 @@ class GameState extends Notifier<MyVars> {
           if (newOption != option) {
             _enemyTurn(newOption);
           } else {
-            state.list[state.enemyIndex].makeAttack(state.list[0]);
+            state.list[state.enemyIndex].makeAttack(state.list.first);
             ref.read(soundManagerProvider.notifier).playEnemyAttack();
           }
         }
       }
     } else if (option == 2) {
       {
-        if (!state.list[0].isWeak() &&
+        if (!state.list.first.isWeak() &&
             state.list[state.enemyIndex].showMana() >=
                 state.list[state.enemyIndex].showManaCost('weakness')) {
           ref.read(soundManagerProvider.notifier).playWeakness();
-          state.list[state.enemyIndex].weakness(state.list[0]);
+          state.list[state.enemyIndex].weakness(state.list.first);
           ref.read(effectsStateProvider.notifier).setClearenceForAll(false);
           ref.read(effectsStateProvider.notifier).setWeaknessPlayer(true);
         } else {
@@ -253,7 +271,7 @@ class GameState extends Notifier<MyVars> {
           if (newOption != option) {
             _enemyTurn(newOption);
           } else {
-            state.list[state.enemyIndex].makeAttack(state.list[0]);
+            state.list[state.enemyIndex].makeAttack(state.list.first);
             ref.read(soundManagerProvider.notifier).playEnemyAttack();
           }
         }
@@ -264,13 +282,13 @@ class GameState extends Notifier<MyVars> {
   }
 
   void _setButtonsbuttonIgnore() {
-    if (state.list[0].showMana() >= state.list[0].showManaCost('SuperAttack')) {
+    if (state.list.first.showMana() >= state.list.first.showManaCost('SuperAttack')) {
       ref.read(actionButtonIgnoreProvider.notifier).changeSuperAtack(false);
     }
-    if (state.list[0].showMana() >= state.list[0].showManaCost('weakness')) {
+    if (state.list.first.showMana() >= state.list.first.showManaCost('weakness')) {
       ref.read(actionButtonIgnoreProvider.notifier).changeWeakOnEnemy(false);
     }
-    if (state.list[0].showMana() >= state.list[0].showManaCost('clearMe')) {
+    if (state.list.first.showMana() >= state.list.first.showManaCost('clearMe')) {
       ref.read(actionButtonIgnoreProvider.notifier).changeCleary(false);
     }
     ref.read(actionButtonIgnoreProvider.notifier).changeAtack(false);

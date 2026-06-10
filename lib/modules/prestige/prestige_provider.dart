@@ -37,7 +37,7 @@ class PrestigeNotifier extends Notifier<PrestigeModel> {
 
   Future<void> savePrestige() async {
     await prestigeRepo.saveToDb(state);
-    ref.read(myStateProvider.notifier).newGame();
+    ref.read(myStateProvider.notifier).prestigeGame();
   }
 
   void calculatedPoints(int level) {

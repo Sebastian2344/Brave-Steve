@@ -22,6 +22,8 @@ abstract class PlayerModel{
   double showLucky();
   bool isLive(); 
   bool isWeak();
+  int getEnemyIndex();
+  void setEnemyIndex(int index);
   set setWeak(bool weak);
   set setAttack(double attack);
   set setHp(double hp);

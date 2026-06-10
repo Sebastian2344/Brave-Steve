@@ -25,12 +25,12 @@ class Items {
   static const Map<ItemSet, Map<ItemTypeModel, Map<Rarity, ItemModel>>>
       _mapItems = {
     //--
-    //set - 1
+    //set - 1 zestaw dla fanatyka
     //--
     ItemSet.set1: {
       ItemTypeModel.sword: {
         Rarity.common: ItemModel(
-            name: 'Drewniany Miecz',
+            name: 'Miecz fanatyka I',
             description: 'Dodaje 4 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m1.png',
             classItem: ItemTypeModel.sword,
@@ -40,7 +40,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.uncommon: ItemModel(
-            name: 'Kamienny Miecz',
+            name: 'Miecz fanatyka II',
             description: 'Dodaje 5 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m2.png',
             classItem: ItemTypeModel.sword,
@@ -50,7 +50,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.rare: ItemModel(
-            name: 'Żelazny miecz',
+            name: 'Miecz fanatyka III',
             description: 'Dodaje 6 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m3.png',
             classItem: ItemTypeModel.sword,
@@ -60,7 +60,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Miecz',
+            name: 'Miecz fanatyka IV',
             description: 'Dodaje 7 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m4.jpg',
             classItem: ItemTypeModel.sword,
@@ -70,7 +70,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Miecz',
+            name: 'Miecz fanatyka V',
             description: 'Dodaje 10 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m5.jpg',
             classItem: ItemTypeModel.sword,
@@ -80,7 +80,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Miecz',
+            name: 'Miecz fanatyka VI',
             description: 'Dodaje 15 do ataku',
             image: 'assets/images/512px_items/miecze/set_1/m6.jpg',
             classItem: ItemTypeModel.sword,
@@ -92,7 +92,7 @@ class Items {
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Chełm',
+            name: 'Chełm fanatyka I',
             description: 'Dodaje 3 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h1.jpg',
             classItem: ItemTypeModel.helmet,
@@ -102,7 +102,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Chełm',
+            name: 'Chełm fanatyka II',
             description: 'Dodaje 5 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h2.jpg',
             classItem: ItemTypeModel.helmet,
@@ -112,7 +112,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Chełm',
+            name: 'Chełm fanatyka III',
             description: 'Dodaje 7 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h3.jpg',
             classItem: ItemTypeModel.helmet,
@@ -122,7 +122,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Chełm',
+            name: 'Chełm fanatyka IV',
             description: 'Dodaje 9 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h4.jpg',
             classItem: ItemTypeModel.helmet,
@@ -132,7 +132,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Chełm',
+            name: 'Chełm fanatyka V',
             description: 'Dodaje 15 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h5.jpg',
             classItem: ItemTypeModel.helmet,
@@ -142,7 +142,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Chełm',
+            name: 'Chełm fanatyka VI',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/hełmy/set_1/h6.jpg',
             classItem: ItemTypeModel.helmet,
@@ -154,7 +154,7 @@ class Items {
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Napierśnik',
+            name: 'Napierśnik fanatyka I',
             description: 'Dodaje 8 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n1.png',
             classItem: ItemTypeModel.chestplate,
@@ -164,7 +164,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Napierśnik',
+            name: 'Napierśnik fanatyka II',
             description: 'Dodaje 10 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n2.png',
             classItem: ItemTypeModel.chestplate,
@@ -174,7 +174,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Napierśnik',
+            name: 'Napierśnik fanatyka III',
             description: 'Dodaje 12 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n3.png',
             classItem: ItemTypeModel.chestplate,
@@ -184,7 +184,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Napierśnik',
+            name: 'Napierśnik fanatyka IV',
             description: 'Dodaje 14 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n4.png',
             classItem: ItemTypeModel.chestplate,
@@ -194,7 +194,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Napierśnik',
+            name: 'Napierśnik fanatyka V',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n5.png',
             classItem: ItemTypeModel.chestplate,
@@ -204,7 +204,7 @@ class Items {
             itemRarity: 'legendary',
             upgradePrice: 20),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Napierśnik',
+            name: 'Napierśnik fanatyka VI',
             description: 'Dodaje 25 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_1/n6.png',
             classItem: ItemTypeModel.chestplate,
@@ -216,7 +216,7 @@ class Items {
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Spodnie',
+            name: 'Spodnie fanatyka I',
             description: 'Dodają 4 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s1.jpg',
             classItem: ItemTypeModel.pants,
@@ -226,7 +226,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Spodnie',
+            name: 'Spodnie fanatyka II',
             description: 'Dodają 6 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s2.jpg',
             classItem: ItemTypeModel.pants,
@@ -236,7 +236,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Spodnie',
+            name: 'Spodnie fanatyka III',
             description: 'Dodają 8 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s3.jpg',
             classItem: ItemTypeModel.pants,
@@ -246,7 +246,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Spodnie',
+            name: 'Spodnie fanatyka IV',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s4.jpg',
             classItem: ItemTypeModel.pants,
@@ -256,7 +256,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Spodnie',
+            name: 'Spodnie fanatyka V',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s5.png',
             classItem: ItemTypeModel.pants,
@@ -266,7 +266,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Spodnie',
+            name: 'Spodnie fanatyka VI',
             description: 'Dodają 20 pancerza',
             image: 'assets/images/512px_items/spodnie/set_1/s6.png',
             classItem: ItemTypeModel.pants,
@@ -278,7 +278,7 @@ class Items {
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Buty',
+            name: 'Buty fanatyka I',
             description: 'Dodają 1 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b1.jpg',
             classItem: ItemTypeModel.boots,
@@ -288,7 +288,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Buty',
+            name: 'Buty fanatyka II',
             description: 'Dodają 3 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b2.jpg',
             classItem: ItemTypeModel.boots,
@@ -298,7 +298,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Buty',
+            name: 'Buty fanatyka III',
             description: 'Dodają 5 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b3.jpg',
             classItem: ItemTypeModel.boots,
@@ -308,7 +308,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Buty',
+            name: 'Buty fanatyka IV',
             description: 'Dodają 7 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b4.jpg',
             classItem: ItemTypeModel.boots,
@@ -318,7 +318,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Buty',
+            name: 'Buty fanatyka V',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b5.jpg',
             classItem: ItemTypeModel.boots,
@@ -328,7 +328,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 1),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Buty',
+            name: 'Buty fanatyka VI',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/buty/set_1/b6.jpg',
             classItem: ItemTypeModel.boots,
@@ -340,12 +340,12 @@ class Items {
       }
     },
     //--
-    //set - 2
+    //set - 2 zestaw dla paladyna
     //--
     ItemSet.set2: {
       ItemTypeModel.sword: {
         Rarity.common: ItemModel(
-            name: 'Drewniany Miecz',
+            name: 'Miecz paladyna I',
             description: 'Dodaje 4 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m1.png',
             classItem: ItemTypeModel.sword,
@@ -355,7 +355,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.uncommon: ItemModel(
-            name: 'Kamienny Miecz',
+            name: 'Miecz paladyna II',
             description: 'Dodaje 5 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m2.png',
             classItem: ItemTypeModel.sword,
@@ -365,7 +365,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.rare: ItemModel(
-            name: 'Żelazny miecz',
+            name: 'Miecz paladyna III',
             description: 'Dodaje 6 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m3.png',
             classItem: ItemTypeModel.sword,
@@ -375,7 +375,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Miecz',
+            name: 'Miecz paladyna IV',
             description: 'Dodaje 7 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m4.png',
             classItem: ItemTypeModel.sword,
@@ -385,7 +385,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Miecz',
+            name: 'Miecz paladyna V',
             description: 'Dodaje 10 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m5.png',
             classItem: ItemTypeModel.sword,
@@ -395,7 +395,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Miecz',
+            name: 'Miecz paladyna VI',
             description: 'Dodaje 15 do ataku',
             image: 'assets/images/512px_items/miecze/set_2/m6.png',
             classItem: ItemTypeModel.sword,
@@ -407,7 +407,7 @@ class Items {
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Chełm',
+            name: 'Chełm paladyna I',
             description: 'Dodaje 3 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h1.png',
             classItem: ItemTypeModel.helmet,
@@ -417,7 +417,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Chełm',
+            name: 'Chełm paladyna II',
             description: 'Dodaje 5 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h2.png',
             classItem: ItemTypeModel.helmet,
@@ -427,7 +427,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Chełm',
+            name: 'Chełm paladyna III',
             description: 'Dodaje 7 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h3.png',
             classItem: ItemTypeModel.helmet,
@@ -437,7 +437,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Chełm',
+            name: 'Chełm paladyna IV',
             description: 'Dodaje 9 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h4.png',
             classItem: ItemTypeModel.helmet,
@@ -447,7 +447,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Chełm',
+            name: 'Chełm paladyna V',
             description: 'Dodaje 15 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h5.png',
             classItem: ItemTypeModel.helmet,
@@ -457,7 +457,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Chełm',
+            name: 'Chełm paladyna VI',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/hełmy/set_2/h6.png',
             classItem: ItemTypeModel.helmet,
@@ -469,7 +469,7 @@ class Items {
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Napierśnik',
+            name: 'Spodnie paladyna I',
             description: 'Dodaje 8 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n1.png',
             classItem: ItemTypeModel.chestplate,
@@ -479,7 +479,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Napierśnik',
+            name: 'Spodnie paladyna II',
             description: 'Dodaje 10 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n2.png',
             classItem: ItemTypeModel.chestplate,
@@ -489,7 +489,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Napierśnik',
+            name: 'Spodnie paladyna III',
             description: 'Dodaje 12 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n3.png',
             classItem: ItemTypeModel.chestplate,
@@ -499,7 +499,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Napierśnik',
+            name: 'Spodnie paladyna IV',
             description: 'Dodaje 14 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n4.png',
             classItem: ItemTypeModel.chestplate,
@@ -509,7 +509,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Napierśnik',
+            name: 'Spodnie paladyna V',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n5.jpeg',
             classItem: ItemTypeModel.chestplate,
@@ -519,7 +519,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Napierśnik',
+            name: 'Spodnie paladyna VI',
             description: 'Dodaje 25 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_2/n6.png',
             classItem: ItemTypeModel.chestplate,
@@ -531,7 +531,7 @@ class Items {
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Spodnie',
+            name: 'Spodnie paladyna I',
             description: 'Dodają 4 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s1.jpg',
             classItem: ItemTypeModel.pants,
@@ -541,7 +541,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Spodnie',
+            name: 'Spodnie paladyna II',
             description: 'Dodają 6 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s2.jpg',
             classItem: ItemTypeModel.pants,
@@ -551,7 +551,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Spodnie',
+            name: 'Spodnie paladyna III',
             description: 'Dodają 8 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s3.jpg',
             classItem: ItemTypeModel.pants,
@@ -561,7 +561,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Spodnie',
+            name: 'Spodnie paladyna IV',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s4.jpg',
             classItem: ItemTypeModel.pants,
@@ -571,7 +571,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Spodnie',
+            name: 'Spodnie paladyna V',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s5.jpg',
             classItem: ItemTypeModel.pants,
@@ -581,7 +581,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Spodnie',
+            name: 'Spodnie paladyna VI',
             description: 'Dodają 20 pancerza',
             image: 'assets/images/512px_items/spodnie/set_2/s6.jpg',
             classItem: ItemTypeModel.pants,
@@ -593,7 +593,7 @@ class Items {
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Buty',
+            name: 'Buty paladyna I',
             description: 'Dodają 1 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b1.png',
             classItem: ItemTypeModel.boots,
@@ -603,7 +603,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Buty',
+            name: 'Buty paladyna II',
             description: 'Dodają 3 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b2.png',
             classItem: ItemTypeModel.boots,
@@ -613,7 +613,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Buty',
+            name: 'Buty paladyna III',
             description: 'Dodają 5 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b3.png',
             classItem: ItemTypeModel.boots,
@@ -623,7 +623,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Buty',
+            name: 'Buty paladyna IV',
             description: 'Dodają 7 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b4.png',
             classItem: ItemTypeModel.boots,
@@ -633,7 +633,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Buty',
+            name: 'Buty paladyna V',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b5.png',
             classItem: ItemTypeModel.boots,
@@ -643,7 +643,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 2),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Buty',
+            name: 'Buty paladyna VI',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/buty/set_2/b6.png',
             classItem: ItemTypeModel.boots,
@@ -655,12 +655,12 @@ class Items {
       }
     },
     //--
-    //set - 3
+    //set - 3 zestaw smoka
     //--
     ItemSet.set3: {
       ItemTypeModel.sword: {
         Rarity.common: ItemModel(
-            name: 'Drewniany Miecz',
+            name: 'Miecz smoka I',
             description: 'Dodaje 4 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m1.png',
             classItem: ItemTypeModel.sword,
@@ -670,27 +670,27 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.uncommon: ItemModel(
-            name: 'Kamienny Miecz',
+            name: 'Miecz smoka II',
             description: 'Dodaje 5 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m2.png',
             classItem: ItemTypeModel.sword,
             price: 15,
             attack: 5,
-            itemRarity: 'common',
+            itemRarity: 'uncommon',
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.rare: ItemModel(
-            name: 'Żelazny miecz',
+            name: 'Miecz smoka III',
             description: 'Dodaje 6 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m3.jpg',
             classItem: ItemTypeModel.sword,
             price: 20,
             attack: 6,
-            itemRarity: 'uncommon',
+            itemRarity: 'rare',
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Miecz',
+            name: 'Miecz smoka IV',
             description: 'Dodaje 7 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m4.png',
             classItem: ItemTypeModel.sword,
@@ -700,7 +700,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Miecz',
+            name: 'Miecz smoka V',
             description: 'Dodaje 10 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m5.png',
             classItem: ItemTypeModel.sword,
@@ -710,7 +710,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Miecz',
+            name: 'Miecz smoka VI',
             description: 'Dodaje 15 do ataku',
             image: 'assets/images/512px_items/miecze/set_3/m6.jpg',
             classItem: ItemTypeModel.sword,
@@ -722,7 +722,7 @@ class Items {
       },
       ItemTypeModel.helmet: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Chełm',
+            name: 'Chełm smoka I',
             description: 'Dodaje 3 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h1.png',
             classItem: ItemTypeModel.helmet,
@@ -732,7 +732,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Chełm',
+            name: 'Chełm smoka II',
             description: 'Dodaje 5 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h2.jpeg',
             classItem: ItemTypeModel.helmet,
@@ -742,7 +742,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Chełm',
+            name: 'Chełm smoka III',
             description: 'Dodaje 7 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h3.jpeg',
             classItem: ItemTypeModel.helmet,
@@ -752,7 +752,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Chełm',
+            name: 'Chełm smoka IV',
             description: 'Dodaje 9 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h4.jpeg',
             classItem: ItemTypeModel.helmet,
@@ -762,7 +762,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Chełm',
+            name: 'Chełm smoka V',
             description: 'Dodaje 15 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h5.jpg',
             classItem: ItemTypeModel.helmet,
@@ -772,7 +772,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Chełm',
+            name: 'Chełm smoka VI',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/hełmy/set_3/h6.jpg',
             classItem: ItemTypeModel.helmet,
@@ -784,7 +784,7 @@ class Items {
       },
       ItemTypeModel.chestplate: {
         Rarity.common: ItemModel(
-            name: 'Skórzany Napierśnik',
+            name: 'Napierśnik smoka I',
             description: 'Dodaje 8 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n1.jpg',
             classItem: ItemTypeModel.chestplate,
@@ -794,7 +794,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.uncommon: ItemModel(
-            name: 'Kolczy Napierśnik',
+            name: 'Napierśnik smoka II',
             description: 'Dodaje 10 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n2.jpg',
             classItem: ItemTypeModel.chestplate,
@@ -804,7 +804,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.rare: ItemModel(
-            name: 'Żelazny Napierśnik',
+            name: 'Napierśnik smoka III',
             description: 'Dodaje 12 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n3.jpg',
             classItem: ItemTypeModel.chestplate,
@@ -814,7 +814,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.epic: ItemModel(
-            name: 'Diamentowy Napierśnik',
+            name: 'Napierśnik smoka IV',
             description: 'Dodaje 14 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n4.jpg',
             classItem: ItemTypeModel.chestplate,
@@ -824,7 +824,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Napierśnik',
+            name: 'Napierśnik smoka V',
             description: 'Dodaje 20 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n5.png',
             classItem: ItemTypeModel.chestplate,
@@ -834,7 +834,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.mithic: ItemModel(
-            name: 'Mityczny Napierśnik',
+            name: 'Napierśnik smoka VI',
             description: 'Dodaje 25 pancerza',
             image: 'assets/images/512px_items/napierśniki/set_3/n6.png',
             classItem: ItemTypeModel.chestplate,
@@ -846,7 +846,7 @@ class Items {
       },
       ItemTypeModel.pants: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Spodnie',
+            name: 'Spodnie smoka I',
             description: 'Dodają 4 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s1.jpg',
             classItem: ItemTypeModel.pants,
@@ -856,7 +856,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Spodnie',
+            name: 'Spodnie smoka II',
             description: 'Dodają 6 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s2.jpg',
             classItem: ItemTypeModel.pants,
@@ -866,7 +866,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Spodnie',
+            name: 'Spodnie smoka III',
             description: 'Dodają 8 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s3.png',
             classItem: ItemTypeModel.pants,
@@ -876,7 +876,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Spodnie',
+            name: 'Spodnie smoka IV',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s4.jpg',
             classItem: ItemTypeModel.pants,
@@ -886,7 +886,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Spodnie',
+            name: 'Spodnie smoka V',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s5.jpg',
             classItem: ItemTypeModel.pants,
@@ -896,7 +896,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Spodnie',
+            name: 'Spodnie smoka VI',
             description: 'Dodają 20 pancerza',
             image: 'assets/images/512px_items/spodnie/set_3/s6.jpg',
             classItem: ItemTypeModel.pants,
@@ -908,7 +908,7 @@ class Items {
       },
       ItemTypeModel.boots: {
         Rarity.common: ItemModel(
-            name: 'Skórzane Buty',
+            name: 'Buty smoka I',
             description: 'Dodają 1 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b1.jpg',
             classItem: ItemTypeModel.boots,
@@ -918,7 +918,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.uncommon: ItemModel(
-            name: 'Kolcze Buty',
+            name: 'Buty smoka II',
             description: 'Dodają 3 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b2.jpg',
             classItem: ItemTypeModel.boots,
@@ -928,7 +928,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.rare: ItemModel(
-            name: 'Żelazne Buty',
+            name: 'Buty smoka III',
             description: 'Dodają 5 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b3.jpg',
             classItem: ItemTypeModel.boots,
@@ -938,7 +938,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.epic: ItemModel(
-            name: 'Diamentowe Buty',
+            name: 'Buty smoka IV',
             description: 'Dodają 7 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b4.jpg',
             classItem: ItemTypeModel.boots,
@@ -948,7 +948,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.legendary: ItemModel(
-            name: 'Legendarny Buty',
+            name: 'Buty smoka V',
             description: 'Dodają 10 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b5.jpg',
             classItem: ItemTypeModel.boots,
@@ -958,7 +958,7 @@ class Items {
             upgradePrice: 20,
             numerZestawu: 3),
         Rarity.mithic: ItemModel(
-            name: 'Mityczne Buty',
+            name: 'Buty smoka VI',
             description: 'Dodają 15 pancerza',
             image: 'assets/images/512px_items/buty/set_3/b6.jpg',
             classItem: ItemTypeModel.boots,

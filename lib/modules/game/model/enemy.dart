@@ -223,4 +223,14 @@ class Enemy extends PlayerModel {
   set setLucky(double lucky) {
     _lucky = lucky;
   }
+  
+  @override
+  int getEnemyIndex() {
+    return 0;
+  }
+  
+  @override
+  void setEnemyIndex(int index) {
+    
+  }
 }

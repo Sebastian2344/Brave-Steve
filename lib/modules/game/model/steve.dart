@@ -78,10 +78,12 @@ class Steve extends PlayerModel {
     return _attack;
   }
 
+  @override
   void setEnemyIndex(int i) {
     _enemyIndex = i;
   }
 
+  @override
   int getEnemyIndex() {
     return _enemyIndex ?? 1;
   }

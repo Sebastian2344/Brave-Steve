@@ -1,4 +1,4 @@
-import 'package:brave_steve/modules/game/state_menegment/game_state.dart';
+import 'package:brave_steve/modules/game/model/player_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,9 +30,7 @@ class ActionButtonIgnoreNotifier extends Notifier<ActionButtonIgnoreModel> {
     return const ActionButtonIgnoreModel(false, false, false, false);
   }
 
-  void setAfterplayerAndEneyLoad() {
-
-    final player = ref.read(myStateProvider).list[0];
+  void setAfterplayerAndEneyLoad(PlayerModel player) {
 
     if(player.showMana() <= player.showManaCost('SuperAttack')){    
       changeSuperAtack(true);

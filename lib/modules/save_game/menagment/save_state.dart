@@ -1,9 +1,7 @@
 import 'package:brave_steve/core/di/providers.dart';
 import 'package:brave_steve/modules/save_game/model/save_model.dart';
 import 'package:brave_steve/modules/save_game/repo/save_repository.dart';
-import 'package:brave_steve/modules/game/state_menegment/action_button_state.dart';
 import 'package:brave_steve/modules/counter_enemy_and_bioms/menagment/counter_enemy_state.dart';
-import 'package:brave_steve/modules/game/state_menegment/effects_state.dart';
 import 'package:brave_steve/modules/eq/menagment/eq_state.dart';
 import 'package:brave_steve/modules/game/state_menegment/game_state.dart';
 import 'package:brave_steve/modules/sounds/menagment/sound_state.dart';
@@ -32,18 +30,9 @@ class SaveStateNotifier extends Notifier<List<SaveModel>> {
     ref.read(soundManagerProvider.notifier).playButtonClick(); //sound
     ref
         .read(myStateProvider.notifier)
-        .loadPlayerAndMobs(index); //player and enemies
+        .loadPlayerAndEnemies(index); //player and enemies
     ref.read(providerEQ.notifier).loadItemPlaceModels(index); //eq
-    ref
-        .read(counterEnemyNotifierProvider.notifier)
-        .fromSave(index); //enemy counter and set biom
-    ref.read(myStateProvider.notifier).loadExpMultiply(index); //exp multiply
-    ref
-        .read(effectsStateProvider.notifier)
-        .setEffects(); // efects(weakness,clearance)
-    ref
-        .read(actionButtonIgnoreProvider.notifier)
-        .setAfterplayerAndEneyLoad(); //action buttons state
+    ref.read(counterEnemyNotifierProvider.notifier).fromSave(index); //counter enemy and bioms 
   }
 
   void returnListSaves() {
